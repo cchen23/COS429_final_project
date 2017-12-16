@@ -7,3 +7,4 @@ a*.pyo
 *.mat
 *.jpg
 *.xml
+resources/IIIT-CFW1.0/*
