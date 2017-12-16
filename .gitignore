@@ -1,0 +1,9 @@
+# Python stuff.
+*.pyc
+a*.pyo
+
+# Data stuff.
+*.zip
+*.mat
+*.jpg
+*.xml
