@@ -8,3 +8,7 @@ a*.pyo
 *.jpg
 *.xml
 resources/IIIT-CFW1.0/*
+resources/lfw_funneled/*
+
+
+*~
