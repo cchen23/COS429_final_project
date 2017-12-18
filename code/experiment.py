@@ -48,25 +48,26 @@ def compute_accuracy(predictions, targets):
     accuracy = np.sum(np.array(predictions) == np.array(targets)) / len(predictions)
     return accuracy
 
-def run_experiment(train_model_function, predict_model_function, model_name):
+def run_experiment(train_function, predict_function, model_name):
     """ Trains and tests using train_model_function and evaluate_model_function
     arguments, and saves results. """
     train_data, train_targets, test_data, test_targets = get_lfw_dataset()
     
-    model = train_model_function(train_data, train_targets)
-    train_predictions = predict_model_function(model, train_data)
+    model = train_function(train_data, train_targets)
+    train_predictions = predict_function(model, train_data)
     train_accuracy = compute_accuracy(train_predictions, train_targets)
-    test_predictions = predict_model_function(model, test_data)
+    test_predictions = predict_function(model, test_data)
     test_accuracy = compute_accuracy(test_predictions, test_targets)
 
-    print(len(train_predictions))
-    print(len(test_predictions))
+    num_faces = len(np.unique(train_targets))
+    print("Number of distinct faces: %d" % num_faces)
+    print("Chance rate: %f" % (1 / num_faces))
     print("Results for %s Algorithm" % model_name)
     print("Train accuracy: %f" % train_accuracy)
     print("Test accuracy: %f" % test_accuracy)
     
-    save_dict = {"model":model,"train_data":train_data,"train_targets":train_targets,"test_data":test_data,"test_targets":test_targets}
-    p.dump(save_dict, open( "../results/%s_results.p" % model_name, "wb" ))
+#    save_dict = {"model":model,"train_data":train_data,"train_targets":train_targets,"test_data":test_data,"test_targets":test_targets}
+#    p.dump(save_dict, open( "../results/%s_results.p" % model_name, "wb" ))
 
 if __name__ == "__main__":
     run_experiment(utils.train_pca, utils.predict_pca, "PCA")
