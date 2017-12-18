@@ -5,22 +5,23 @@ Created on Mon Dec 18 14:26:03 2017
 @author: Cathy
 """
 from sklearn.datasets import fetch_lfw_people
+from sklearn.model_selection import train_test_split
 
 import pickle as p
 import experiment_utils as utils
 import numpy as np
 
-def split_traintest(target):
+def split_traintest(targets):
     # TODO: Different way of splitting train and test?
     # Maybe should use more than one of each face to train?
     """ Splits targets into train and test indices."""
-    unique_targets = np.unique(target)
-    num_train = 1
+    unique_targets = np.unique(targets)
+    num_train = 3
     train_indices = []
     test_indices = []
 
     for label in unique_targets:
-        label_indices = np.where(target == label)[0].tolist()
+        label_indices = np.where(targets == label)[0].tolist()
         train_indices += label_indices[0:num_train]
         test_indices += label_indices[num_train:]
 
@@ -36,24 +37,36 @@ def get_lfw_dataset():
     
     train_indices, test_indices = split_traintest(dataset.target)
     train_data = data[train_indices,:]
-    train_target = dataset.target[train_indices]
+    train_targets = dataset.target[train_indices]
     test_data = data[test_indices,:]
-    test_target = dataset.target[test_indices]
+    test_targets = dataset.target[test_indices]
 
-    return train_data, train_target, test_data, test_target
+    #train_data, test_data, train_targets, test_targets = train_test_split(data, dataset.target)
+    return train_data, train_targets, test_data, test_targets
 
-def run_experiment(train_model_function, evaluate_model_function, model_name):
+def compute_accuracy(predictions, targets):
+    accuracy = np.sum(np.array(predictions) == np.array(targets)) / len(predictions)
+    return accuracy
+
+def run_experiment(train_model_function, predict_model_function, model_name):
     """ Trains and tests using train_model_function and evaluate_model_function
     arguments, and saves results. """
-    train_data, train_target, test_data, test_target = get_lfw_dataset()
+    train_data, train_targets, test_data, test_targets = get_lfw_dataset()
     
-    model = train_model_function(train_data, train_target)
-    return model
-    # results = evaluate_model_function(model, test_data, test_target)
-    #p.dump(results, open( "../results/%s_results.p" % model_name, "wb" ))
+    model = train_model_function(train_data, train_targets)
+    train_predictions = predict_model_function(model, train_data)
+    train_accuracy = compute_accuracy(train_predictions, train_targets)
+    test_predictions = predict_model_function(model, test_data)
+    test_accuracy = compute_accuracy(test_predictions, test_targets)
+
+    print(len(train_predictions))
+    print(len(test_predictions))
+    print("Results for %s Algorithm" % model_name)
+    print("Train accuracy: %f" % train_accuracy)
+    print("Test accuracy: %f" % test_accuracy)
+    
+    save_dict = {"model":model,"train_data":train_data,"train_targets":train_targets,"test_data":test_data,"test_targets":test_targets}
+    p.dump(save_dict, open( "../results/%s_results.p" % model_name, "wb" ))
 
 if __name__ == "__main__":
-    model = run_experiment(utils.train_pca, utils.evaluate_pca, "PCA")
-    weights, train_target = model
-    print(weights.shape)
-    print(train_target)
+    run_experiment(utils.train_pca, utils.predict_pca, "PCA")
