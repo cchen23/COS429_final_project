@@ -76,5 +76,7 @@ def run_experiment(train_function, predict_function, model_name):
 #    p.dump(save_dict, open( "../results/%s_results.p" % model_name, "wb" ))
 
 if __name__ == "__main__":
-    run_experiment(utils.train_pca, utils.predict_pca, "PCA")
-    run_experiment(utils.train_sparserepresentation, utils.predict_sparserepresentation, "Sparse Representation")
+    #run_experiment(utils.train_pca, utils.predict_pca, "PCA")
+    #run_experiment(utils.train_sparserepresentation, utils.predict_sparserepresentation, "Sparse Representation")
+    run_experiment(utils.train_sparserepresentation_dimension_reduction, utils.predict_sparserepresentation_dimension_reduction, "Sparse Representation, Dimension Reduction")
+    run_experiment(utils.train_sparserepresentation_combinedl1, utils.predict_sparserepresentation_combinedl1, "Sparse Representation, Combined l1")
