@@ -5,11 +5,13 @@ Created on Mon Dec 18 14:26:03 2017
 @author: Cathy
 """
 from sklearn.datasets import fetch_lfw_people
-from sklearn.model_selection import train_test_split
+#from sklearn.model_selection import train_test_split
 
-import pickle as p
+#import pickle as p
 import experiment_utils as utils
 import numpy as np
+
+from sklearn.preprocessing import normalize
 
 def split_traintest(targets):
     # TODO: Different way of splitting train and test?
@@ -31,15 +33,18 @@ def get_lfw_dataset():
     """ Return train and test data and labels from 'Labeled Faces in the Wild" dataset."""
     min_faces_per_person = 5
     dataset = fetch_lfw_people(min_faces_per_person=min_faces_per_person)
-    data = dataset.data
+    data = dataset.data # num_people x image_length
     mean_face = np.mean(data, axis=0)
     data = data - mean_face
-    
+
     train_indices, test_indices = split_traintest(dataset.target)
     train_data = data[train_indices,:]
     train_targets = dataset.target[train_indices]
     test_data = data[test_indices,:]
     test_targets = dataset.target[test_indices]
+
+    test_data = normalize(test_data, axis=1)
+    train_data = normalize(train_data, axis=1)
 
     #train_data, test_data, train_targets, test_targets = train_test_split(data, dataset.target)
     return train_data, train_targets, test_data, test_targets
