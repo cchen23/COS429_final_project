@@ -1,6 +1,6 @@
 ## Algorithms
-- [ ] Framework for implementation + testing.
-- [ ] Eigenfaces PCA (Turk and Pentland 1991)
+- [x] Framework for implementation + testing.
+- [x] Eigenfaces PCA (Turk and Pentland 1991)
 - [ ] Sparse representation (eqn 1.4, face_chapter)
 - [ ] Combined l1 minimization (eqn 1.9, face_chapter)
 
