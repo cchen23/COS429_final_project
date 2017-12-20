@@ -31,7 +31,7 @@ def split_traintest(targets):
 
 def get_lfw_dataset():
     """ Return train and test data and labels from 'Labeled Faces in the Wild" dataset."""
-    min_faces_per_person = 5
+    min_faces_per_person = 20
     dataset = fetch_lfw_people(min_faces_per_person=min_faces_per_person)
     data = dataset.data # num_people x image_length
     mean_face = np.mean(data, axis=0)
@@ -65,6 +65,7 @@ def run_experiment(train_function, predict_function, model_name):
     test_accuracy = compute_accuracy(test_predictions, test_targets)
 
     num_faces = len(np.unique(train_targets))
+    print("Recognition Algorithm: %s" % model_name)
     print("Number of distinct faces: %d" % num_faces)
     print("Chance rate: %f" % (1 / num_faces))
     print("Results for %s Algorithm" % model_name)
@@ -76,3 +77,4 @@ def run_experiment(train_function, predict_function, model_name):
 
 if __name__ == "__main__":
     run_experiment(utils.train_pca, utils.predict_pca, "PCA")
+    run_experiment(utils.train_sparserepresentation, utils.predict_sparserepresentation, "Sparse Representation")

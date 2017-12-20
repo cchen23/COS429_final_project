@@ -7,8 +7,9 @@ Created on Mon Dec 18 15:39:53 2017
 import matplotlib.pyplot as plt
 import numpy as np
 
-# Training functions.
+from sklearn.decomposition import SparseCoder
 
+# Training functions.
 def train_pca(train_data, train_targets):
     # Train data is num_people x num_dims.
     # TODO: What if more than one training example per person? Average weights? Use each?
@@ -24,6 +25,11 @@ def train_pca(train_data, train_targets):
 #        plt.figure(i)
 #        plt.imshow(np.reshape(eigenface, (62,47)))
     return eigenfaces, train_weights, train_targets
+
+def train_sparserepresentation(train_data, train_targets):
+    # Implemented based on: https://people.eecs.berkeley.edu/~yang/paper/face_chapter.pdf
+    coder = SparseCoder(train_data, transform_algorithm='omp')
+    return coder, train_targets
 
 # Prediction functions.
 def predict_pca(model, test_data):
@@ -41,4 +47,24 @@ def predict_pca(model, test_data):
         test_predictions.append(test_prediction)
     
     return test_predictions 
-    
+
+def predict_sparserepresentation(model, test_data):
+    coder, train_targets = model
+    weights = coder.transform(test_data)
+    train_labels = np.unique(train_targets)
+    num_test_examples = test_data.shape[0]
+    test_predictions = []
+
+    for i in range(num_test_examples):
+        example_weights = weights[i,:]
+        max_label_weight = -float("inf")
+        max_label = -1
+        for label in train_labels:
+            label_indices = np.where(train_targets == label)
+            label_weights = np.sum(example_weights[label_indices])
+            if label_weights > max_label_weight:
+                max_label_weight = label_weights
+                max_label = label
+        test_predictions.append(max_label)
+
+    return test_predictions
