@@ -6,6 +6,18 @@
 
 - Deformable SRC? (Algorithm 1.1, face_chapter)
 
+- [ ] Add stuff with timing.
+
 ## Manipulations
 
+- [ ] Rotations.
+- [ ] Flipping.
+- [ ] Illumination.
+- [ ] Cartoon Faces.
+
 ## Written
+- [ ] Algorithm performance.
+    - [ ] Baseline.
+    - [ ] With our manipulations.
+    - [ ] With cartoon faces.
+- [ ] Algorithm runtime.
