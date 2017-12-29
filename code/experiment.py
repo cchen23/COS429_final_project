@@ -54,7 +54,7 @@ def compute_accuracy(predictions, targets):
     accuracy = np.sum(np.array(predictions) == np.array(targets)) / len(predictions)
     return accuracy
 
-def run_experiment(train_function, predict_function, model_name, manipulation_info):
+def run_experiment(train_function, predict_function, model_name, manipulation_info, savename):
     """ Trains and tests using train_model_function and evaluate_model_function
     arguments, and saves results. """
     min_faces_per_person = 20
@@ -85,7 +85,7 @@ def run_experiment(train_function, predict_function, model_name, manipulation_in
     print("\n")
     
     # Save results.
-    with open("../results/%smanipulation_results.txt" % (manipulation_info[0]).replace(" ",""), "a") as f:
+    with open("../results/%s_results.txt" % savename, "a") as f:
         f.write("Algorithm: %s\n" % model_name)
         f.write("Min faces per person: %d\n" % min_faces_per_person)
         f.write("Number of distinct faces: %d\n" % num_faces)
@@ -99,8 +99,9 @@ def run_experiment(train_function, predict_function, model_name, manipulation_in
 if __name__ == "__main__":
     # Experiments without manipulations.
     manipulation_infos = [("none", -1), ("occlude_lfw", 20)]
-    for manipulation_info in manipulation_infos:
-        run_experiment(algorithms.train_pca, algorithms.predict_pca, "PCA", manipulation_info)
-        run_experiment(algorithms.train_sparserepresentation, algorithms.predict_sparserepresentation, "Sparse Representation", manipulation_info)
-        run_experiment(algorithms.train_sparserepresentation_dimension_reduction, algorithms.predict_sparserepresentation_dimension_reduction, "Sparse Representation Dimension Reduction", manipulation_info)
-        run_experiment(algorithms.train_sparserepresentation_combinedl1, algorithms.predict_sparserepresentation_combinedl1, "Sparse Representation Combined l1", manipulation_info)
+    savenames = ["nomanipulation", "occludelfw_20"]
+    for (manipulation_info, savename) in zip(manipulation_infos, savenames):
+        run_experiment(algorithms.train_pca, algorithms.predict_pca, "PCA", manipulation_info, savename)
+        run_experiment(algorithms.train_sparserepresentation, algorithms.predict_sparserepresentation, "Sparse Representation", manipulation_info, savename)
+        run_experiment(algorithms.train_sparserepresentation_dimension_reduction, algorithms.predict_sparserepresentation_dimension_reduction, "Sparse Representation Dimension Reduction", manipulation_info, savename)
+        run_experiment(algorithms.train_sparserepresentation_combinedl1, algorithms.predict_sparserepresentation_combinedl1, "Sparse Representation Combined l1", manipulation_info, savename)
