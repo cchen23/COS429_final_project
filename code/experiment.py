@@ -80,8 +80,8 @@ def run_experiment(train_function, predict_function, model_name, manipulation_in
     print("Chance rate: %f" % (1 / num_faces))
     print("Train accuracy: %f" % train_accuracy)
     print("Test accuracy: %f" % test_accuracy)
-    print("Training Time: %s sec\n" % train_time)
-    print("Testing Time: %s sec\n" % test_time)
+    print("Training Time: %s sec" % train_time)
+    print("Testing Time: %s sec" % test_time)
     print("\n")
     
     # Save results.
