@@ -16,6 +16,8 @@ def perform_manipulation(data, manipulation_info):
     elif manipulation_type == "occlude_lfw":
         occlusion_size = manipulation_parameters[0]
         return occlude_lfw_dataset(data, occlusion_size)
+    else:
+        print("UNKNOWN MANIPULATION.")
 
 # Manipulation definitions.
 def occlude_lfw_dataset(data, occlusion_size):

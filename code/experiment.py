@@ -75,6 +75,7 @@ def run_experiment(train_function, predict_function, model_name, manipulation_in
 
     # Print results.
     num_faces = len(np.unique(train_targets))
+    print("Manipulation info: %s" % str(manipulation_info))
     print("Recognition Algorithm: %s" % model_name)
     print("Number of distinct faces: %d" % num_faces)
     print("Chance rate: %f" % (1 / num_faces))
@@ -98,8 +99,8 @@ def run_experiment(train_function, predict_function, model_name, manipulation_in
         
 if __name__ == "__main__":
     # Experiments without manipulations.
-    manipulation_infos = [("none", -1), ("occlude_lfw", 20)]
-    savenames = ["nomanipulation", "occludelfw_20"]
+    manipulation_infos = [("none", -1), ("occlude_lfw", 20), ("occlude_lfw", 10), ("occlude_lfw", 30), ("occlude_lfw", 40)]
+    savenames = ["nomanipulation", "occludelfw_20", "occludelfw_10", "occludelfw_30", "occludelfw_40"]
     for (manipulation_info, savename) in zip(manipulation_infos, savenames):
         run_experiment(algorithms.train_pca, algorithms.predict_pca, "PCA", manipulation_info, savename)
         run_experiment(algorithms.train_sparserepresentation, algorithms.predict_sparserepresentation, "Sparse Representation", manipulation_info, savename)
