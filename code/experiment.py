@@ -7,7 +7,7 @@ Created on Mon Dec 18 14:26:03 2017
 from sklearn.datasets import fetch_lfw_people
 #from sklearn.model_selection import train_test_split
 
-import experiment_utils as utils
+import algorithms
 import numpy as np
 
 from sklearn.preprocessing import normalize
@@ -82,7 +82,7 @@ def run_experiment(train_function, predict_function, model_name):
         f.write("\n\n")
         
 if __name__ == "__main__":
-    run_experiment(utils.train_pca, utils.predict_pca, "PCA")
-    run_experiment(utils.train_sparserepresentation, utils.predict_sparserepresentation, "Sparse Representation")
-    run_experiment(utils.train_sparserepresentation_dimension_reduction, utils.predict_sparserepresentation_dimension_reduction, "Sparse Representation Dimension Reduction")
-    run_experiment(utils.train_sparserepresentation_combinedl1, utils.predict_sparserepresentation_combinedl1, "Sparse Representation Combined l1")
+    run_experiment(algorithms.train_pca, algorithms.predict_pca, "PCA")
+    run_experiment(algorithms.train_sparserepresentation, algorithms.predict_sparserepresentation, "Sparse Representation")
+    run_experiment(algorithms.train_sparserepresentation_dimension_reduction, algorithms.predict_sparserepresentation_dimension_reduction, "Sparse Representation Dimension Reduction")
+    run_experiment(algorithms.train_sparserepresentation_combinedl1, algorithms.predict_sparserepresentation_combinedl1, "Sparse Representation Combined l1")
