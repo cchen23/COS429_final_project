@@ -9,6 +9,7 @@ from sklearn.datasets import fetch_lfw_people
 from sklearn.preprocessing import normalize
 
 import numpy as np
+import time
 
 import algorithms
 import manipulations
@@ -59,12 +60,19 @@ def run_experiment(train_function, predict_function, model_name, manipulation_in
     min_faces_per_person = 20
     train_data, train_targets, test_data, test_targets = get_lfw_dataset(min_faces_per_person, manipulation_info)
     
+    time1 = time.clock()
     model = train_function(train_data, train_targets)
+    time2 = time.clock()
+    train_time = time2 - time1
+
+    time1 = time.clock()
     train_predictions = predict_function(model, train_data)
     train_accuracy = compute_accuracy(train_predictions, train_targets)
     test_predictions = predict_function(model, test_data)
     test_accuracy = compute_accuracy(test_predictions, test_targets)
-    
+    time2 = time.clock()
+    test_time = time2 - time1
+
     # Print results.
     num_faces = len(np.unique(train_targets))
     print("Recognition Algorithm: %s" % model_name)
@@ -72,6 +80,8 @@ def run_experiment(train_function, predict_function, model_name, manipulation_in
     print("Chance rate: %f" % (1 / num_faces))
     print("Train accuracy: %f" % train_accuracy)
     print("Test accuracy: %f" % test_accuracy)
+    print("Training Time: %s sec\n" % train_time)
+    print("Testing Time: %s sec\n" % test_time)
     print("\n")
     
     # Save results.
@@ -82,12 +92,15 @@ def run_experiment(train_function, predict_function, model_name, manipulation_in
         f.write("Chance rate: %f\n" % (1 / num_faces))
         f.write("Train accuracy: %f\n" % train_accuracy)
         f.write("Test accuracy: %f\n" % test_accuracy)
+        f.write("Training Time: %s sec\n" % train_time)
+        f.write("Testing Time: %s sec\n" % test_time)
         f.write("\n\n")
         
 if __name__ == "__main__":
     # Experiments without manipulations.
-    manipulation_info = ("none", -1)
-    run_experiment(algorithms.train_pca, algorithms.predict_pca, "PCA", manipulation_info)
-    run_experiment(algorithms.train_sparserepresentation, algorithms.predict_sparserepresentation, "Sparse Representation", manipulation_info)
-    run_experiment(algorithms.train_sparserepresentation_dimension_reduction, algorithms.predict_sparserepresentation_dimension_reduction, "Sparse Representation Dimension Reduction", manipulation_info)
-    run_experiment(algorithms.train_sparserepresentation_combinedl1, algorithms.predict_sparserepresentation_combinedl1, "Sparse Representation Combined l1", manipulation_info)
+    manipulation_infos = [("none", -1), ("occlude_lfw", 20)]
+    for manipulation_info in manipulation_infos:
+        run_experiment(algorithms.train_pca, algorithms.predict_pca, "PCA", manipulation_info)
+        run_experiment(algorithms.train_sparserepresentation, algorithms.predict_sparserepresentation, "Sparse Representation", manipulation_info)
+        run_experiment(algorithms.train_sparserepresentation_dimension_reduction, algorithms.predict_sparserepresentation_dimension_reduction, "Sparse Representation Dimension Reduction", manipulation_info)
+        run_experiment(algorithms.train_sparserepresentation_combinedl1, algorithms.predict_sparserepresentation_combinedl1, "Sparse Representation Combined l1", manipulation_info)
