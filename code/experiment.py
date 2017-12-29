@@ -6,11 +6,12 @@ Created on Mon Dec 18 14:26:03 2017
 """
 from sklearn.datasets import fetch_lfw_people
 #from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import normalize
 
-import algorithms
 import numpy as np
 
-from sklearn.preprocessing import normalize
+import algorithms
+import manipulations
 
 def split_traintest(targets):
     # TODO: Different way of splitting train and test?
@@ -28,10 +29,11 @@ def split_traintest(targets):
 
     return train_indices, test_indices
 
-def get_lfw_dataset(min_faces_per_person):
+def get_lfw_dataset(min_faces_per_person, manipulation_info):
     """ Return train and test data and labels from 'Labeled Faces in the Wild" dataset."""
     dataset = fetch_lfw_people(min_faces_per_person=min_faces_per_person)
     data = dataset.data # num_people x image_length
+    data = manipulations.perform_manipulation(data, manipulation_info)
     mean_face = np.mean(data, axis=0)
     data = data - mean_face
 
@@ -51,11 +53,11 @@ def compute_accuracy(predictions, targets):
     accuracy = np.sum(np.array(predictions) == np.array(targets)) / len(predictions)
     return accuracy
 
-def run_experiment(train_function, predict_function, model_name):
+def run_experiment(train_function, predict_function, model_name, manipulation_info):
     """ Trains and tests using train_model_function and evaluate_model_function
     arguments, and saves results. """
     min_faces_per_person = 20
-    train_data, train_targets, test_data, test_targets = get_lfw_dataset(min_faces_per_person)
+    train_data, train_targets, test_data, test_targets = get_lfw_dataset(min_faces_per_person, manipulation_info)
     
     model = train_function(train_data, train_targets)
     train_predictions = predict_function(model, train_data)
@@ -73,7 +75,8 @@ def run_experiment(train_function, predict_function, model_name):
     print("\n")
     
     # Save results.
-    with open("../results/%s_results.txt" % (model_name).replace(" ",""), "a") as f:
+    with open("../results/%smanipulation_results.txt" % (manipulation_info[0]).replace(" ",""), "a") as f:
+        f.write("Algorithm: %s\n" % model_name)
         f.write("Min faces per person: %d\n" % min_faces_per_person)
         f.write("Number of distinct faces: %d\n" % num_faces)
         f.write("Chance rate: %f\n" % (1 / num_faces))
@@ -82,7 +85,9 @@ def run_experiment(train_function, predict_function, model_name):
         f.write("\n\n")
         
 if __name__ == "__main__":
-    run_experiment(algorithms.train_pca, algorithms.predict_pca, "PCA")
-    run_experiment(algorithms.train_sparserepresentation, algorithms.predict_sparserepresentation, "Sparse Representation")
-    run_experiment(algorithms.train_sparserepresentation_dimension_reduction, algorithms.predict_sparserepresentation_dimension_reduction, "Sparse Representation Dimension Reduction")
-    run_experiment(algorithms.train_sparserepresentation_combinedl1, algorithms.predict_sparserepresentation_combinedl1, "Sparse Representation Combined l1")
+    # Experiments without manipulations.
+    manipulation_info = ("none", -1)
+    run_experiment(algorithms.train_pca, algorithms.predict_pca, "PCA", manipulation_info)
+    run_experiment(algorithms.train_sparserepresentation, algorithms.predict_sparserepresentation, "Sparse Representation", manipulation_info)
+    run_experiment(algorithms.train_sparserepresentation_dimension_reduction, algorithms.predict_sparserepresentation_dimension_reduction, "Sparse Representation Dimension Reduction", manipulation_info)
+    run_experiment(algorithms.train_sparserepresentation_combinedl1, algorithms.predict_sparserepresentation_combinedl1, "Sparse Representation Combined l1", manipulation_info)
