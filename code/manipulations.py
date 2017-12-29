@@ -18,7 +18,7 @@ def perform_manipulation(data, manipulation_info):
         return occlude_lfw_dataset(data, occlusion_size)
 
 # Manipulation definitions.
-def occlude_lfw_dataset(data, oclusion_size):
+def occlude_lfw_dataset(data, occlusion_size):
     """Returns a list of occluded images. Takes dataset.data from lfw as input."""
     num_images = data.shape[0]
     lfw_imageshape = (62,47)
