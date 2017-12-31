@@ -1,12 +1,12 @@
 ## Algorithms
 - [x] Framework for implementation + testing.
-- [x ] Add code to save results (and model?)
+- [x] Add code to save results (and model?)
 
 - [x] Eigenfaces PCA (Turk and Pentland 1991)
 - [x] Sparse representation (eqn 1.4, face_chapter)
 - [x] Sparse representation with dimension reduction
 - [x] Combined l1 minimization (eqn 1.9, face_chapter)
-
+- [ ] VGG
 Other possible ideas: (from http://www.face-rec.org/algorithms/)
 - LDA
 - EP
@@ -18,7 +18,7 @@ Other possible ideas: (from http://www.face-rec.org/algorithms/)
 
 - Deformable SRC? (Algorithm 1.1, face_chapter)
 
-- [ ] Add stuff with timing.
+- [x] Add stuff with timing.
 
 ## Manipulations
 
@@ -26,6 +26,7 @@ Other possible ideas: (from http://www.face-rec.org/algorithms/)
 - [ ] Flipping.
 - [ ] Illumination.
 - [ ] Cartoon Faces.
+- [ ] Deep Feature Interpretation
 
 ## Written
 - [ ] Algorithm performance.
