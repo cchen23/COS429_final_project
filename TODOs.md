@@ -7,6 +7,7 @@
 - [x] Sparse representation with dimension reduction
 - [x] Combined l1 minimization (eqn 1.9, face_chapter)
 - [ ] VGG
+
 Other possible ideas: (from http://www.face-rec.org/algorithms/)
 - LDA
 - EP
