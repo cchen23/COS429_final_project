@@ -1,0 +1,40 @@
+Algorithm: PCA
+Min faces per person: 20
+Number of distinct faces: 62
+Chance rate: 0.016129
+Train accuracy: 1.000000
+Test accuracy: 0.051815
+Training Time: 0.013486057258660367 sec
+Testing Time: 0.3314242842670865 sec
+
+
+Algorithm: Sparse Representation
+Min faces per person: 20
+Number of distinct faces: 62
+Chance rate: 0.016129
+Train accuracy: 1.000000
+Test accuracy: 0.124780
+Training Time: 1.585839811468759e-05 sec
+Testing Time: 68.86740151462806 sec
+
+
+Algorithm: Sparse Representation Dimension Reduction
+Min faces per person: 20
+Number of distinct faces: 62
+Chance rate: 0.016129
+Train accuracy: 0.994624
+Test accuracy: 0.101516
+Training Time: 0.04252316175677606 sec
+Testing Time: 2.4461907561397425 sec
+
+
+Algorithm: Sparse Representation Combined l1
+Min faces per person: 20
+Number of distinct faces: 62
+Chance rate: 0.016129
+Train accuracy: 0.994624
+Test accuracy: 0.094466
+Training Time: 0.054842116431586874 sec
+Testing Time: 5.117353278667167 sec
+
+
