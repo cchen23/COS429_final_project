@@ -33,8 +33,20 @@ Other possible ideas: (from http://www.face-rec.org/algorithms/)
 - [ ] Deep Feature Interpretation
 
 ## Written
-- [ ] Algorithm performance.
-    - [ ] Baseline.
-    - [ ] With our manipulations.
-    - [ ] With cartoon faces.
-- [ ] Algorithm runtime.
+- [ ] Overall motivation+goal.
+- [ ] Background/related work.
+- [ ] Approach.
+- [ ] Descriptions of algorithms.
+- [ ] Descriptions of manipulations.
+    - [ ] Motivations behind manipulations.
+    - [ ] Image examples of distortions.
+- [ ] Results.
+    - [ ] Algorithm performance.
+        - [ ] Baseline.
+        - [ ] With our manipulations.
+        - [ ] With cartoon faces.
+    - [ ] Algorithm runtime.
+- [ ] Discussion/Conclusion.
+- [ ] Appendix.
+    - [ ] Implementation details.
+    - [ ] Link to code.

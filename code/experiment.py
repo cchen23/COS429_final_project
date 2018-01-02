@@ -99,8 +99,10 @@ def run_experiment(train_function, predict_function, model_name, manipulation_in
         
 if __name__ == "__main__":
     # Experiments without manipulations.
-    manipulation_infos = [("none", -1), ("occlude_lfw", 20), ("occlude_lfw", 10), ("occlude_lfw", 30), ("occlude_lfw", 40)]
-    savenames = ["nomanipulation", "occludelfw_20", "occludelfw_10", "occludelfw_30", "occludelfw_40"]
+#    manipulation_infos = [("none", -1), ("occlude_lfw", 20), ("occlude_lfw", 10), ("occlude_lfw", 30), ("occlude_lfw", 40), ("radial_distortion", 0.00015), ("radial_distortion", -0.00015), ("radial_distortion", 0.0003), ("radial_distortion", -0.0003), ("radial_distortion", 0.0005), ("radial_distortion", -0.0005)]
+#    savenames = ["nomanipulation", "occludelfw_20", "occludelfw_10", "occludelfw_30", "occludelfw_40", "radial_distortion_k00015", "radial_distortion_kneg00015", "radial_distortion_k0003", "radial_distortion_kneg0003", "radial_distortion_k0005", "radial_distortion_kneg0005"]
+    manipulation_infos = [("blur", 5), ("blur", 10)]
+    savenames = ["blur_5", "blur_10"]
     for (manipulation_info, savename) in zip(manipulation_infos, savenames):
         run_experiment(algorithms.train_pca, algorithms.predict_pca, "PCA", manipulation_info, savename)
         run_experiment(algorithms.train_sparserepresentation, algorithms.predict_sparserepresentation, "Sparse Representation", manipulation_info, savename)
