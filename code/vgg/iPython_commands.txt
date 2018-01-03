@@ -1,0 +1,51 @@
+# iPython commands
+
+# Import
+import numpy as np
+import matplotlib.pyplot as plt
+from PIL import Image
+import caffe
+
+# Use GPU
+# For CPU, use caffe.set_mode_cpu()
+caffe.set_device(0)
+caffe.set_mode_gpu()
+
+# The CCN architecture is described in FILENAME.prototxt
+model_filepath = 'vgg_face_caffe/VGG_FACE_deploy.prototxt'
+weights_filepath = 'vgg_face_caffe/VGG_FACE.caffemodel'
+
+# Load the CNN and the weights
+net = caffe.Net(model_filepath, weights_filepath, 'finalproj')
+
+# Load test image
+testImg_filepath = 'vgg_face_caffe/ak.png'
+testImg = np.array(Image.open(testImg_filepath).convert('RGB'))
+
+# Subtract average image, from the matcaffe_demo.m file
+# Should use a Transformer for this in batch
+avgImg = [129.1863, 104.7624, 93.5940]
+testImg[:,:,0] -= avgImg[0]
+testImg[:,:,1] -= avgImg[1]
+testImg[:,:,2] -= avgImg[2]
+
+# Convert from RGB to BGR
+testImg = testImg[:,:,[2, 1, 0]]
+
+# Permute width and height (switch width and height)
+print testImg.shape
+testImg = np.transpose(testImg, (1, 0, 2))
+print testImg.shape
+
+# Load image in data layer
+im = caffe.io.load_image('examples/images/cat.jpg')
+net.blobs['data'].data[...] = transformer.preprocess('data', im)
+
+# Run through CNN
+res = net.forward()
+print res['prob'].argmax()
+
+caffe_ft = net.blobs().get_data
+
+
+
