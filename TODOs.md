@@ -26,7 +26,7 @@ Other possible ideas: (from http://www.face-rec.org/algorithms/)
 - [ ] Rotations.
 - [ ] Flipping.
 - ~~[ ] Illumination.~~
-- [ ] Camera distortion.
+- [x] Camera distortion.
 - [x] Occlusion.
 - [ ] Resolution.
 - [ ] Cartoon Faces.
