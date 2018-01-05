@@ -22,20 +22,25 @@ net = caffe.Net(model_filepath, weights_filepath, 'finalproj')
 testImg_filepath = 'vgg_face_caffe/ak.png'
 testImg = np.array(Image.open(testImg_filepath).convert('RGB'))
 
-# Subtract average image, from the matcaffe_demo.m file
-# Should use a Transformer for this in batch
+# Define preprocessing Transformer
 avgImg = [129.1863, 104.7624, 93.5940]
-testImg[:,:,0] -= avgImg[0]
-testImg[:,:,1] -= avgImg[1]
-testImg[:,:,2] -= avgImg[2]
+transformer = caffe.io.Transformer({'data': net.blobs['data'].data.shape})
+transformer.set_mean('data', avgImg)
+transformer.set_transpose('data', (2,1,0))
+transformer.set_channel_swap('data', (2,1,0))
+transformer.set_raw_scale('data', 255.0)
+
+# testImg[:,:,0] -= avgImg[0]
+# testImg[:,:,1] -= avgImg[1]
+# testImg[:,:,2] -= avgImg[2]
 
 # Convert from RGB to BGR
-testImg = testImg[:,:,[2, 1, 0]]
+# testImg = testImg[:,:,[2, 1, 0]]
 
 # Permute width and height (switch width and height)
-print testImg.shape
-testImg = np.transpose(testImg, (1, 0, 2))
-print testImg.shape
+# print testImg.shape
+# testImg = np.transpose(testImg, (1, 0, 2))
+# print testImg.shape
 
 # Load image in data layer
 im = caffe.io.load_image('examples/images/cat.jpg')
