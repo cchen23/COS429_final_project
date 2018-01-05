@@ -56,21 +56,21 @@ def compute_accuracy(predictions, targets):
     accuracy = np.sum(np.array(predictions) == np.array(targets)) / len(predictions)
     return accuracy
 
-def run_experiment(train_function, predict_function, model_name, manipulation_info, savename):
+def run_experiment(model_name, manipulation_info, savename):
     """ Trains and tests using train_model_function and evaluate_model_function
     arguments, and saves results. """
     min_faces_per_person = 20
     train_data, train_targets, test_data, test_targets = get_lfw_dataset(min_faces_per_person, manipulation_info)
     
     time1 = time.clock()
-    model = train_function(train_data, train_targets)
+    model = algorithms.train(model_name, train_data, train_targets)
     time2 = time.clock()
     train_time = time2 - time1
 
     time1 = time.clock()
-    train_predictions = predict_function(model, train_data)
+    train_predictions = algorithms.predict(model_name, model, train_data)
     train_accuracy = compute_accuracy(train_predictions, train_targets)
-    test_predictions = predict_function(model, test_data)
+    test_predictions = algorithms.predict(model_name, model, test_data)
     test_accuracy = compute_accuracy(test_predictions, test_targets)
     time2 = time.clock()
     test_time = time2 - time1
@@ -132,7 +132,7 @@ if __name__ == "__main__":
         "blur_10",
     ]
     for (manipulation_info, savename) in zip(manipulation_infos, savenames):
-        run_experiment(algorithms.train_pca, algorithms.predict_pca, "PCA", manipulation_info, savename)
-        run_experiment(algorithms.train_sparserepresentation, algorithms.predict_sparserepresentation, "Sparse Representation", manipulation_info, savename)
-        run_experiment(algorithms.train_sparserepresentation_dimension_reduction, algorithms.predict_sparserepresentation_dimension_reduction, "Sparse Representation Dimension Reduction", manipulation_info, savename)
-        run_experiment(algorithms.train_sparserepresentation_combinedl1, algorithms.predict_sparserepresentation_combinedl1, "Sparse Representation Combined l1", manipulation_info, savename)
+        run_experiment("PCA", manipulation_info, savename)
+        run_experiment("Sparse Representation", manipulation_info, savename)
+        run_experiment("Sparse Representation Dimension Reduction", manipulation_info, savename)
+        run_experiment("Sparse Representation Combined l1", manipulation_info, savename)
