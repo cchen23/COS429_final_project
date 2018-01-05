@@ -10,6 +10,7 @@ from sklearn.preprocessing import normalize
 
 import numpy as np
 import time
+import itertools
 
 import algorithms
 import manipulations
@@ -101,6 +102,12 @@ def run_experiment(model_name, manipulation_info, savename):
         
 if __name__ == "__main__":
     # Experiments without manipulations.
+    model_names = [
+        "PCA",
+        "Sparse Representation",
+        "Sparse Representation Dimension Reduction",
+        "Sparse Representation Combined l1",
+    ]
     manipulation_infos = [
         # ManipulationInfo("none", {}),
         # ManipulationInfo("occlude_lfw", {"occlusion_size": 20}),
@@ -131,8 +138,5 @@ if __name__ == "__main__":
         "blur_5",
         "blur_10",
     ]
-    for (manipulation_info, savename) in zip(manipulation_infos, savenames):
-        run_experiment("PCA", manipulation_info, savename)
-        run_experiment("Sparse Representation", manipulation_info, savename)
-        run_experiment("Sparse Representation Dimension Reduction", manipulation_info, savename)
-        run_experiment("Sparse Representation Combined l1", manipulation_info, savename)
+    for model_name, (manipulation_info, savename) in itertools.product(model_names, zip(manipulation_infos, savenames)):
+        run_experiment(model_name, manipulation_info, savename)
