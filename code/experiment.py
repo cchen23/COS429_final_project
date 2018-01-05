@@ -72,7 +72,7 @@ def compute_accuracy(predictions, targets):
     accuracy = np.sum(np.array(predictions) == np.array(targets)) / len(predictions)
     return accuracy
 
-def run_experiment(model_name, manipulation_info, savename):
+def run_experiment(model_name, manipulation_info, savename=None):
     """ Trains and tests using train_model_function and evaluate_model_function
     arguments, and saves results. """
     min_faces_per_person = 20
@@ -104,16 +104,17 @@ def run_experiment(model_name, manipulation_info, savename):
     print("\n")
 
     # Save results.
-    with open("../results/%s_results.txt" % savename, "a") as f:
-        f.write("Algorithm: %s\n" % model_name)
-        f.write("Min faces per person: %d\n" % min_faces_per_person)
-        f.write("Number of distinct faces: %d\n" % num_faces)
-        f.write("Chance rate: %f\n" % (1 / num_faces))
-        f.write("Train accuracy: %f\n" % train_accuracy)
-        f.write("Test accuracy: %f\n" % test_accuracy)
-        f.write("Training Time: %s sec\n" % train_time)
-        f.write("Testing Time: %s sec\n" % test_time)
-        f.write("\n\n")
+    if savename is not None:
+        with open("../results/%s_results.txt" % savename, "a") as f:
+            f.write("Algorithm: %s\n" % model_name)
+            f.write("Min faces per person: %d\n" % min_faces_per_person)
+            f.write("Number of distinct faces: %d\n" % num_faces)
+            f.write("Chance rate: %f\n" % (1 / num_faces))
+            f.write("Train accuracy: %f\n" % train_accuracy)
+            f.write("Test accuracy: %f\n" % test_accuracy)
+            f.write("Training Time: %s sec\n" % train_time)
+            f.write("Testing Time: %s sec\n" % test_time)
+            f.write("\n\n")
 
     return {
         "Manipulation Type": manipulation_info.type,
@@ -151,21 +152,21 @@ if __name__ == "__main__":
         ManipulationInfo("blur", {"blurwindow_size": 5}),
         ManipulationInfo("blur", {"blurwindow_size": 10}),
     ]
-    savenames = [
-        "nomanipulation",
-        "occludelfw_20",
-        "occludelfw_10",
-        "occludelfw_30",
-        "occludelfw_40",
-        "radial_distortion_k00015",
-        "radial_distortion_kneg00015",
-        "radial_distortion_k0003",
-        "radial_distortion_kneg0003",
-        "radial_distortion_k0005",
-        "radial_distortion_kneg0005",
-        "blur_5",
-        "blur_10",
-    ]
+    # savenames = [
+    #     "nomanipulation",
+    #     "occludelfw_20",
+    #     "occludelfw_10",
+    #     "occludelfw_30",
+    #     "occludelfw_40",
+    #     "radial_distortion_k00015",
+    #     "radial_distortion_kneg00015",
+    #     "radial_distortion_k0003",
+    #     "radial_distortion_kneg0003",
+    #     "radial_distortion_k0005",
+    #     "radial_distortion_kneg0005",
+    #     "blur_5",
+    #     "blur_10",
+    # ]
     save_path = "../results/results.csv"
 
     # Create new save file if it doesn't exist
@@ -180,13 +181,13 @@ if __name__ == "__main__":
     # Run experiments
     with open(save_path, 'a') as f:
         writer = csv.DictWriter(f, fieldnames=COLUMNS)
-        for (manipulation_info, savename), model_name in itertools.product(zip(manipulation_infos, savenames), model_names):
+        for manipulation_info, model_name in itertools.product(manipulation_infos, model_names):
             # Skip completed experiments
             if (manipulation_info.type, str(manipulation_info.parameters), model_name) in seen_results:
                 print("Skipping: %s" % str((manipulation_info.type, manipulation_info.parameters, model_name)))
                 continue
 
-            result = run_experiment(model_name, manipulation_info, savename)
+            result = run_experiment(model_name, manipulation_info)
             assert(set(result.keys()) == set(COLUMNS))
             writer.writerow(result)
             f.flush()
