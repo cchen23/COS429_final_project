@@ -8,23 +8,26 @@ import matplotlib.pyplot as plt
 import numpy as np
 from scipy import ndimage
 from sklearn.datasets import fetch_lfw_people
+from collections import namedtuple
 
-def perform_manipulation(data, manipulation_info):
-    manipulation_type = manipulation_info[0]
-    manipulation_parameters = manipulation_info[1:]
+ManipulationInfo = namedtuple("ManipulationInfo", ["type", "parameters"])
+
+def perform_manipulation(data, manipulation_info: ManipulationInfo):
+    manipulation_type = manipulation_info.type
+    manipulation_parameters = manipulation_info.parameters
     if manipulation_type == "none":
         return data
     elif manipulation_type == "occlude_lfw":
-        occlusion_size = manipulation_parameters[0]
+        occlusion_size = manipulation_parameters["occlusion_size"]
         return occlude_lfw_dataset(data, occlusion_size)
     elif manipulation_type == "radial_distortion":
-        k = manipulation_parameters[0]
+        k = manipulation_parameters["k"]
         return radially_distort_lfw_dataset(data, k)
     elif manipulation_type == "blur":
-        blurwindow_size = manipulation_parameters[0]
+        blurwindow_size = manipulation_parameters["blurwindow_size"]
         return blur_lfw_dataset(data, blurwindow_size)
     else:
-        print("UNKNOWN MANIPULATION.")
+        raise Exception("UNKNOWN MANIPULATION.")
 
 # Manipulation definitions.
 def occlude_lfw_dataset(data, occlusion_size):
