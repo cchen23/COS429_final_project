@@ -136,6 +136,8 @@ if __name__ == "__main__":
     lfw_shape = (62,47)
     cmap="gray"
     dataset = fetch_lfw_people(min_faces_per_person=min_faces_per_person)
+    print("Number of people with at least %d distinct faces: %d" % (min_faces_per_person, len(np.unique(dataset.target))))
+    print("Number of retrieved faces: %d" % len(dataset.target))
     test_image = np.reshape(dataset.data[0], lfw_shape)
     fig = plt.imshow(test_image, cmap=cmap)
     fig.axes.get_xaxis().set_visible(False)
