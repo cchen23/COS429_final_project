@@ -11,11 +11,26 @@ from sklearn.preprocessing import normalize
 import numpy as np
 import time
 import itertools
+import os.path
+import csv
 
 import algorithms
 import manipulations
 
 from manipulations import ManipulationInfo
+
+COLUMNS = [
+    "Manipulation Type",
+    "Manipulation Parameters",
+    "Recognition Algorithm",
+    "Min Faces Per Person",
+    "Number of Distinct Faces",
+    "Chance Rate",
+    "Train Accuracy",
+    "Test Accuracy",
+    "Training Time",
+    "Testing Time",
+]
 
 def split_traintest(targets):
     # TODO: Different way of splitting train and test?
@@ -87,7 +102,7 @@ def run_experiment(model_name, manipulation_info, savename):
     print("Training Time: %s sec" % train_time)
     print("Testing Time: %s sec" % test_time)
     print("\n")
-    
+
     # Save results.
     with open("../results/%s_results.txt" % savename, "a") as f:
         f.write("Algorithm: %s\n" % model_name)
@@ -99,7 +114,20 @@ def run_experiment(model_name, manipulation_info, savename):
         f.write("Training Time: %s sec\n" % train_time)
         f.write("Testing Time: %s sec\n" % test_time)
         f.write("\n\n")
-        
+
+    return {
+        "Manipulation Type": manipulation_info.type,
+        "Manipulation Parameters": manipulation_info.parameters,
+        "Recognition Algorithm": model_name,
+        "Min Faces Per Person": min_faces_per_person,
+        "Number of Distinct Faces": num_faces,
+        "Chance Rate": (1 / num_faces),
+        "Train Accuracy": train_accuracy,
+        "Test Accuracy": test_accuracy,
+        "Training Time": train_time,
+        "Testing Time": test_time,
+    }
+
 if __name__ == "__main__":
     # Experiments without manipulations.
     model_names = [
@@ -138,5 +166,27 @@ if __name__ == "__main__":
         "blur_5",
         "blur_10",
     ]
-    for model_name, (manipulation_info, savename) in itertools.product(model_names, zip(manipulation_infos, savenames)):
-        run_experiment(model_name, manipulation_info, savename)
+    save_path = "../results/results.csv"
+
+    # Create new save file if it doesn't exist
+    if not os.path.exists(save_path):
+        with open(save_path, 'w') as f:
+            csv.DictWriter(f, fieldnames=COLUMNS).writeheader()
+
+    # Load existing results
+    with open(save_path, 'r') as f:
+        seen_results = [(row["Manipulation Type"], row["Manipulation Parameters"], row["Recognition Algorithm"]) for row in csv.DictReader(f)]
+
+    # Run experiments
+    with open(save_path, 'a') as f:
+        writer = csv.DictWriter(f, fieldnames=COLUMNS)
+        for model_name, (manipulation_info, savename) in itertools.product(model_names, zip(manipulation_infos, savenames)):
+            # Skip completed experiments
+            if (manipulation_info.type, str(manipulation_info.parameters), model_name) in seen_results:
+                print("Skipping: %s" % str((manipulation_info.type, manipulation_info.parameters, model_name)))
+                continue
+
+            result = run_experiment(model_name, manipulation_info, savename)
+            assert(set(result.keys()) == set(COLUMNS))
+            writer.writerow(result)
+            f.flush()
