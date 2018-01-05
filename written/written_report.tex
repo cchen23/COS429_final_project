@@ -17,12 +17,23 @@
 \date{}
 \maketitle
 
-\section{Motivation and Goal}
+\section{Motivation}
+As people we can often recognize pictures of people we know even if the image has low resolution or obscures part of the face, if the camera angle resulted in a distorted image of the subject's face, or if the subject has aged or put on makeup since we last saw them. Although we seem to do this quite easily, when we think about how we accomplish this task it seems non-trivial for compute algorithms to recognize faces despite visual changes.
+
+Moreover, computer facial recognition is highly useful. Facial recognition systems have applications ranging from airport security and suspect identification to personal device authentication and face tagging\cite{huang_face_2011}. In these real-world applications, the system must continue to recognize images of a person who looks slightly different due to the passage of time, a change in environment, or a difference in clothing.
+
+Therefore we are interested in both the construction of face recognition algorithms and their robustness to image changes resulting from realistically plausible manipulations. Furthermore, we are curious about whether the impact of image manipulations on computer algorithms' face recognition ability mirrors impacts on humans' face recognition abilities.
+
+\section{Goal}
+In this project, we implement both face recognition algorithms and image manipulations. We then analyze the impact of each image manipulation on the recognition accuracy each algorithm, and how these influences depend on the accuracy of each algorithm on un-manipulated images.
+
 \section{Background and Related Work}
-% About face recognition in general.
-% About algorithms for face recognition.
-% About robustness.
-% From CS and from psychology.
+Researchers have developed a wide variety of face recognition algorithms, such as traditional statistical methods such as PCA, more opaque methods such as deep neural networks, and proprietary systems used by governments and corporations\cite{noauthor_face_nodate}\cite{schroff_facenet:_2015}\cite{sun_meet_2017}.
+
+Similarly, others have developed image manipulations using principles from linear algebra, such as mimicking distortions from lens distortions, as well as using neural networks, such as a system for transforming images according to specified characteristics\cite{savarese_camera_2015}\cite{upchurch_deep_2016}.
+
+Furthermore, researchers in psychology have studied face recognition in humans. A study of "super-recognizers" (people with extraordinarily high powers of face recognition) and "developmental prosopagnosics" (people with severely impaired face recognition abilities) found that inverting images of faces impaired recognition ability more for people with stronger face recognition abilities\cite{russell_super-recognizers:_2009}. This could indicate that image manipulations tend to equalize face recognition abilities, and we investigate whether this is the case with the manipulations and face recognition algorithms we test.
+
 \section{Methods}
 \subsection{Algorithms}
 % Description of each algorithm.
@@ -30,6 +41,12 @@
 \subsection{Image Manipulations}
 % Description/motivation for each manipulation.
 % Implementation details either here or in appendix.
+\subsection{Dataset}
+% LFW.
+% Why LFW.
+	% Not focusing on face detection.
+	% Pretty standard images, so we can apply our manipulations on top of them to better control for amount of manipulation.
+\subsection{Accuracy}
 \section{Results and Description}
 % Performance for each manipulation for each algorithm.
 \section{Conclusion}
@@ -43,6 +60,7 @@
  
 \section{Appendix}
 % Maybe implementation details.
+	% Dataset: at least 20 images.
 % Link to (and description of?) code.
 \end{document}
  
