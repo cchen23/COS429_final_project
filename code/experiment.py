@@ -180,7 +180,7 @@ if __name__ == "__main__":
     # Run experiments
     with open(save_path, 'a') as f:
         writer = csv.DictWriter(f, fieldnames=COLUMNS)
-        for model_name, (manipulation_info, savename) in itertools.product(model_names, zip(manipulation_infos, savenames)):
+        for (manipulation_info, savename), model_name in itertools.product(zip(manipulation_infos, savenames), model_names):
             # Skip completed experiments
             if (manipulation_info.type, str(manipulation_info.parameters), model_name) in seen_results:
                 print("Skipping: %s" % str((manipulation_info.type, manipulation_info.parameters, model_name)))
