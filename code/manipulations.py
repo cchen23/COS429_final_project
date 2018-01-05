@@ -8,23 +8,26 @@ import matplotlib.pyplot as plt
 import numpy as np
 from scipy import ndimage
 from sklearn.datasets import fetch_lfw_people
+from collections import namedtuple
 
-def perform_manipulation(data, manipulation_info):
-    manipulation_type = manipulation_info[0]
-    manipulation_parameters = manipulation_info[1:]
+ManipulationInfo = namedtuple("ManipulationInfo", ["type", "parameters"])
+
+def perform_manipulation(data, manipulation_info: ManipulationInfo):
+    manipulation_type = manipulation_info.type
+    manipulation_parameters = manipulation_info.parameters
     if manipulation_type == "none":
         return data
     elif manipulation_type == "occlude_lfw":
-        occlusion_size = manipulation_parameters[0]
+        occlusion_size = manipulation_parameters["occlusion_size"]
         return occlude_lfw_dataset(data, occlusion_size)
     elif manipulation_type == "radial_distortion":
-        k = manipulation_parameters[0]
+        k = manipulation_parameters["k"]
         return radially_distort_lfw_dataset(data, k)
     elif manipulation_type == "blur":
-        blurwindow_size = manipulation_parameters[0]
+        blurwindow_size = manipulation_parameters["blurwindow_size"]
         return blur_lfw_dataset(data, blurwindow_size)
     else:
-        print("UNKNOWN MANIPULATION.")
+        raise Exception("UNKNOWN MANIPULATION.")
 
 # Manipulation definitions.
 def occlude_lfw_dataset(data, occlusion_size):
@@ -129,18 +132,74 @@ def blur_slow(input_image, blurwindow_size):
     return blurred_image
             
 if __name__ == "__main__":
-    # Test add_occlusion.
     min_faces_per_person = 20
-    occlusion_size = 20
     lfw_shape = (62,47)
+    cmap="gray"
     dataset = fetch_lfw_people(min_faces_per_person=min_faces_per_person)
     test_image = np.reshape(dataset.data[0], lfw_shape)
-    test_image_occluded = add_occlusion(test_image, occlusion_size)
-    f, (ax1, ax2) = plt.subplots(1, 2, sharey=True)
-    ax1.imshow(test_image)
-    ax2.imshow(test_image_occluded)
-    ax1.set_title("Original image.")
-    ax2.set_title("Occluded image.")
+    fig = plt.imshow(test_image, cmap=cmap)
+    fig.axes.get_xaxis().set_visible(False)
+    fig.axes.get_yaxis().set_visible(False)
+    plt.savefig("../figures/manipulationdemo_none")
+    plt.close()
+
+    # Test add_occlusion.
+    print("Testing occlusion")
+    occlusion_sizes = [20, 30, 40]
+    num_occlusionsizes = len(occlusion_sizes)
+    test_images_occluded = []
+    for occlusion_size in occlusion_sizes:
+        test_images_occluded.append(add_occlusion(test_image, occlusion_size))
+    f, axarr = plt.subplots(1, num_occlusionsizes, sharey=True)
+    for i in range(num_occlusionsizes):
+        axarr[i].imshow(test_images_occluded[i], cmap=cmap)
+        axarr[i].set_title("Window Size %d" % occlusion_sizes[i])
+        axarr[i].axis('off')
+    plt.savefig("../figures/manipulationdemo_occlusion")
+    plt.close()
+
+    # Test radial distortion.
+    print("Testing radial distortion")
+    ks = [0.00015, 0.0003, 0.0005]
+    num_ks = len(ks)
+    test_images_pincushion = []
+    test_images_barrel = []
+    for k in ks:
+        barrel_distortion_array_i, barrel_distortion_array_j = create_radial_distortion_array(k, lfw_shape)
+        test_images_barrel.append(radial_distortion(test_image, barrel_distortion_array_i, barrel_distortion_array_j))
+        pincushion_distortion_array_i, pincushion_distortion_array_j = create_radial_distortion_array(-k, lfw_shape)
+        test_images_pincushion.append(radial_distortion(test_image, pincushion_distortion_array_i, pincushion_distortion_array_j))
+
+    f, axarr = plt.subplots(2, num_ks, sharey=True)
+    for i in range(num_ks):
+        axarr[0,i].imshow(test_images_barrel[i], cmap=cmap)
+        axarr[1,i].imshow(test_images_pincushion[i], cmap=cmap)
+        axarr[0,i].tick_params(bottom='off',top='off',left='off',right='off',labelbottom='off',labeltop='off',labelleft='off',labelright='off')
+        axarr[1,i].tick_params(bottom='off',top='off',left='off',right='off',labelbottom='off',labeltop='off',labelleft='off',labelright='off')
+        axarr[0,i].set_frame_on(False)
+        axarr[1,i].set_frame_on(False)
+        axarr[0,i].set_title("k=%.5f" % ks[i])
+    axarr[0,0].set_ylabel("Barrel")
+    axarr[1,0].set_ylabel("Pincushion")
+    plt.savefig("../figures/manipulationdemo_radial")
+    plt.close()
+
+    # Test blur.
+    print("Testing blur")
+    blurwindow_sizes = [5, 10]
+    num_blurwindowsizes = len(blurwindow_sizes)
+    test_images_blurred = []
+    for blurwindow_size in blurwindow_sizes:
+        dataset = fetch_lfw_people(min_faces_per_person=min_faces_per_person)
+        test_images_blurred.append(blur(test_image, blurwindow_size))
+
+    f, axarr = plt.subplots(1, num_blurwindowsizes, sharey=True)
+    for i in range(num_blurwindowsizes):
+        axarr[i].imshow(test_images_blurred[i], cmap=cmap)
+        axarr[i].set_title("Window size %d" % blurwindow_sizes[i])
+        axarr[i].axis('off')
+    plt.savefig("../figures/manipulationdemo_blur")
+    plt.close()
     
     # Test occlude_lfw_dataset.
     occluded_images = occlude_lfw_dataset(dataset.data, occlusion_size)
@@ -161,36 +220,3 @@ if __name__ == "__main__":
         axarr[i,1].imshow(np.reshape(occluded_images[i], lfw_shape))
     axarr[0,0].set_title("Original images.")
     axarr[0,1].set_title("Occluded images.")
-
-    # Test radial distortion.
-    min_faces_per_person = 20
-    occlusion_size = 20
-    lfw_shape = (62,47)
-    k1 = 0.0015
-    dataset = fetch_lfw_people(min_faces_per_person=min_faces_per_person)
-    test_image = np.reshape(dataset.data[0], lfw_shape)
-    barrel_distortion_array_i, barrel_distortion_array_j = create_radial_distortion_array(k1, lfw_shape)
-    test_image_barrel = radial_distortion(test_image, barrel_distortion_array_i, barrel_distortion_array_j)
-    pincushion_distortion_array_i, pincushion_distortion_array_j = create_radial_distortion_array(-k1, lfw_shape)
-    test_image_pincushion = radial_distortion(test_image, pincushion_distortion_array_i, pincushion_distortion_array_j)
-    f, (ax1, ax2, ax3) = plt.subplots(1, 3, sharey=True)
-    ax1.imshow(test_image)
-    ax2.imshow(test_image_barrel)
-    ax3.imshow(test_image_pincushion)
-    ax1.set_title("Original image.")
-    ax2.set_title("Barrel distortion image.")
-    ax3.set_title("Pincushion distortion image.")
-
-    # Test blur.
-    min_faces_per_person = 20
-    occlusion_size = 20
-    lfw_shape = (62,47)
-    blurwindow_size = 10
-    dataset = fetch_lfw_people(min_faces_per_person=min_faces_per_person)
-    test_image = np.reshape(dataset.data[0], lfw_shape)
-    test_image_blurred = blur(test_image, blurwindow_size)
-    f, (ax1, ax2) = plt.subplots(1, 2, sharey=True)
-    ax1.imshow(test_image)
-    ax2.imshow(test_image_blurred)
-    ax1.set_title("Original image.")
-    ax2.set_title("Blurred image.")

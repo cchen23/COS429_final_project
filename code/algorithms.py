@@ -137,3 +137,16 @@ def predict_sparserepresentation_combinedl1(model, test_data):
         test_predictions.append(max_label)
 
     return test_predictions
+
+ALGORITHM_MAP = {
+    "PCA": (train_pca, predict_pca),
+    "Sparse Representation": (train_sparserepresentation, predict_sparserepresentation),
+    "Sparse Representation Dimension Reduction": (train_sparserepresentation_dimension_reduction, predict_sparserepresentation_dimension_reduction),
+    "Sparse Representation Combined l1": (train_sparserepresentation_combinedl1, predict_sparserepresentation_combinedl1),
+}
+
+def train(model_name, train_data, train_targets):
+    return ALGORITHM_MAP[model_name][0](train_data=train_data, train_targets=train_targets)
+
+def predict(model_name, model, test_data):
+    return ALGORITHM_MAP[model_name][1](model=model, test_data=test_data)
