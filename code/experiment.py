@@ -13,6 +13,7 @@ import time
 import itertools
 import os.path
 import csv
+import concurrent.futures
 
 import algorithms
 import manipulations
@@ -179,15 +180,23 @@ if __name__ == "__main__":
         seen_results = [(row["Manipulation Type"], row["Manipulation Parameters"], row["Recognition Algorithm"]) for row in csv.DictReader(f)]
 
     # Run experiments
-    with open(save_path, 'a') as f:
+    with open(save_path, 'a') as f, concurrent.futures.ProcessPoolExecutor() as executor:
         writer = csv.DictWriter(f, fieldnames=COLUMNS)
+        futures = []
+
         for manipulation_info, model_name in itertools.product(manipulation_infos, model_names):
+            params_tuple = (manipulation_info.type, str(manipulation_info.parameters), model_name)
+
             # Skip completed experiments
-            if (manipulation_info.type, str(manipulation_info.parameters), model_name) in seen_results:
-                print("Skipping: %s" % str((manipulation_info.type, manipulation_info.parameters, model_name)))
+            if params_tuple in seen_results:
+                print("Skipping: %s" % str(params_tuple))
                 continue
 
-            result = run_experiment(model_name, manipulation_info)
+            print("Submitting: %s" % str(params_tuple))
+            futures.append(executor.submit(run_experiment, model_name, manipulation_info))
+
+        for future in concurrent.futures.as_completed(futures):
+            result = future.result()
             assert(set(result.keys()) == set(COLUMNS))
             writer.writerow(result)
             f.flush()
