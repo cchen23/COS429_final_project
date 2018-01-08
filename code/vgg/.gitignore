@@ -1,4 +1,5 @@
 vgg_face_caffe
 *.tar.gz
-.DS_Store
+*.DS_Store
 cos429.pem
+*.h5
