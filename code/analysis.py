@@ -17,26 +17,28 @@ def create_accuracies_plot(accuracies, labels, xlabel, title, savename):
     width = 0.35       # the width of the bars
 
     fig, ax = plt.subplots()
-    ax.bar(ind, accuracies, width, color='g', alpha=0.5)
+    ax.bar(ind, accuracies, width, alpha=0.5)
 
     # add some text for labels, title and axes ticks
     ax.set_ylabel('Accuracy')
-    ax.set_ylim([0,0.15])
+    ax.set_ylim([0,0.2])
     ax.set_title(title)
     ax.set_xticks(ind)
-    ax.set_xticklabels(labels,rotation=90)
+    ax.set_xticklabels(labels,fontsize=8)
     ax.set_xlabel(xlabel)
 
+    plt.tight_layout()
     plt.savefig(figures_dir+savename+".png")
     plt.show()
     
 def create_default_accuracies(results):
     nomanipulation_results = results[results['Manipulation Type']=='none']
     algorithms = ["Chance"] + list(nomanipulation_results['Recognition Algorithm'])
+    algorithms = [algorithm.replace(" ","\n") for algorithm in algorithms]
     train_accuracies = [CHANCE_RATE] + list(nomanipulation_results['Train Accuracy'])
     test_accuracies = [CHANCE_RATE] + list(nomanipulation_results['Test Accuracy'])
 
-    create_accuracies_plot(test_accuracies, algorithms, "Algorithm", "Recognition Algorithm", "default")
+    create_accuracies_plot(test_accuracies, algorithms, "Algorithm", "Test Accuracies", "default")
 
 #def create_manipulation_plot(algorithms, manipulation, results_subset, default_results):
 #        num_algorithms = len(algorithms)
