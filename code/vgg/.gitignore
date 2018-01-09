@@ -3,3 +3,5 @@ vgg_face_caffe
 *.DS_Store
 cos429.pem
 *.h5
+*.tgz
+lfw-names.txt
