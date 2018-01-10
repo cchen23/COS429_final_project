@@ -38,14 +38,14 @@ def split_traintest(targets):
     # Maybe should use more than one of each face to train?
     """ Splits targets into train and test indices."""
     unique_targets = np.unique(targets)
-    num_train = 3
+    num_test = 10
     train_indices = []
     test_indices = []
 
     for label in unique_targets:
         label_indices = np.where(targets == label)[0].tolist()
-        train_indices += label_indices[0:num_train]
-        test_indices += label_indices[num_train:]
+        test_indices += label_indices[0:num_test]
+        train_indices += label_indices[num_test:]
 
     return train_indices, test_indices
 
@@ -137,6 +137,7 @@ if __name__ == "__main__":
         "Sparse Representation",
         "Sparse Representation Dimension Reduction",
         "Sparse Representation Combined l1",
+        "SVM",
     ]
     manipulation_infos = [
         ManipulationInfo("none", {}),
