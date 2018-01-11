@@ -38,3 +38,12 @@ Training Time: 0.046300876214672826 sec
 Testing Time: 5.313304672414461 sec
 
 
+Algorithm: VGG_FACE
+Manipulation info: ManipulationInfo(type='occlude_lfw', parameters={'occlusion_size': 165})
+Min faces per person: 20
+Number of distinct faces: 62
+Chance rate: 0.016129
+Train accuracy: 1.000000
+Test accuracy: 0.013394
+Training Time: 2429.647927 sec
+Testing Time: 1.9999709999992774 sec
