@@ -37,4 +37,12 @@ Test accuracy: 0.134649
 Training Time: 0.025664939107457485 sec
 Testing Time: 5.360507212175605 sec
 
+Algorithm: VGG_FACE
+Min Faces Per Person: 20
+Number of Distinct Faces: 62
+Chance Rate: 0.016129032258064516
+Train Accuracy: 1.0
+Test Accuracy: 0.85442368699330273
+Training Time: 2543.455226
+Testing Time: 1.7423609999996188
 
