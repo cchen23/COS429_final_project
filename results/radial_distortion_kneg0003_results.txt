@@ -38,3 +38,13 @@ Training Time: 0.054842116431586874 sec
 Testing Time: 5.117353278667167 sec
 
 
+Algorithm: VGG_FACE
+Manipulation info: ManipulationInfo(type='radial_distortion', parameters={'k': -1.6e-05})
+Min faces per person: 20
+Number of distinct faces: 62
+Chance rate: 0.016129
+Train accuracy: 1.000000
+Test accuracy: 0.708495
+Training Time: 2395.2620760000027 sec
+Testing Time: 1.9583650000022317 sec
+

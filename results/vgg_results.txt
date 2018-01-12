@@ -1,0 +1,25 @@
+{'Manipulation Type': 'occlude_lfw', 'Manipulation Parameters': {'occlusion_size': 82}, 'Recognition Algorithm': 'VGG_FACE', 'Min Faces Per Person': 20, 'Number of Distinct Faces': 62, 'Chance Rate': 0.016129032258064516, 'Train Accuracy': 1.0, 'Test Accuracy': 0.4067677123722242, 'Training Time': 2427.5211830000003, 'Testing Time': 1.958480999999665}
+
+{'Manipulation Type': 'occlude_lfw', 'Manipulation Parameters': {'occlusion_size': 41}, 'Recognition Algorithm': 'VGG_FACE', 'Min Faces Per Person': 20, 'Number of Distinct Faces': 62, 'Chance Rate': 0.016129032258064516, 'Train Accuracy': 1.0, 'Test Accuracy': 0.77299964751498063, 'Training Time': 2430.146885, 'Testing Time': 1.8458709999995335}
+
+{'Manipulation Type': 'occlude_lfw', 'Manipulation Parameters': {'occlusion_size': 124}, 'Recognition Algorithm': 'VGG_FACE', 'Min Faces Per Person': 20, 'Number of Distinct Faces': 62, 'Chance Rate': 0.016129032258064516, 'Train Accuracy': 1.0, 'Test Accuracy': 0.024673951357067323, 'Training Time': 2430.8892380000007, 'Testing Time': 1.9282860000002984}
+
+{'Manipulation Type': 'occlude_lfw', 'Manipulation Parameters': {'occlusion_size': 165}, 'Recognition Algorithm': 'VGG_FACE', 'Min Faces Per Person': 20, 'Number of Distinct Faces': 62, 'Chance Rate': 0.016129032258064516, 'Train Accuracy': 1.0, 'Test Accuracy': 0.013394430736693691, 'Training Time': 2429.647927, 'Testing Time': 1.9999709999992774}
+
+{'Manipulation Type': 'radial_distortion', 'Manipulation Parameters': {'k': 8e-06}, 'Recognition Algorithm': 'VGG_FACE', 'Min Faces Per Person': 20, 'Number of Distinct Faces': 62, 'Chance Rate': 0.016129032258064516, 'Train Accuracy': 1.0, 'Test Accuracy': 0.86464575255551634, 'Training Time': 2421.536619999999, 'Testing Time': 1.8982529999993858}
+
+{'Manipulation Type': 'radial_distortion', 'Manipulation Parameters': {'k': -8e-06}, 'Recognition Algorithm': 'VGG_FACE', 'Min Faces Per Person': 20, 'Number of Distinct Faces': 62, 'Chance Rate': 0.016129032258064516, 'Train Accuracy': 1.0, 'Test Accuracy': 0.79732111385266125, 'Training Time': 2421.5872710000003, 'Testing Time': 1.8908579999988433}
+
+{'Manipulation Type': 'radial_distortion', 'Manipulation Parameters': {'k': 1.6e-05}, 'Recognition Algorithm': 'VGG_FACE', 'Min Faces Per Person': 20, 'Number of Distinct Faces': 62, 'Chance Rate': 0.016129032258064516, 'Train Accuracy': 1.0, 'Test Accuracy': 0.81811772999647514, 'Training Time': 2427.3962950000023, 'Testing Time': 1.9219909999992524}
+
+{'Manipulation Type': 'radial_distortion', 'Manipulation Parameters': {'k': -1.6e-05}, 'Recognition Algorithm': 'VGG_FACE', 'Min Faces Per Person': 20, 'Number of Distinct Faces': 62, 'Chance Rate': 0.016129032258064516, 'Train Accuracy': 1.0, 'Test Accuracy': 0.70849488896721891, 'Training Time': 2395.2620760000027, 'Testing Time': 1.9583650000022317}
+
+{'Manipulation Type': 'radial_distortion', 'Manipulation Parameters': {'k': 3e-05}, 'Recognition Algorithm': 'VGG_FACE', 'Min Faces Per Person': 20, 'Number of Distinct Faces': 62, 'Chance Rate': 0.016129032258064516, 'Train Accuracy': 1.0, 'Test Accuracy': 0.62530842439196332, 'Training Time': 2419.4993380000014, 'Testing Time': 1.8946369999976014}
+
+{'Manipulation Type': 'radial_distortion', 'Manipulation Parameters': {'k': -3e-05}, 'Recognition Algorithm': 'VGG_FACE', 'Min Faces Per Person': 20, 'Number of Distinct Faces': 62, 'Chance Rate': 0.016129032258064516, 'Train Accuracy': 1.0, 'Test Accuracy': 0.50793091293620019, 'Training Time': 2399.7880049999985, 'Testing Time': 1.9711200000019744}
+
+{'Manipulation Type': 'blur', 'Manipulation Parameters': {'blurwindow_size': 5}, 'Recognition Algorithm': 'VGG_FACE', 'Min Faces Per Person': 20, 'Number of Distinct Faces': 62, 'Chance Rate': 0.016129032258064516, 'Train Accuracy': 1.0, 'Test Accuracy': 0.81600281988015511, 'Training Time': 2405.032998999999, 'Testing Time': 1.8945559999992838}
+
+{'Manipulation Type': 'blur', 'Manipulation Parameters': {'blurwindow_size': 10}, 'Recognition Algorithm': 'VGG_FACE', 'Min Faces Per Person': 20, 'Number of Distinct Faces': 62, 'Chance Rate': 0.016129032258064516, 'Train Accuracy': 1.0, 'Test Accuracy': 0.51568558336270709, 'Training Time': 2405.975219, 'Testing Time': 1.948157999999239}
+
+{'Manipulation Type': 'none', 'Manipulation Parameters': {}, 'Recognition Algorithm': 'VGG_FACE', 'Min Faces Per Person': 20, 'Number of Distinct Faces': 62, 'Chance Rate': 0.016129032258064516, 'Train Accuracy': 1.0, 'Test Accuracy': 0.85442368699330273, 'Training Time': 2407.0715129999953, 'Testing Time': 2.0076699999990524}
