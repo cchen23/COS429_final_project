@@ -1,0 +1,91 @@
+==============================================================
+Deep Face Recognition
+
+Omkar M. Parkhi, Andrea Vedaldi, Andrew Zisserman 
+Visual Geometry Group, University of Oxford
+==============================================================
+
+--------
+Overview
+--------
+
+This package contains the MATLAB source code for computation of "VGG Face" descriptor.
+The algorithm details can be found in [1]. 
+
+The source code and data packages can be downloaded from: 
+http://www.robots.ox.ac.uk/~vgg/software/vgg_face/
+
+The models and contents of this package can only be used for non-commercial research purposes. 
+(Please read the licence terms here. http://creativecommons.org/licenses/by-nc/4.0/). 
+Please cite [1] if you use the code or the data.
+If you have any questions regarding the package, 
+please contact Omkar M. Parkhi <omkar@robots.ox.ac.uk>
+
+------------
+Dependencies
+------------
+The source code depends on the publicly available MatConvNet library, 
+which should be compiled and installed as per instructions below. 
+The face detector is faster vesion of [3] using the cascade dpm code [4]. 
+The cascade dpm code needs to be compiled using the instructions below.
+
+
+------------
+Installation
+------------
+
+1. MatConvNet
+
+Download MatConvNet library from (http://www.vlfeat.org/matconvnet/). 
+We used version 1.0-beta13(http://www.vlfeat.org/matconvnet/download/matconvnet-1.0-beta13.tar.gz) 
+for our experiments. 
+
+Compile using the instructions provided. Copy files vl_nnconv.mex* and vl_nnpool.mex* to 
++lib/+face_feats/@convNet directory. Cuda and CuDNN (optional) need to be in the path. 
+Set useGPU and cudnn flags in convNet.m correctly depending upon whether the MatConvNet is 
+compiled with or without GPU support and CuDNN respectively.
+
+2. DPM Cascade detector
+All necessory files to run the fast dpm implementation of [3] using cascade detector[4] are 
+packaged in +lib/+face_detector/@dpmCascadeDetector. Edit Makefile in that directory to
+and specify correct path to mex by modifying variable mexCMD. Then use make to compile the 
+source code.
+
+
+------------
+Usage
+------------
+demo.m shows example for using the library.
+
+Load Face detector model and the CNN model from the data directory.
+
+1. Use dpmCascadeDetector.detect to detect the face. You can replace this step with your favourite face detector.
+
+2. Use faceCrop.crop to crop the detection from the image.
+
+3. Run convNet.simpleNN to obtain 4096d descriptor as described in [1]. L2 normalise the
+   descriptor before use.
+
+
+----------
+References
+----------
+
+[1] O. M. Parkhi, A. Vedaldi, A. Zisserman
+Deep Face Recognition  
+British Machine Vision Conference, 2015.
+
+[2] A. Vedaldi, K. Lenc
+MatConvNet - Convolutional Neural Networks for MATLAB  
+arXiv:1412.4564, 2014.
+
+[3] M. Mathias, R. Benenson, M. Pedersoli, L. Van Gool
+Face detection without bells and whistles
+European Conference on Computer Vision, 2014.
+
+[4] P. Felzenszwalb, R. Girshick, D. McAllester
+Cascade Object Detection with Deformable Part Models
+Computer Vision and Pattern Recognition 2010.
+
+
+
