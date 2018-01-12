@@ -33,12 +33,11 @@ COLUMNS = [
     "Testing Time",
 ]
 
-def split_traintest(targets):
+def split_traintest(targets, num_train):
     # TODO: Different way of splitting train and test?
     # Maybe should use more than one of each face to train?
     """ Splits targets into train and test indices."""
     unique_targets = np.unique(targets)
-    num_train = 3
     train_indices = []
     test_indices = []
 
@@ -49,7 +48,7 @@ def split_traintest(targets):
 
     return train_indices, test_indices
 
-def get_lfw_dataset(min_faces_per_person, manipulation_info):
+def get_lfw_dataset(min_faces_per_person, manipulation_info, num_train):
     """ Return train and test data and labels from 'Labeled Faces in the Wild" dataset."""
     dataset = fetch_lfw_people(min_faces_per_person=min_faces_per_person)
     data = dataset.data # num_people x image_length
@@ -57,7 +56,7 @@ def get_lfw_dataset(min_faces_per_person, manipulation_info):
     mean_face = np.mean(data, axis=0)
     data = data - mean_face
 
-    train_indices, test_indices = split_traintest(dataset.target)
+    train_indices, test_indices = split_traintest(dataset.target, num_train)
     train_data = data[train_indices,:]
     train_targets = dataset.target[train_indices]
     test_data = data[test_indices,:]
@@ -73,11 +72,11 @@ def compute_accuracy(predictions, targets):
     accuracy = np.sum(np.array(predictions) == np.array(targets)) / len(predictions)
     return accuracy
 
-def run_experiment(model_name, manipulation_info, savename=None):
+def run_experiment(model_name, manipulation_info, num_train, savename=None):
     """ Trains and tests using train_model_function and evaluate_model_function
     arguments, and saves results. """
     min_faces_per_person = 20
-    train_data, train_targets, test_data, test_targets = get_lfw_dataset(min_faces_per_person, manipulation_info)
+    train_data, train_targets, test_data, test_targets = get_lfw_dataset(min_faces_per_person, manipulation_info, num_train)
     
     time1 = time.clock()
     model = algorithms.train(model_name, train_data, train_targets)
@@ -168,35 +167,37 @@ if __name__ == "__main__":
     #     "blur_5",
     #     "blur_10",
     # ]
-    save_path = "../results/results.csv"
-
-    # Create new save file if it doesn't exist
-    if not os.path.exists(save_path):
-        with open(save_path, 'w') as f:
-            csv.DictWriter(f, fieldnames=COLUMNS).writeheader()
-
-    # Load existing results
-    with open(save_path, 'r') as f:
-        seen_results = [(row["Manipulation Type"], row["Manipulation Parameters"], row["Recognition Algorithm"]) for row in csv.DictReader(f)]
-
-    # Run experiments
-    with open(save_path, 'a') as f, concurrent.futures.ProcessPoolExecutor() as executor:
-        writer = csv.DictWriter(f, fieldnames=COLUMNS)
-        futures = []
-
-        for manipulation_info, model_name in itertools.product(manipulation_infos, model_names):
-            params_tuple = (manipulation_info.type, str(manipulation_info.parameters), model_name)
-
-            # Skip completed experiments
-            if params_tuple in seen_results:
-                print("Skipping: %s" % str(params_tuple))
-                continue
-
-            print("Submitting: %s" % str(params_tuple))
-            futures.append(executor.submit(run_experiment, model_name, manipulation_info))
-
-        for future in concurrent.futures.as_completed(futures):
-            result = future.result()
-            assert(set(result.keys()) == set(COLUMNS))
-            writer.writerow(result)
-            f.flush()
+    num_trains = [10, 15, 19]
+    for num_train in num_trains:
+        print("Num training examples: %d" % num_train)
+        save_path = "../results/results_%d.csv" % num_train
+    
+        # Create new save file if it doesn't exist
+        if not os.path.exists(save_path):
+            with open(save_path, 'w') as f:
+                csv.DictWriter(f, fieldnames=COLUMNS).writeheader()
+    
+        # Load existing results
+        with open(save_path, 'r') as f:
+            seen_results = [(row["Manipulation Type"], row["Manipulation Parameters"], row["Recognition Algorithm"]) for row in csv.DictReader(f)]
+    
+        # Run experiments
+        with open(save_path, 'a') as f:
+            writer = csv.DictWriter(f, fieldnames=COLUMNS)
+    
+            for manipulation_info in manipulation_infos:
+                for model_name in model_names:
+                    params_tuple = (manipulation_info.type, str(manipulation_info.parameters), model_name)
+        
+                    # Skip completed experiments
+                    if params_tuple in seen_results:
+                        print("Skipping: %s" % str(params_tuple))
+                        continue
+        
+                    print("Running: %s" % str(params_tuple))
+                    try:
+                        results = run_experiment(model_name, manipulation_info, num_train)
+                        writer.writerow(results)
+                        f.flush()
+                    except Exception as e:
+                        print("Error:" + e)
