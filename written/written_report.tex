@@ -71,8 +71,9 @@ We first project the test and training faces to a lower-dimension subspace using
 So this algorithm performs face recognition by solving $\min||c||_1+||e||_1\:s.t.\:||y=\Phi c+e$, where the addition of $e$ is intended to allow the algorithm to account for small differences between images of the same person.
 
 \subsubsection{VGG-based Classification}\hspace*{\fill} \\
-We implement this algorithm based on the work and pretrained network of \cite{parkhi_deep_2015}.
-[TODO: DESCRIBE IMPLEMENTATION]
+We implement this algorithm based on the work and pre-trained convolutional neural network of \cite{parkhi_deep_2015}. Each image undergoes preprocessing before usage in the network. For the preprocessing, we use the deformable parts model face detector provided by \cite{parkhi_deep_2015} and crop the detected face from each of the the original images. Next, we translate the architecture of the VGG-based network for use with the Keras Python framework and load the pre-trained weights. We feed each face through the network, stopping at the fc-7 layer to obtain a 4,096-dimensional descriptor for each image. 
+
+For each test descriptor $w$, we calculate its cosine similarity to each training descriptor $v$. This is given by $arccos\frac{v \cdot w}{||v|| ||w||}$. The use of cosine similarity is different from the Euclidean distance methodology used in \cite{parkhi_deep_2015}, which we found to have weaker performance on our dataset. We find the nearest-$k$ neighboring training descriptors according to cosine similarity and classify the test face according to the majority vote.
 
 \subsection{Image Manipulations}
 
