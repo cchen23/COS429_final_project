@@ -13,7 +13,7 @@ from sklearn.svm import SVC
 
 # Helper functions.
 def reduce_dimensions(train_data):
-    n_components=150 # TODO: Test with different numbers of components?
+    n_components=None # TODO: Test with different numbers of components?
     pca = PCA(n_components=n_components)
     pca.fit(train_data)
     train_data = pca.transform(train_data)
