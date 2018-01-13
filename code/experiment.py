@@ -1,3 +1,4 @@
+#! /usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
 Created on Mon Dec 18 14:26:03 2017
@@ -52,7 +53,6 @@ def get_lfw_dataset(min_faces_per_person, manipulation_info, num_train):
     """ Return train and test data and labels from 'Labeled Faces in the Wild" dataset."""
     dataset = fetch_lfw_people(min_faces_per_person=min_faces_per_person)
     data = dataset.data # num_people x image_length
-    data = manipulations.perform_manipulation(data, manipulation_info)
     mean_face = np.mean(data, axis=0)
     data = data - mean_face
 
@@ -77,7 +77,7 @@ def run_experiment(model_name, manipulation_info, num_train, savename=None):
     arguments, and saves results. """
     min_faces_per_person = 20
     train_data, train_targets, test_data, test_targets = get_lfw_dataset(min_faces_per_person, manipulation_info, num_train)
-    
+
     time1 = time.clock()
     model = algorithms.train(model_name, train_data, train_targets)
     time2 = time.clock()
@@ -136,6 +136,7 @@ if __name__ == "__main__":
         "Sparse Representation",
         "Sparse Representation Dimension Reduction",
         "Sparse Representation Combined l1",
+        "SVM",
     ]
     manipulation_infos = [
         ManipulationInfo("none", {}),
@@ -171,29 +172,29 @@ if __name__ == "__main__":
     for num_train in num_trains:
         print("Num training examples: %d" % num_train)
         save_path = "../results/results_%d.csv" % num_train
-    
+
         # Create new save file if it doesn't exist
         if not os.path.exists(save_path):
             with open(save_path, 'w') as f:
                 csv.DictWriter(f, fieldnames=COLUMNS).writeheader()
-    
+
         # Load existing results
         with open(save_path, 'r') as f:
             seen_results = [(row["Manipulation Type"], row["Manipulation Parameters"], row["Recognition Algorithm"]) for row in csv.DictReader(f)]
-    
+
         # Run experiments
         with open(save_path, 'a') as f:
             writer = csv.DictWriter(f, fieldnames=COLUMNS)
-    
+
             for manipulation_info in manipulation_infos:
                 for model_name in model_names:
                     params_tuple = (manipulation_info.type, str(manipulation_info.parameters), model_name)
-        
+
                     # Skip completed experiments
                     if params_tuple in seen_results:
                         print("Skipping: %s" % str(params_tuple))
                         continue
-        
+
                     print("Running: %s" % str(params_tuple))
                     try:
                         results = run_experiment(model_name, manipulation_info, num_train)

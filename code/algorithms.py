@@ -9,6 +9,7 @@ import numpy as np
 
 from sklearn.decomposition import PCA
 from sklearn.decomposition import SparseCoder
+from sklearn.svm import SVC
 
 # Helper functions.
 def reduce_dimensions(train_data):
@@ -54,6 +55,12 @@ def train_sparserepresentation_combinedl1(train_data, train_targets):
     dictionary = np.concatenate((train_data, I))
     coder = SparseCoder(dictionary, transform_algorithm='omp')
     return coder, pca, train_targets
+
+def train_sklearn_svm(train_data, train_targets):
+    train_data, pca = reduce_dimensions(train_data)
+    clf = SVC(class_weight='balanced')#, C=1000.0, gamma=0.001)
+    clf.fit(train_data, train_targets)
+    return clf, pca
 
 # Prediction functions.
 def predict_pca(model, test_data):
@@ -138,11 +145,16 @@ def predict_sparserepresentation_combinedl1(model, test_data):
 
     return test_predictions
 
+def predict_sklearn_svm(model, test_data):
+    clf, pca = model
+    return clf.predict(pca.transform(test_data))
+
 ALGORITHM_MAP = {
     "PCA": (train_pca, predict_pca),
     "Sparse Representation": (train_sparserepresentation, predict_sparserepresentation),
     "Sparse Representation Dimension Reduction": (train_sparserepresentation_dimension_reduction, predict_sparserepresentation_dimension_reduction),
     "Sparse Representation Combined l1": (train_sparserepresentation_combinedl1, predict_sparserepresentation_combinedl1),
+    "SVM": (train_sklearn_svm, predict_sklearn_svm),
 }
 
 def train(model_name, train_data, train_targets):
