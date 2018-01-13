@@ -21,7 +21,7 @@ def create_accuracies_plot(accuracies, labels, xlabel, title, savename):
 
     # add some text for labels, title and axes ticks
     ax.set_ylabel('Accuracy')
-    ax.set_ylim([0,0.2])
+    ax.set_ylim([0,0.5])
     ax.set_title(title)
     ax.set_xticks(ind)
     ax.set_xticklabels(labels,fontsize=8)
@@ -30,15 +30,39 @@ def create_accuracies_plot(accuracies, labels, xlabel, title, savename):
     plt.tight_layout()
     plt.savefig(figures_dir+savename+".png")
     plt.show()
-    
-def create_default_accuracies(results):
+  
+def create_all_accuracies(results, labels, xlabel):
+    ind = np.arange(len(labels))  # the x locations for the groups
+    width = 0.35       # the width of the bars
+    num_results = len(results)
+    fig, ax = plt.subplots()
+    print(len(results))
+    print(results)
+    for i in range(num_results):
+        results_subset = results[i]
+        accuracies = results_subset[results_subset['Manipulation Type']=='none']['Test Accuracy']
+        ax.bar(ind+(width*i)/num_results, accuracies, width/num_results, alpha=0.5, label=labels[i])
+
+    # add some text for labels, title and axes ticks
+    ax.set_ylabel('Accuracy')
+    ax.set_ylim([0,0.5])
+    ax.set_title("Test Accuracies")
+    ax.set_xticks(ind)
+    ax.set_xticklabels(xlabel,fontsize=8)
+    ax.set_xlabel("Algorithm")
+    plt.legend()
+    plt.tight_layout()
+    plt.savefig(figures_dir+"default_accuracies_difftraintest"+".png")
+    plt.show()
+
+def create_default_accuracies(results, num_train):
     nomanipulation_results = results[results['Manipulation Type']=='none']
     algorithms = ["Chance"] + list(nomanipulation_results['Recognition Algorithm'])
     algorithms = [algorithm.replace(" ","\n") for algorithm in algorithms]
     train_accuracies = [CHANCE_RATE] + list(nomanipulation_results['Train Accuracy'])
     test_accuracies = [CHANCE_RATE] + list(nomanipulation_results['Test Accuracy'])
 
-    create_accuracies_plot(test_accuracies, algorithms, "Algorithm", "Test Accuracies", "default")
+    create_accuracies_plot(test_accuracies, algorithms, "Algorithm", "Test Accuracies", "default_%d" % num_train)
 
 #def create_manipulation_plot(algorithms, manipulation, results_subset, default_results):
 #        num_algorithms = len(algorithms)
@@ -83,6 +107,13 @@ def create_manipulation_accuracies(results):
             create_accuracies_plot(accuracies, labels, xlabel, title, savename)
 
 if __name__ == "__main__":
-    results = pd.read_csv("../results/results.csv", header=0)
-    create_default_accuracies(results)
-    create_manipulation_accuracies(results)
+    num_trains = [10, 15, 19]
+    results = []
+    results.append(pd.read_csv("../results/results.csv", header=0))
+    for num_train in num_trains:
+        results.append(pd.read_csv("../results/results_%d.csv" % num_train, header=0))
+    labels = ["3", "10", "15", "19"]
+    xlabel = ["PCA", "Sparse\nRepresentation", "Sparse\nRepresentation\nDimension\nReduction", "Sparse\nRepresentation\nCombined\nL1"]
+    create_all_accuracies(results, labels, xlabel)
+#    create_default_accuracies(results, num_train)
+#    create_manipulation_accuracies(results)
