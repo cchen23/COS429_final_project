@@ -6,12 +6,16 @@ Created on Mon Dec 18 14:26:03 2017
 @author: Cathy
 """
 from sklearn.datasets import fetch_lfw_people
+from sklearn.datasets.lfw import check_fetch_lfw
 #from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import normalize
+from matplotlib.pyplot import imread
+from scipy.misc import imresize
 
 import numpy as np
 import time
 import itertools
+import os
 import os.path
 import csv
 import concurrent.futures
@@ -69,6 +73,67 @@ def get_lfw_dataset(min_faces_per_person, num_train):
     #train_data, test_data, train_targets, test_targets = train_test_split(data, dataset.target)
     return train_data, train_targets, test_data, test_targets
 
+def get_lfw_image_path(lfw_data_folder_path, person, imagenum):
+    return os.path.join(lfw_data_folder_path, person, "{}_{:04d}.jpg".format(person, imagenum))
+
+def get_lfw_dfi_image_path(person, imagenum, transform):
+    return os.path.join("..", "dfi", "{}_{:04d}__{}.jpg".format(person, imagenum, transform))
+
+def get_lfw_image(image_path, crop_resize, scale=0.5):
+    face = imread(image_path)
+    face = face[:,:,:3] # delete alpha channel
+    if crop_resize:
+        face = face[(slice(50, 200), slice(50, 200))]
+        face = imresize(face, 200 / 150 * scale)
+    else:
+        face = imresize(face, scale)
+    face = face.flatten()
+    face = face / 255 # convert to float
+    return face
+
+def get_lfw_dfi_dataset(min_faces_per_person, num_train, manipulation_info):
+    assert(manipulation_info.type == "dfi")
+
+    train_data, train_targets, test_data, test_targets = [], [], [], []
+    lfw_home, lfw_data_folder_path = check_fetch_lfw()
+    transform = manipulation_info.parameters["transform"]
+    person_index = 0
+
+    for person in os.listdir(lfw_data_folder_path):
+        if not os.path.isfile(get_lfw_image_path(lfw_data_folder_path, person, min_faces_per_person)):
+            continue
+
+        # Load train data
+        train_data += [get_lfw_image(get_lfw_image_path(lfw_data_folder_path, person, index + 1), crop_resize=True) for index in range(min_faces_per_person - num_train, min_faces_per_person)]
+        train_targets += [person_index] * num_train
+        assert(len(train_data) == len(train_targets))
+
+        # Load test data
+        person_image_paths = [get_lfw_dfi_image_path(person, index + 1, transform) for index in range(0, min_faces_per_person - num_train)]
+        person_image_paths = [image_path for image_path in person_image_paths if os.path.isfile(image_path)]
+        assert(1 <= len(person_image_paths) <= min_faces_per_person - num_train)
+        test_data += [get_lfw_image(image_path, crop_resize=False) for image_path in person_image_paths]
+        test_targets += [person_index] * len(person_image_paths)
+        assert(len(test_data) == len(test_targets))
+
+        person_index += 1
+
+    assert(len(train_data) > 0)
+    assert(len(test_data) > 0)
+
+    train_data = np.array(train_data)
+    test_data = np.array(test_data)
+    print(train_data.shape, test_data.shape)
+
+    mean_face = np.mean(train_data, axis=0)
+    train_data -= mean_face
+    test_data -= mean_face
+
+    train_data = normalize(train_data, axis=1)
+    test_data = normalize(test_data, axis=1)
+
+    return train_data, train_targets, test_data, test_targets
+
 def compute_accuracy(predictions, targets):
     accuracy = np.sum(np.array(predictions) == np.array(targets)) / len(predictions)
     return accuracy
@@ -77,10 +142,14 @@ def run_experiment(model_name, manipulation_info, num_train, savename=None):
     """ Trains and tests using train_model_function and evaluate_model_function
     arguments, and saves results. """
     min_faces_per_person = 20
-    train_data, train_targets, test_data_nomanipulation, test_targets = get_lfw_dataset(min_faces_per_person, num_train)
 
-    # Apply manipulations to test dataset
-    test_data = np.array(manipulations.perform_manipulation(test_data_nomanipulation, manipulation_info))
+    if manipulation_info.type == "dfi":
+        train_data, train_targets, test_data, test_targets = get_lfw_dfi_dataset(min_faces_per_person, num_train, manipulation_info)
+    else:
+        train_data, train_targets, test_data_nomanipulation, test_targets = get_lfw_dataset(min_faces_per_person, num_train)
+
+        # Apply manipulations to test dataset
+        test_data = np.array(manipulations.perform_manipulation(test_data_nomanipulation, manipulation_info))
 
     time1 = time.clock()
     model = algorithms.train(model_name, train_data, train_targets)
@@ -162,6 +231,8 @@ if __name__ == "__main__":
         ManipulationInfo("radial_distortion", {"k": -0.0005}),
         ManipulationInfo("blur", {"blurwindow_size": 5}),
         ManipulationInfo("blur", {"blurwindow_size": 10}),
+        ManipulationInfo("dfi", {"transform": "Senior"}),
+        ManipulationInfo("dfi", {"transform": "Mustache"}),
     ]
     num_trains = [10, 15, 19]
 
