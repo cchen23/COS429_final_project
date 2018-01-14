@@ -15,6 +15,7 @@ import itertools
 import os.path
 import csv
 import concurrent.futures
+import argparse
 
 import algorithms
 import manipulations
@@ -133,6 +134,12 @@ def run_experiment(model_name, manipulation_info, num_train, savename=None):
     }
 
 if __name__ == "__main__":
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--model", help="Re-run experiments with this model")
+    parser.add_argument("--manipulation", help="Re-run experiments with this manipulation")
+    parser.add_argument("--num-train", type=int, help="Only run experiments with this number of training images (does not re-run)")
+    args = parser.parse_args()
+
     # Experiments without manipulations.
     model_names = [
         "PCA",
@@ -156,22 +163,22 @@ if __name__ == "__main__":
         ManipulationInfo("blur", {"blurwindow_size": 5}),
         ManipulationInfo("blur", {"blurwindow_size": 10}),
     ]
-    # savenames = [
-    #     "nomanipulation",
-    #     "occludelfw_20",
-    #     "occludelfw_10",
-    #     "occludelfw_30",
-    #     "occludelfw_40",
-    #     "radial_distortion_k00015",
-    #     "radial_distortion_kneg00015",
-    #     "radial_distortion_k0003",
-    #     "radial_distortion_kneg0003",
-    #     "radial_distortion_k0005",
-    #     "radial_distortion_kneg0005",
-    #     "blur_5",
-    #     "blur_10",
-    # ]
     num_trains = [10, 15, 19]
+
+    should_rerun = False
+    if args.model:
+        should_rerun = True
+        if args.model not in model_names:
+            raise Exception("Unrecognized model name")
+        model_names = [model for model in model_names if model == args.model]
+    if args.manipulation:
+        should_rerun = True
+        manipulation_infos = [mi for mi in manipulation_infos if mi.type == args.manipulation]
+        if len(manipulation_infos) == 0:
+            raise Exception("Unrecognized manipulation type")
+    if args.num_train:
+        num_trains = [args.num_train]
+
     for num_train in num_trains:
         print("Num training examples: %d" % num_train)
         save_path = "../results/results_%d.csv" % num_train
@@ -194,7 +201,7 @@ if __name__ == "__main__":
                     params_tuple = (manipulation_info.type, str(manipulation_info.parameters), model_name)
 
                     # Skip completed experiments
-                    if params_tuple in seen_results:
+                    if params_tuple in seen_results and not should_rerun:
                         print("Skipping: %s" % str(params_tuple))
                         continue
 
