@@ -51,16 +51,3 @@ radial_distortion,{'k': -0.0005},Sparse Representation,20,62,0.016129032,1,0.113
 blur,{'blurwindow_size': 10},Sparse Representation Combined l1,20,62,0.016129032,1,0.075784279,0.361553,7.726249,
 blur,{'blurwindow_size': 5},Sparse Representation,20,62,0.016129032,1,0.135354247,2.50E-05,500.552152,
 blur,{'blurwindow_size': 10},Sparse Representation,20,62,0.016129032,1,0.106450476,2.20E-05,366.114021,
-none,{},VGG,20,62,0.016129032,0.989247312,0.98614429,2518.814395,704.296187,use k=5 for all reported vgg results
-occlude_lfw,{'occlusion_size': 20},VGG,20,62,0.016129032,0.989247312,0.900621118,2487.495576,700.243438,actually {'occlusion_size': 82} for equivalent area
-occlude_lfw,{'occlusion_size': 10},VGG,20,62,0.016129032,0.989247312,0.982799809,2496.483926,699.494234,actually {'occlusion_size': 41} for equivalent area
-occlude_lfw,{'occlusion_size': 30},VGG,20,62,0.016129032,0.989247312,0.549450549,2493.69773,707.064284,actually {'occlusion_size': 124} for equivalent area
-occlude_lfw,{'occlusion_size': 10},VGG,20,62,0.016129032,0.989247312,0.087434305,2522.696233,697.820506,actually {'occlusion_size': 165} for equivalent area
-radial_distortion,{'k': 0.00015},VGG,20,62,0.016129032,0.989247312,0.985188724,2500.99642,704.957324,actually {'k': 8e-06} for approx same distortion
-radial_distortion,{'k': -0.00015},VGG,20,62,0.016129032,0.989247312,0.985666507,2508.600858,708.250574,actually {'k': -8e-06} for approx same distortion
-radial_distortion,{'k': 0.0003},VGG,20,62,0.016129032,0.989247312,0.970855232,2502.458067,701.100064,actually {'k': 1.6e-05} for approx same distortion
-radial_distortion,{'k': -0.0003},VGG,20,62,0.016129032,0.989247312,0.974199713,2493.627045,701.562441,actually {'k': -1.6e-05} for approx same distortion
-radial_distortion,{'k': 0.0005},VGG,20,62,0.016129032,0.989247312,0.877209747,2508.724039,704.525739,actually {'k': 3e-05} for approx same distortion
-radial_distortion,{'k': -0.0005},VGG,20,62,0.016129032,0.989247312,0.80649785,2506.308369,697.594731,actually {'k': -3e-05} for approx same distortion
-blur,{'blurwindow_size': 5},VGG,20,62,0.016129032,0.989247312,0.983277592,2516.467821,704.315025,
-blur,{'blurwindow_size': 10},VGG,20,62,0.016129032,0.989247312,0.976110846,2501.234005,702.674946,
