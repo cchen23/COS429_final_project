@@ -49,7 +49,7 @@ def split_traintest(targets, num_train):
 
     return train_indices, test_indices
 
-def get_lfw_dataset(min_faces_per_person, manipulation_info, num_train):
+def get_lfw_dataset(min_faces_per_person, num_train):
     """ Return train and test data and labels from 'Labeled Faces in the Wild" dataset."""
     dataset = fetch_lfw_people(min_faces_per_person=min_faces_per_person)
     data = dataset.data # num_people x image_length
@@ -76,7 +76,10 @@ def run_experiment(model_name, manipulation_info, num_train, savename=None):
     """ Trains and tests using train_model_function and evaluate_model_function
     arguments, and saves results. """
     min_faces_per_person = 20
-    train_data, train_targets, test_data, test_targets = get_lfw_dataset(min_faces_per_person, manipulation_info, num_train)
+    train_data, train_targets, test_data_nomanipulation, test_targets = get_lfw_dataset(min_faces_per_person, num_train)
+
+    # Apply manipulations to test dataset
+    test_data = np.array(manipulations.perform_manipulation(test_data_nomanipulation, manipulation_info))
 
     time1 = time.clock()
     model = algorithms.train(model_name, train_data, train_targets)
