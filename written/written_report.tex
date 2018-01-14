@@ -130,7 +130,7 @@ We provide examples of blurred images in figure \ref{fig:manipulationdemo_blur}.
 TODO: DESCRIBE
 
 \subsection{Dataset}
-We use the Labeled Faces in the Wild Dataset\cite{huang_labeled_2007}. We chose this dataset because it contains many ($13,000$) labeled images of different people ($1,680$ of whom have at least two distinct images and $62$ of whom have at least twenty distinct images). This provides sufficient training data for our experiments.
+We use the Labeled Faces in the Wild Dataset (LFW)\cite{huang_labeled_2007}. We chose this dataset because it contains many ($13,000$) labeled images of different people ($1,680$ of whom have at least two distinct images and $62$ of whom have at least twenty distinct images). This provides sufficient training data for our experiments.
 
 Furthermore, each of image is centered on a single face, which provides some measure of standardization between (un-manipulated) images. This allows us to control the amount and type of manipulation which we then add in our experiments, which is important because we test the robustness of algorithms to specific manipulations.
 
@@ -140,6 +140,16 @@ We train each algorithm using three instances of each person's face. We then eva
 \section{Results and Description}
 TODO: ADD RESULTS WITH VGG, DFI
 TODO: ANALYZE/DESCRIBE
+
+
+A deep learning approach to face recognition outperformed the statistical methods of PCA and Sparse Representation. The VGG-FACE network produced an accuracy score of over 0.98 on non-manipulated images for various values of $k$, where $k$ is the number of nearest neighboring training descriptors to compare to for each test image. We found that preprocessing the images through face detection and cropping improved performance. In addition, using cosine similarity and the nearest-$k$ neighboring heuristic, instead of Euclidean distance and the mean of the training descriptors, also improved performance. A summary of the VGG-FACE network's performance on non-manipulated images of the LFW dataset is shown in Figure \ref{fig:vgg_nonmanipulated}. 
+
+\begin{figure}
+\centering
+\includegraphics[scale=0.5]{../figures/vgg_1.png}
+\caption{VGG-FACE Results with No Manipulations (The dotted line indicates performance with Euclidean distance and mean descriptor)}
+\label{fig:vgg_nonmanipulated}
+\end{figure}
 
 \begin{figure}
 \centering
