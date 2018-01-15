@@ -68,7 +68,7 @@ We implement this algorithm according to the descriptions found in \cite{ganesh_
 
 We first project the test and training faces to a lower-dimension subspace using PCA, and then find a sparse encoding of the test face using a dictionary with the projected training faces in addition to the standard basis vectors. Using this sparse encoding, we perform classification as described in section \ref{sec:sparse_representation}.
 
-So this algorithm performs face recognition by solving $\min||c||_1+||e||_1\:s.t.\:||y=\Phi c+e$, where the addition of $e$ is intended to allow the algorithm to account for small differences between images of the same person.
+So this algorithm performs face recognition by solving $\min||c||_1+||e||_1\:s.t.\:y=\Phi c+e$, where the addition of $e$ is intended to allow the algorithm to account for small differences between images of the same person.
 
 \subsubsection{VGG-based Classification}\hspace*{\fill} \\
 We implement this algorithm based on the work and pre-trained convolutional neural network of \cite{parkhi_deep_2015}. Each image undergoes preprocessing before usage in the network. For the preprocessing, we use the deformable parts model face detector provided by \cite{parkhi_deep_2015} and crop the detected face from each of the the original images. An example of a face before and after preprocessing is shown in Figure \ref{fig:vgg_preprocessing}. We also subtract the mean values for each color channel, provided by \cite{parkhi_deep_2015}, from the images prior to using the convolutional neural network.
