@@ -1,56 +1,56 @@
 Manipulation Type,Manipulation Parameters,Recognition Algorithm,Min Faces Per Person,Number of Distinct Faces,Chance Rate,Train Accuracy,Test Accuracy,Training Time,Testing Time
-none,{},PCA,20,62,0.016129032,1,0.075322514,0.129538996,4.79681231
-none,{},Sparse Representation,20,62,0.016129032,1,0.19766958,1.96E-05,114.9723811
-none,{},Sparse Representation Dimension Reduction,20,62,0.016129032,1,0.286308781,0.206082604,15.49514355
-none,{},Sparse Representation Combined l1,20,62,0.016129032,1,0.229296712,0.154659086,46.63237878
-occlude_lfw,{'occlusion_size': 20},PCA,20,62,0.016129032,1,0.064086558,0.111841017,4.533795769
-occlude_lfw,{'occlusion_size': 20},Sparse Representation,20,62,0.016129032,1,0.117769455,2.11E-05,120.9386295
-occlude_lfw,{'occlusion_size': 20},Sparse Representation Dimension Reduction,20,62,0.016129032,1,0.168955472,0.150690331,18.30573946
-occlude_lfw,{'occlusion_size': 20},Sparse Representation Combined l1,20,62,0.016129032,1,0.1065335,0.155758979,41.04901304
-occlude_lfw,{'occlusion_size': 10},PCA,20,62,0.016129032,1,0.074490221,0.117336709,4.95102585
-occlude_lfw,{'occlusion_size': 10},Sparse Representation,20,62,0.016129032,1,0.179775281,1.62E-05,121.8313893
-occlude_lfw,{'occlusion_size': 10},Sparse Representation Dimension Reduction,20,62,0.016129032,1,0.286308781,0.199741886,17.81577858
-occlude_lfw,{'occlusion_size': 10},Sparse Representation Combined l1,20,62,0.016129032,1,0.204327923,0.150374296,42.8317597
-occlude_lfw,{'occlusion_size': 30},PCA,20,62,0.016129032,1,0.064502705,0.12265003,7.005038064
-occlude_lfw,{'occlusion_size': 30},Sparse Representation,20,62,0.016129032,1,0.072409488,2.72E-05,119.9018112
-occlude_lfw,{'occlusion_size': 30},Sparse Representation Dimension Reduction,20,62,0.016129032,1,0.109030379,0.148899087,17.61458943
-occlude_lfw,{'occlusion_size': 30},Sparse Representation Combined l1,20,62,0.016129032,1,0.059508947,0.14932009,39.80497561
-occlude_lfw,{'occlusion_size': 40},PCA,20,62,0.016129032,1,0.055763629,0.117716934,4.659581988
-occlude_lfw,{'occlusion_size': 40},Sparse Representation,20,62,0.016129032,1,0.051186017,1.77E-05,115.1981538
-occlude_lfw,{'occlusion_size': 40},Sparse Representation Dimension Reduction,20,62,0.016129032,1,0.054931336,0.147573777,17.48457657
-occlude_lfw,{'occlusion_size': 40},Sparse Representation Combined l1,20,62,0.016129032,1,0.0295464,0.151644856,39.57671352
-radial_distortion,{'k': 0.00015},PCA,20,62,0.016129032,1,0.079483978,0.145916574,9.47154889
-radial_distortion,{'k': 0.00015},Sparse Representation,20,62,0.016129032,1,0.181856013,1.93E-05,136.4244328
-radial_distortion,{'k': 0.00015},Sparse Representation Dimension Reduction,20,62,0.016129032,1,0.248855597,0.327561,16.20224751
-radial_distortion,{'k': 0.00015},Sparse Representation Combined l1,20,62,0.016129032,1,0.222222222,0.265708316,37.98204791
-radial_distortion,{'k': -0.00015},PCA,20,62,0.016129032,1,0.063670412,0.151157022,9.512934039
-radial_distortion,{'k': -0.00015},Sparse Representation,20,62,0.016129032,1,0.179775281,1.85E-05,135.77332
-radial_distortion,{'k': -0.00015},Sparse Representation Dimension Reduction,20,62,0.016129032,1,0.185601332,0.284642873,8.382587397
-radial_distortion,{'k': -0.00015},Sparse Representation Combined l1,20,62,0.016129032,1,0.156054931,0.289628075,26.22744803
-radial_distortion,{'k': 0.0003},PCA,20,62,0.016129032,1,0.074490221,0.143666946,9.503343858
-radial_distortion,{'k': 0.0003},Sparse Representation,20,62,0.016129032,1,0.155222638,1.66E-05,133.1683528
-radial_distortion,{'k': 0.0003},Sparse Representation Dimension Reduction,20,62,0.016129032,1,0.200166459,0.281101917,13.91490116
-radial_distortion,{'k': 0.0003},Sparse Representation Combined l1,20,62,0.016129032,1,0.19642114,0.274458379,36.12713645
-radial_distortion,{'k': -0.0003},PCA,20,62,0.016129032,1,0.065334998,0.146011725,9.468535794
-radial_distortion,{'k': -0.0003},Sparse Representation,20,62,0.016129032,1,0.189762797,1.85E-05,132.5824686
+none,{},PCA,20,62,0.016129032,1.0,0.075322514,0.129538996,4.79681231
+none,{},Sparse Representation,20,62,0.016129032,1.0,0.19766958,1.96e-05,114.9723811
+none,{},Sparse Representation Dimension Reduction,20,62,0.016129032,1.0,0.286308781,0.206082604,15.49514355
+none,{},Sparse Representation Combined l1,20,62,0.016129032,1.0,0.229296712,0.154659086,46.63237878
+occlude_lfw,{'occlusion_size': 20},PCA,20,62,0.016129032,1.0,0.064086558,0.111841017,4.533795769
+occlude_lfw,{'occlusion_size': 20},Sparse Representation,20,62,0.016129032,1.0,0.117769455,2.11e-05,120.9386295
+occlude_lfw,{'occlusion_size': 20},Sparse Representation Dimension Reduction,20,62,0.016129032,1.0,0.168955472,0.150690331,18.30573946
+occlude_lfw,{'occlusion_size': 20},Sparse Representation Combined l1,20,62,0.016129032,1.0,0.1065335,0.155758979,41.04901304
+occlude_lfw,{'occlusion_size': 10},PCA,20,62,0.016129032,1.0,0.074490221,0.117336709,4.95102585
+occlude_lfw,{'occlusion_size': 10},Sparse Representation,20,62,0.016129032,1.0,0.179775281,1.62e-05,121.8313893
+occlude_lfw,{'occlusion_size': 10},Sparse Representation Dimension Reduction,20,62,0.016129032,1.0,0.286308781,0.199741886,17.81577858
+occlude_lfw,{'occlusion_size': 10},Sparse Representation Combined l1,20,62,0.016129032,1.0,0.204327923,0.150374296,42.8317597
+occlude_lfw,{'occlusion_size': 30},PCA,20,62,0.016129032,1.0,0.064502705,0.12265003,7.005038064
+occlude_lfw,{'occlusion_size': 30},Sparse Representation,20,62,0.016129032,1.0,0.072409488,2.72e-05,119.9018112
+occlude_lfw,{'occlusion_size': 30},Sparse Representation Dimension Reduction,20,62,0.016129032,1.0,0.109030379,0.148899087,17.61458943
+occlude_lfw,{'occlusion_size': 30},Sparse Representation Combined l1,20,62,0.016129032,1.0,0.059508947,0.14932009,39.80497561
+occlude_lfw,{'occlusion_size': 40},PCA,20,62,0.016129032,1.0,0.055763629,0.117716934,4.659581988
+occlude_lfw,{'occlusion_size': 40},Sparse Representation,20,62,0.016129032,1.0,0.051186017,1.77e-05,115.1981538
+occlude_lfw,{'occlusion_size': 40},Sparse Representation Dimension Reduction,20,62,0.016129032,1.0,0.054931336,0.147573777,17.48457657
+occlude_lfw,{'occlusion_size': 40},Sparse Representation Combined l1,20,62,0.016129032,1.0,0.0295464,0.151644856,39.57671352
+radial_distortion,{'k': 0.00015},PCA,20,62,0.016129032,1.0,0.079483978,0.145916574,9.47154889
+radial_distortion,{'k': 0.00015},Sparse Representation,20,62,0.016129032,1.0,0.181856013,1.93e-05,136.4244328
+radial_distortion,{'k': 0.00015},Sparse Representation Dimension Reduction,20,62,0.016129032,1.0,0.248855597,0.327561,16.20224751
+radial_distortion,{'k': 0.00015},Sparse Representation Combined l1,20,62,0.016129032,1.0,0.222222222,0.265708316,37.98204791
+radial_distortion,{'k': -0.00015},PCA,20,62,0.016129032,1.0,0.063670412,0.151157022,9.512934039
+radial_distortion,{'k': -0.00015},Sparse Representation,20,62,0.016129032,1.0,0.179775281,1.85e-05,135.77332
+radial_distortion,{'k': -0.00015},Sparse Representation Dimension Reduction,20,62,0.016129032,1.0,0.185601332,0.284642873,8.382587397
+radial_distortion,{'k': -0.00015},Sparse Representation Combined l1,20,62,0.016129032,1.0,0.156054931,0.289628075,26.22744803
+radial_distortion,{'k': 0.0003},PCA,20,62,0.016129032,1.0,0.074490221,0.143666946,9.503343858
+radial_distortion,{'k': 0.0003},Sparse Representation,20,62,0.016129032,1.0,0.155222638,1.66e-05,133.1683528
+radial_distortion,{'k': 0.0003},Sparse Representation Dimension Reduction,20,62,0.016129032,1.0,0.200166459,0.281101917,13.91490116
+radial_distortion,{'k': 0.0003},Sparse Representation Combined l1,20,62,0.016129032,1.0,0.19642114,0.274458379,36.12713645
+radial_distortion,{'k': -0.0003},PCA,20,62,0.016129032,1.0,0.065334998,0.146011725,9.468535794
+radial_distortion,{'k': -0.0003},Sparse Representation,20,62,0.016129032,1.0,0.189762797,1.85e-05,132.5824686
 radial_distortion,{'k': -0.0003},Sparse Representation Dimension Reduction,20,62,0.016129032,0.972580645,0.133583021,0.287691084,6.982772487
 radial_distortion,{'k': -0.0003},Sparse Representation Combined l1,20,62,0.016129032,0.972580645,0.124427799,0.277793552,23.91908702
-radial_distortion,{'k': 0.0005},PCA,20,62,0.016129032,1,0.083645443,0.143058286,10.03558362
-radial_distortion,{'k': 0.0005},Sparse Representation,20,62,0.016129032,1,0.124011652,1.96E-05,138.3779465
-radial_distortion,{'k': 0.0005},Sparse Representation Dimension Reduction,20,62,0.016129032,1,0.178526841,0.361562929,15.16748476
+radial_distortion,{'k': 0.0005},PCA,20,62,0.016129032,1.0,0.083645443,0.143058286,10.03558362
+radial_distortion,{'k': 0.0005},Sparse Representation,20,62,0.016129032,1.0,0.124011652,1.96e-05,138.3779465
+radial_distortion,{'k': 0.0005},Sparse Representation Dimension Reduction,20,62,0.016129032,1.0,0.178526841,0.361562929,15.16748476
 radial_distortion,{'k': 0.0005},Sparse Representation Combined l1,20,62,0.016129032,0.998387097,0.161048689,0.325969118,39.74162242
-radial_distortion,{'k': -0.0005},PCA,20,62,0.016129032,1,0.062838119,0.145409483,9.617219659
-radial_distortion,{'k': -0.0005},Sparse Representation,20,62,0.016129032,1,0.179359134,2.27E-05,147.8874053
+radial_distortion,{'k': -0.0005},PCA,20,62,0.016129032,1.0,0.062838119,0.145409483,9.617219659
+radial_distortion,{'k': -0.0005},Sparse Representation,20,62,0.016129032,1.0,0.179359134,2.27e-05,147.8874053
 radial_distortion,{'k': -0.0005},Sparse Representation Dimension Reduction,20,62,0.016129032,0.891935484,0.117769455,0.282264489,7.442668849
 radial_distortion,{'k': -0.0005},Sparse Representation Combined l1,20,62,0.016129032,0.891935484,0.110278818,0.291367213,22.67430765
-blur,{'blurwindow_size': 5},PCA,20,62,0.016129032,1,0.067831877,0.110480593,4.816868282
-blur,{'blurwindow_size': 5},Sparse Representation,20,62,0.016129032,1,0.20349563,1.96E-05,116.5850226
-blur,{'blurwindow_size': 5},Sparse Representation Dimension Reduction,20,62,0.016129032,1,0.214315439,0.145257695,10.0831071
-blur,{'blurwindow_size': 5},Sparse Representation Combined l1,20,62,0.016129032,1,0.176446109,0.149207193,34.31657452
-blur,{'blurwindow_size': 10},PCA,20,62,0.016129032,1,0.06741573,0.111440026,4.891980858
-blur,{'blurwindow_size': 10},Sparse Representation,20,62,0.016129032,1,0.188514357,1.85E-05,92.73279533
-blur,{'blurwindow_size': 10},Sparse Representation Dimension Reduction,20,62,0.016129032,1,0.129421556,0.15710128,7.742479529
-blur,{'blurwindow_size': 10},Sparse Representation Combined l1,20,62,0.016129032,1,0.107781939,0.160644878,31.69927444
+blur,{'blurwindow_size': 5},PCA,20,62,0.016129032,1.0,0.067831877,0.110480593,4.816868282
+blur,{'blurwindow_size': 5},Sparse Representation,20,62,0.016129032,1.0,0.20349563,1.96e-05,116.5850226
+blur,{'blurwindow_size': 5},Sparse Representation Dimension Reduction,20,62,0.016129032,1.0,0.214315439,0.145257695,10.0831071
+blur,{'blurwindow_size': 5},Sparse Representation Combined l1,20,62,0.016129032,1.0,0.176446109,0.149207193,34.31657452
+blur,{'blurwindow_size': 10},PCA,20,62,0.016129032,1.0,0.06741573,0.111440026,4.891980858
+blur,{'blurwindow_size': 10},Sparse Representation,20,62,0.016129032,1.0,0.188514357,1.85e-05,92.73279533
+blur,{'blurwindow_size': 10},Sparse Representation Dimension Reduction,20,62,0.016129032,1.0,0.129421556,0.15710128,7.742479529
+blur,{'blurwindow_size': 10},Sparse Representation Combined l1,20,62,0.016129032,1.0,0.107781939,0.160644878,31.69927444
 none,{},SVM,20,62,0.016129032,0.411290323,0.131918435,1.017714599,1.942279918
 occlude_lfw,{'occlusion_size': 20},SVM,20,62,0.016129032,0.411290323,0.006242197,0.917112622,2.055170653
 occlude_lfw,{'occlusion_size': 10},SVM,20,62,0.016129032,0.411290323,0.006242197,0.891733879,2.078787979
@@ -64,7 +64,7 @@ radial_distortion,{'k': 0.0005},SVM,20,62,0.016129032,0.411290323,0.06158968,0.8
 radial_distortion,{'k': -0.0005},SVM,20,62,0.016129032,0.411290323,0.044527674,0.943846125,2.138833206
 blur,{'blurwindow_size': 5},SVM,20,62,0.016129032,0.411290323,0.12068248,0.872184235,1.878224779
 blur,{'blurwindow_size': 10},SVM,20,62,0.016129032,0.411290323,0.094049105,0.97262121,1.916824905
-none,{},VGG,20,62,0.016129032,0,0,0,0
+none,{},VGG,20,62,0.016129032,0.0,0.0,0.0,0.0
 dfi,{'transform': 'Senior'},PCA,20,62,0.016129032258064516,1.0,0.0734094616639,3.6402089999999987,4.895384000000007
 dfi,{'transform': 'Senior'},Sparse Representation,20,62,0.016129032258064516,1.0,0.610114192496,2.6999999988674972e-05,1798.570228
 dfi,{'transform': 'Senior'},Sparse Representation Dimension Reduction,20,62,0.016129032258064516,1.0,0.460032626427,10.81194800000003,22.773206999999957
