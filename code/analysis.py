@@ -78,7 +78,7 @@ def create_all_traintestsplit_default_accuracies():
     for num_train in num_trains:
         results.append(pd.read_csv("../results/results_%d.csv" % num_train, header=0))
     labels = ["3", "10", "15", "19"]
-    xlabel = ["PCA", "Sparse\nRepresentation", "Sparse\nRepresentation\nDimension\nReduction", "Sparse\nRepresentation\nCombined\nL1", "SVM"]
+    xlabel = ["PCA", "Sparse\nRepresentation", "Sparse\nRepresentation\nDimension\nReduction", "Sparse\nRepresentation\nCombined\nL1", "SVM", "VGG"]
 
     ind = np.arange(len(xlabel))  # the x locations for the groups
     width = 0.35       # the width of the bars
@@ -86,14 +86,15 @@ def create_all_traintestsplit_default_accuracies():
     fig, ax = plt.subplots()
     for i in range(num_results):
         results_subset = results[i]
-        accuracies = results_subset[results_subset['Manipulation Type']=='none'][results_subset['Recognition Algorithm']!='VGG']['Test Accuracy']
+
+        accuracies = results_subset[results_subset['Manipulation Type']=='none']['Test Accuracy']
         ax.bar(ind+(width*(i-num_results/2))/num_results, accuracies, width/num_results, alpha=0.5, label=labels[i])
 
     # add some text for labels, title and axes ticks
     ax.set_ylabel('Accuracy')
-    ax.set_ylim([0,0.5])
+    ax.set_ylim([0,1.0])
     ax.set_title("Test Accuracies")
-    ax.set_xticks(ind)
+    ax.set_xticks(np.arange(len(xlabel))) # ind
     ax.set_xticklabels(xlabel,fontsize=8)
     ax.set_xlabel("Algorithm")
     plt.legend(title="Training Faces Per Person")
@@ -111,5 +112,5 @@ def create_all_traintestsplit_default_accuracies():
 #    create_accuracies_plot(test_accuracies, algorithms, "Algorithm", "Test Accuracies", "default_%d" % num_train)
 
 if __name__ == "__main__":
-    #create_all_traintestsplit_default_accuracies()
-    create_manipulation_accuracies(15)
+    create_all_traintestsplit_default_accuracies()
+    #create_manipulation_accuracies(15)
