@@ -234,7 +234,7 @@ if __name__ == "__main__":
         ManipulationInfo("dfi", {"transform": "Senior"}),
         ManipulationInfo("dfi", {"transform": "Mustache"}),
     ]
-    num_trains = [10, 15, 19]
+    num_trains = [3, 10, 15, 19]
 
     should_rerun = False
     if args.model:
@@ -282,4 +282,4 @@ if __name__ == "__main__":
                         writer.writerow(results)
                         f.flush()
                     except Exception as e:
-                        print("Error:" + e)
+                        print("Error:", e)
