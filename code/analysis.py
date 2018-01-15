@@ -41,12 +41,11 @@ def create_manipulation_accuracies(num_train):
     results = pd.read_csv("../results/results_%d.csv" % num_train, header=0)
     manipulations = np.unique(results['Manipulation Type'])
     #manipulations = ['dfi']
-    algorithms = list(np.unique(results['Recognition Algorithm'])) # FOR DFI
-    #algorithms.remove('VGG') #FOR DFI
     for manipulation in manipulations:
-        if manipulation == "none" or manipulation == 'dfi': # TODO: TAKE OUT DFI PART ONCE WE HAVE RESULTS.
+        if manipulation == "none":
             continue
         manipulation_results = results[results['Manipulation Type']==manipulation]
+        algorithms = list(np.unique(manipulation_results['Recognition Algorithm']))
         parameters = list(set(manipulation_results['Manipulation Parameters']))
         parameters.sort()
         parameter_labels = [list(ast.literal_eval(parameter).values())[0] for parameter in parameters]
@@ -64,13 +63,13 @@ def create_manipulation_accuracies(num_train):
         ax.set_ylabel("Test Accuracy")
         ax.set_title("Accuracies with %s Manipulation Images" % manipulation.title())
         ax.set_xticks(ind)
+        ax.set_ylim(0, 1)
         algorithms_labels = [algorithm.replace(" ","\n") for algorithm in algorithms]
         ax.set_xticklabels(algorithms_labels,fontsize=8)
         ax.set_xlabel("Algorithm")
         plt.legend(title=manipulation_parameter_names[manipulation])
         plt.tight_layout()
         plt.savefig(figures_dir+"results_%s_%d.png"%(manipulation.replace(" ",""), num_train))
-        plt.show()
 
 def create_all_traintestsplit_default_accuracies():
     num_trains = [3, 10, 15, 19]
@@ -112,5 +111,5 @@ def create_all_traintestsplit_default_accuracies():
 #    create_accuracies_plot(test_accuracies, algorithms, "Algorithm", "Test Accuracies", "default_%d" % num_train)
 
 if __name__ == "__main__":
-    create_all_traintestsplit_default_accuracies()
-    #create_manipulation_accuracies(15)
+    # create_all_traintestsplit_default_accuracies()
+    create_manipulation_accuracies(15)
