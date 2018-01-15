@@ -249,12 +249,9 @@ if __name__ == "__main__":
 
         # Create new save file if it doesn't exist
         if not os.path.exists(save_path):
-            with open(save_path, 'w') as f:
-                csv.DictWriter(f, fieldnames=COLUMNS).writeheader()
-
-        # Load existing results
-        with open(save_path, 'r') as f:
-            seen_results = [(row["Manipulation Type"], row["Manipulation Parameters"], row["Recognition Algorithm"]) for row in csv.DictReader(f)]
+            results = pd.DataFrame(columns=COLUMNS)
+        else:
+            results = pd.read_csv(save_path, float_precision='round_trip')
 
         # Run experiments
         with open(save_path, 'a') as f:
@@ -265,14 +262,18 @@ if __name__ == "__main__":
                     params_tuple = (manipulation_info.type, str(manipulation_info.parameters), model_name)
 
                     # Skip completed experiments
-                    if params_tuple in seen_results and not args.rerun:
+                    loc = (results["Manipulation Type"] == params_tuple[0]) & (results["Manipulation Parameters"] == params_tuple[1]) & (results["Recognition Algorithm"] == params_tuple[2])
+                    assert(len(results[loc]) <= 1)
+                    if len(results[loc]) > 0 and not args.rerun:
                         print("Skipping: %s" % str(params_tuple))
                         continue
 
+                    # Clear any duplicates
+                    results = results[~loc]
+
                     print("Running: %s" % str(params_tuple))
                     try:
-                        results = run_experiment(model_name, manipulation_info, num_train)
-                        writer.writerow(results)
-                        f.flush()
+                        results = results.append(run_experiment(model_name, manipulation_info, num_train), ignore_index=True)
+                        results.to_csv(save_path, index=False)
                     except Exception as e:
                         print("Error:", e)
