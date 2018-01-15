@@ -275,4 +275,4 @@ if __name__ == "__main__":
                         writer.writerow(results)
                         f.flush()
                     except Exception as e:
-                        print("Error:" + e)
+                        print("Error:", e)
