@@ -1,66 +1,92 @@
-Manipulation Type,Manipulation Parameters,Recognition Algorithm,Min Faces Per Person,Number of Distinct Faces,Chance Rate,Train Accuracy,Test Accuracy,Training Time,Testing Time
-none,{},PCA,20,62,0.016129032,1,0.050052873,0.118619,0.705791
-occlude_lfw,{'occlusion_size': 20},PCA,20,62,0.016129032,1,0.046175538,0.188828,0.657594
-none,{},Sparse Representation Dimension Reduction,20,62,0.016129032,1,0.163553049,0.430855,9.481343
-none,{},Sparse Representation Combined l1,20,62,0.016129032,1,0.134649277,0.461515,9.760663
-occlude_lfw,{'occlusion_size': 20},Sparse Representation Dimension Reduction,20,62,0.016129032,1,0.108917871,0.378083,9.834219
-occlude_lfw,{'occlusion_size': 20},Sparse Representation Combined l1,20,62,0.016129032,1,0.075431794,0.334062,9.927919
-occlude_lfw,{'occlusion_size': 10},PCA,20,62,0.016129032,1,0.048642933,0.171909,0.640385
-occlude_lfw,{'occlusion_size': 10},Sparse Representation Dimension Reduction,20,62,0.016129032,1,0.146986253,0.371998,9.417163
-occlude_lfw,{'occlusion_size': 10},Sparse Representation Combined l1,20,62,0.016129032,1,0.116672541,0.347981,9.865127
-occlude_lfw,{'occlusion_size': 30},PCA,20,62,0.016129032,1,0.049700388,0.173882,0.58258
-occlude_lfw,{'occlusion_size': 20},Sparse Representation,20,62,0.016129032,1,0.108565386,8.30E-05,478.128014
-none,{},Sparse Representation,20,62,0.016129032,1,0.142403948,0.000105,503.59532
-occlude_lfw,{'occlusion_size': 30},Sparse Representation Dimension Reduction,20,62,0.016129032,1,0.063799789,0.303671,9.375093
-occlude_lfw,{'occlusion_size': 40},PCA,20,62,0.016129032,1,0.048642933,0.124558,0.589965
-occlude_lfw,{'occlusion_size': 10},Sparse Representation,20,62,0.016129032,1,0.134649277,2.20E-05,455.303398
-occlude_lfw,{'occlusion_size': 30},Sparse Representation Combined l1,20,62,0.016129032,1,0.044060627,0.411721,9.866047
-occlude_lfw,{'occlusion_size': 40},Sparse Representation Dimension Reduction,20,62,0.016129032,1,0.043355657,0.324421,9.905317
-occlude_lfw,{'occlusion_size': 40},Sparse Representation Combined l1,20,62,0.016129032,1,0.024673951,0.320955,9.897386
-radial_distortion,{'k': 0.00015},PCA,20,62,0.016129032,1,0.057455058,0.150448,0.877445
-occlude_lfw,{'occlusion_size': 30},Sparse Representation,20,62,0.016129032,1,0.073316884,2.40E-05,527.629676
-radial_distortion,{'k': 0.00015},Sparse Representation Dimension Reduction,20,62,0.016129032,1,0.140994008,0.4666,8.323276
-radial_distortion,{'k': -0.00015},PCA,20,62,0.016129032,1,0.054635178,0.16743,0.927294
-radial_distortion,{'k': 0.00015},Sparse Representation Combined l1,20,62,0.016129032,1,0.135354247,0.472272,9.394493
-radial_distortion,{'k': -0.00015},Sparse Representation Dimension Reduction,20,62,0.016129032,1,0.131476912,0.466063,6.801237
-radial_distortion,{'k': -0.00015},Sparse Representation Combined l1,20,62,0.016129032,1,0.106097991,0.451198,8.307437
-radial_distortion,{'k': 0.0003},PCA,20,62,0.016129032,1,0.060274938,0.161606,0.858594
-occlude_lfw,{'occlusion_size': 40},Sparse Representation,20,62,0.016129032,1,0.041593232,2.20E-05,549.690102
-radial_distortion,{'k': 0.0003},Sparse Representation Dimension Reduction,20,62,0.016129032,1,0.126894607,0.469262,8.3061
-radial_distortion,{'k': 0.00015},Sparse Representation,20,62,0.016129032,1,0.131124427,2.30E-05,530.341695
-radial_distortion,{'k': -0.0003},PCA,20,62,0.016129032,1,0.051815298,0.155562,0.917411
-radial_distortion,{'k': 0.0003},Sparse Representation Combined l1,20,62,0.016129032,0.994623656,0.115615086,0.522883,9.375337
-radial_distortion,{'k': -0.0003},Sparse Representation Dimension Reduction,20,62,0.016129032,0.994623656,0.101515686,0.48705,5.254918
-radial_distortion,{'k': -0.00015},Sparse Representation,20,62,0.016129032,1,0.133944307,2.50E-05,536.354438
-radial_distortion,{'k': -0.0003},Sparse Representation Combined l1,20,62,0.016129032,0.994623656,0.094465985,0.532612,6.444013
-radial_distortion,{'k': 0.0005},PCA,20,62,0.016129032,1,0.056750088,0.179815,0.897177
-radial_distortion,{'k': 0.0005},Sparse Representation Dimension Reduction,20,62,0.016129032,0.994623656,0.101515686,0.430972,7.572491
-radial_distortion,{'k': 0.0003},Sparse Representation,20,62,0.016129032,1,0.115967571,2.30E-05,519.386416
-radial_distortion,{'k': 0.0005},Sparse Representation Combined l1,20,62,0.016129032,0.994623656,0.09270356,0.393342,8.656254
-radial_distortion,{'k': -0.0005},PCA,20,62,0.016129032,1,0.051110328,0.123877,0.903535
-radial_distortion,{'k': -0.0005},Sparse Representation Dimension Reduction,20,62,0.016129032,0.935483871,0.08635883,0.43804,4.483983
-radial_distortion,{'k': -0.0005},Sparse Representation Combined l1,20,62,0.016129032,0.935483871,0.076136764,0.406428,5.463327
-blur,{'blurwindow_size': 5},PCA,20,62,0.016129032,1,0.045823053,0.134041,0.580576
-radial_distortion,{'k': -0.0003},Sparse Representation,20,62,0.016129032,1,0.124779697,2.40E-05,548.338588
-blur,{'blurwindow_size': 5},Sparse Representation Dimension Reduction,20,62,0.016129032,1,0.120197392,0.329688,8.189807
-blur,{'blurwindow_size': 5},Sparse Representation Combined l1,20,62,0.016129032,1,0.105393021,0.310147,8.920696
-radial_distortion,{'k': 0.0005},Sparse Representation,20,62,0.016129032,1,0.094465985,2.20E-05,545.212683
-blur,{'blurwindow_size': 10},PCA,20,62,0.016129032,1,0.043355657,0.146385,0.590425
-blur,{'blurwindow_size': 10},Sparse Representation Dimension Reduction,20,62,0.016129032,1,0.081071554,0.402529,6.527652
-radial_distortion,{'k': -0.0005},Sparse Representation,20,62,0.016129032,1,0.113852661,2.20E-05,532.416947
-blur,{'blurwindow_size': 10},Sparse Representation Combined l1,20,62,0.016129032,1,0.075784279,0.361553,7.726249
-blur,{'blurwindow_size': 5},Sparse Representation,20,62,0.016129032,1,0.135354247,2.50E-05,500.552152
-blur,{'blurwindow_size': 10},Sparse Representation,20,62,0.016129032,1,0.106450476,2.20E-05,366.114021
-none,{},SVM,20,62,0.016129032258064516,0.704301075269,0.0863588297497,0.5012937819551683,0.2841211627839363
-occlude_lfw,{'occlusion_size': 20},SVM,20,62,0.016129032258064516,0.704301075269,0.00775467042651,0.06261428910712241,0.33125953156522137
-occlude_lfw,{'occlusion_size': 10},SVM,20,62,0.016129032258064516,0.704301075269,0.00775467042651,0.06660154649704708,0.3108535336124665
-occlude_lfw,{'occlusion_size': 30},SVM,20,62,0.016129032258064516,0.704301075269,0.00775467042651,0.05793530297303651,0.31667621317781025
-occlude_lfw,{'occlusion_size': 40},SVM,20,62,0.016129032258064516,0.704301075269,0.00775467042651,0.05790698438361952,0.30939455988569886
-radial_distortion,{'k': 0.00015},SVM,20,62,0.016129032258064516,0.704301075269,0.0659146986253,0.06681374712707999,0.47571227860054854
-radial_distortion,{'k': -0.00015},SVM,20,62,0.016129032258064516,0.704301075269,0.0704970038773,0.06302509744426565,0.33925141507991263
-radial_distortion,{'k': 0.0003},SVM,20,62,0.016129032258064516,0.704301075269,0.048290447656,0.06466153433138189,0.3433277816312028
-radial_distortion,{'k': -0.0003},SVM,20,62,0.016129032258064516,0.704301075269,0.0454705675009,0.060513804934760884,0.3403275214777608
-radial_distortion,{'k': 0.0005},SVM,20,62,0.016129032258064516,0.704301075269,0.0451180824815,0.07630613829968524,0.3423234156598767
-radial_distortion,{'k': -0.0005},SVM,20,62,0.016129032258064516,0.704301075269,0.0296087416285,0.06494660813151398,0.3332146469785755
-blur,{'blurwindow_size': 5},SVM,20,62,0.016129032258064516,0.704301075269,0.0768417342263,0.06351482025058885,0.2834713455521154
-blur,{'blurwindow_size': 10},SVM,20,62,0.016129032258064516,0.704301075269,0.0606274233345,0.06354049577166165,0.28019054257284637
+Manipulation Type,Manipulation Parameters,Recognition Algorithm,Min Faces Per Person,Number of Distinct Faces,Chance Rate,Train Accuracy,Test Accuracy,Training Time,Testing Time,
+none,{},PCA,20,62,0.016129032,1,0.050052873,0.118619,0.705791,
+occlude_lfw,{'occlusion_size': 20},PCA,20,62,0.016129032,1,0.046175538,0.188828,0.657594,
+none,{},Sparse Representation Dimension Reduction,20,62,0.016129032,1,0.163553049,0.430855,9.481343,
+none,{},Sparse Representation Combined l1,20,62,0.016129032,1,0.134649277,0.461515,9.760663,
+occlude_lfw,{'occlusion_size': 20},Sparse Representation Dimension Reduction,20,62,0.016129032,1,0.108917871,0.378083,9.834219,
+occlude_lfw,{'occlusion_size': 20},Sparse Representation Combined l1,20,62,0.016129032,1,0.075431794,0.334062,9.927919,
+occlude_lfw,{'occlusion_size': 10},PCA,20,62,0.016129032,1,0.048642933,0.171909,0.640385,
+occlude_lfw,{'occlusion_size': 10},Sparse Representation Dimension Reduction,20,62,0.016129032,1,0.146986253,0.371998,9.417163,
+occlude_lfw,{'occlusion_size': 10},Sparse Representation Combined l1,20,62,0.016129032,1,0.116672541,0.347981,9.865127,
+occlude_lfw,{'occlusion_size': 30},PCA,20,62,0.016129032,1,0.049700388,0.173882,0.58258,
+occlude_lfw,{'occlusion_size': 20},Sparse Representation,20,62,0.016129032,1,0.108565386,8.30E-05,478.128014,
+none,{},Sparse Representation,20,62,0.016129032,1,0.142403948,0.000105,503.59532,
+occlude_lfw,{'occlusion_size': 30},Sparse Representation Dimension Reduction,20,62,0.016129032,1,0.063799789,0.303671,9.375093,
+occlude_lfw,{'occlusion_size': 40},PCA,20,62,0.016129032,1,0.048642933,0.124558,0.589965,
+occlude_lfw,{'occlusion_size': 10},Sparse Representation,20,62,0.016129032,1,0.134649277,2.20E-05,455.303398,
+occlude_lfw,{'occlusion_size': 30},Sparse Representation Combined l1,20,62,0.016129032,1,0.044060627,0.411721,9.866047,
+occlude_lfw,{'occlusion_size': 40},Sparse Representation Dimension Reduction,20,62,0.016129032,1,0.043355657,0.324421,9.905317,
+occlude_lfw,{'occlusion_size': 40},Sparse Representation Combined l1,20,62,0.016129032,1,0.024673951,0.320955,9.897386,
+radial_distortion,{'k': 0.00015},PCA,20,62,0.016129032,1,0.057455058,0.150448,0.877445,
+occlude_lfw,{'occlusion_size': 30},Sparse Representation,20,62,0.016129032,1,0.073316884,2.40E-05,527.629676,
+radial_distortion,{'k': 0.00015},Sparse Representation Dimension Reduction,20,62,0.016129032,1,0.140994008,0.4666,8.323276,
+radial_distortion,{'k': -0.00015},PCA,20,62,0.016129032,1,0.054635178,0.16743,0.927294,
+radial_distortion,{'k': 0.00015},Sparse Representation Combined l1,20,62,0.016129032,1,0.135354247,0.472272,9.394493,
+radial_distortion,{'k': -0.00015},Sparse Representation Dimension Reduction,20,62,0.016129032,1,0.131476912,0.466063,6.801237,
+radial_distortion,{'k': -0.00015},Sparse Representation Combined l1,20,62,0.016129032,1,0.106097991,0.451198,8.307437,
+radial_distortion,{'k': 0.0003},PCA,20,62,0.016129032,1,0.060274938,0.161606,0.858594,
+occlude_lfw,{'occlusion_size': 40},Sparse Representation,20,62,0.016129032,1,0.041593232,2.20E-05,549.690102,
+radial_distortion,{'k': 0.0003},Sparse Representation Dimension Reduction,20,62,0.016129032,1,0.126894607,0.469262,8.3061,
+radial_distortion,{'k': 0.00015},Sparse Representation,20,62,0.016129032,1,0.131124427,2.30E-05,530.341695,
+radial_distortion,{'k': -0.0003},PCA,20,62,0.016129032,1,0.051815298,0.155562,0.917411,
+radial_distortion,{'k': 0.0003},Sparse Representation Combined l1,20,62,0.016129032,0.994623656,0.115615086,0.522883,9.375337,
+radial_distortion,{'k': -0.0003},Sparse Representation Dimension Reduction,20,62,0.016129032,0.994623656,0.101515686,0.48705,5.254918,
+radial_distortion,{'k': -0.00015},Sparse Representation,20,62,0.016129032,1,0.133944307,2.50E-05,536.354438,
+radial_distortion,{'k': -0.0003},Sparse Representation Combined l1,20,62,0.016129032,0.994623656,0.094465985,0.532612,6.444013,
+radial_distortion,{'k': 0.0005},PCA,20,62,0.016129032,1,0.056750088,0.179815,0.897177,
+radial_distortion,{'k': 0.0005},Sparse Representation Dimension Reduction,20,62,0.016129032,0.994623656,0.101515686,0.430972,7.572491,
+radial_distortion,{'k': 0.0003},Sparse Representation,20,62,0.016129032,1,0.115967571,2.30E-05,519.386416,
+radial_distortion,{'k': 0.0005},Sparse Representation Combined l1,20,62,0.016129032,0.994623656,0.09270356,0.393342,8.656254,
+radial_distortion,{'k': -0.0005},PCA,20,62,0.016129032,1,0.051110328,0.123877,0.903535,
+radial_distortion,{'k': -0.0005},Sparse Representation Dimension Reduction,20,62,0.016129032,0.935483871,0.08635883,0.43804,4.483983,
+radial_distortion,{'k': -0.0005},Sparse Representation Combined l1,20,62,0.016129032,0.935483871,0.076136764,0.406428,5.463327,
+blur,{'blurwindow_size': 5},PCA,20,62,0.016129032,1,0.045823053,0.134041,0.580576,
+radial_distortion,{'k': -0.0003},Sparse Representation,20,62,0.016129032,1,0.124779697,2.40E-05,548.338588,
+blur,{'blurwindow_size': 5},Sparse Representation Dimension Reduction,20,62,0.016129032,1,0.120197392,0.329688,8.189807,
+blur,{'blurwindow_size': 5},Sparse Representation Combined l1,20,62,0.016129032,1,0.105393021,0.310147,8.920696,
+radial_distortion,{'k': 0.0005},Sparse Representation,20,62,0.016129032,1,0.094465985,2.20E-05,545.212683,
+blur,{'blurwindow_size': 10},PCA,20,62,0.016129032,1,0.043355657,0.146385,0.590425,
+blur,{'blurwindow_size': 10},Sparse Representation Dimension Reduction,20,62,0.016129032,1,0.081071554,0.402529,6.527652,
+radial_distortion,{'k': -0.0005},Sparse Representation,20,62,0.016129032,1,0.113852661,2.20E-05,532.416947,
+blur,{'blurwindow_size': 10},Sparse Representation Combined l1,20,62,0.016129032,1,0.075784279,0.361553,7.726249,
+blur,{'blurwindow_size': 5},Sparse Representation,20,62,0.016129032,1,0.135354247,2.50E-05,500.552152,
+blur,{'blurwindow_size': 10},Sparse Representation,20,62,0.016129032,1,0.106450476,2.20E-05,366.114021,
+none,{},SVM,20,62,0.016129032,0.704301075,0.08635883,0.501293782,0.284121163,
+,,,,,,,,,,
+occlude_lfw,{'occlusion_size': 20},SVM,20,62,0.016129032,0.704301075,0.00775467,0.062614289,0.331259532,
+,,,,,,,,,,
+occlude_lfw,{'occlusion_size': 10},SVM,20,62,0.016129032,0.704301075,0.00775467,0.066601546,0.310853534,
+,,,,,,,,,,
+occlude_lfw,{'occlusion_size': 30},SVM,20,62,0.016129032,0.704301075,0.00775467,0.057935303,0.316676213,
+,,,,,,,,,,
+occlude_lfw,{'occlusion_size': 40},SVM,20,62,0.016129032,0.704301075,0.00775467,0.057906984,0.30939456,
+,,,,,,,,,,
+radial_distortion,{'k': 0.00015},SVM,20,62,0.016129032,0.704301075,0.065914699,0.066813747,0.475712279,
+,,,,,,,,,,
+radial_distortion,{'k': -0.00015},SVM,20,62,0.016129032,0.704301075,0.070497004,0.063025097,0.339251415,
+,,,,,,,,,,
+radial_distortion,{'k': 0.0003},SVM,20,62,0.016129032,0.704301075,0.048290448,0.064661534,0.343327782,
+,,,,,,,,,,
+radial_distortion,{'k': -0.0003},SVM,20,62,0.016129032,0.704301075,0.045470568,0.060513805,0.340327521,
+,,,,,,,,,,
+radial_distortion,{'k': 0.0005},SVM,20,62,0.016129032,0.704301075,0.045118082,0.076306138,0.342323416,
+,,,,,,,,,,
+radial_distortion,{'k': -0.0005},SVM,20,62,0.016129032,0.704301075,0.029608742,0.064946608,0.333214647,
+,,,,,,,,,,
+blur,{'blurwindow_size': 5},SVM,20,62,0.016129032,0.704301075,0.076841734,0.06351482,0.283471346,
+,,,,,,,,,,
+blur,{'blurwindow_size': 10},SVM,20,62,0.016129032,0.704301075,0.060627423,0.063540496,0.280190543,
+,,,,,,,,,,
+none,{},VGG,20,62,0.016129032,0.951612903,0.943602397,2495.030666,142.463919,also for k=5
+occlude_lfw,{'occlusion_size': 20},VGG,20,62,0.016129032,0.951612903,0.82375749,2492.815256,144.74302,
+occlude_lfw,{'occlusion_size': 10},VGG,20,62,0.016129032,0.951612903,0.942192457,2501.637854,142.73262,
+occlude_lfw,{'occlusion_size': 30},VGG,20,62,0.016129032,0.951612903,0.457525555,2468.582654,142.410265,
+occlude_lfw,{'occlusion_size': 40},VGG,20,62,0.016129032,0.951612903,0.101515686,2503.652497,141.769302,
+radial_distortion,{'k': 0.00015},VGG,20,62,0.016129032,0.951612903,0.938667607,2500.172058,141.008012,
+radial_distortion,{'k': -0.00015},VGG,20,62,0.016129032,0.951612903,0.929855481,2490.960458,141.635099,
+radial_distortion,{'k': 0.0003},VGG,20,62,0.016129032,0.951612903,0.90729644,2493.499229,142.83027,
+radial_distortion,{'k': -0.0003},VGG,20,62,0.016129032,0.951612903,0.909058865,2501.554214,142.93839,
+radial_distortion,{'k': 0.0005},VGG,20,62,0.016129032,0.951612903,0.81106803,2501.055259,143.241019,
+radial_distortion,{'k': -0.0005},VGG,20,62,0.016129032,0.951612903,0.723651745,2508.751412,142.703213,
+blur,{'blurwindow_size': 5},VGG,20,62,0.016129032,0.951612903,0.942544942,2517.935382,141.291877,
+blur,{'blurwindow_size': 10},VGG,20,62,0.016129032,0.951612903,0.930560451,2502.774526,142.453317,
