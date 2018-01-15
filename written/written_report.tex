@@ -16,7 +16,7 @@
 
 \title{Robustness of Face Recognition to Image Manipulations}
 
-\author{Cathy Chen, Zach Liu, and Lindy Zeng}
+\author{Cathy Chen (cc27), Zachary Liu (zsliu), and Lindy Zeng (lindy)}
 \date{}
 \maketitle
 
@@ -70,6 +70,9 @@ We first project the test and training faces to a lower-dimension subspace using
 
 So this algorithm performs face recognition by solving $\min||c||_1+||e||_1\:s.t.\:y=\Phi c+e$, where the addition of $e$ is intended to allow the algorithm to account for small differences between images of the same person.
 
+\subsection{SVM}
+Did not implement, used as another comparison point?
+
 \subsubsection{VGG-based Classification}\hspace*{\fill} \\
 We implement this algorithm based on the work and pre-trained convolutional neural network of \cite{parkhi_deep_2015}. Each image undergoes preprocessing before usage in the network. For the preprocessing, we use the deformable parts model face detector provided by \cite{parkhi_deep_2015} and crop the detected face from each of the the original images. An example of a face before and after preprocessing is shown in Figure \ref{fig:vgg_preprocessing}. We also subtract the mean values for each color channel, provided by \cite{parkhi_deep_2015}, from the images prior to using the convolutional neural network.
 
@@ -81,7 +84,7 @@ We implement this algorithm based on the work and pre-trained convolutional neur
 
 \end{figure} 
 
-Next, we translate the architecture of the VGG-based network for use with the Keras Python framework and load the pre-trained weights. We feed each face through the network, stopping at the fc-7 layer to obtain a 4,096-dimensional descriptor for each image.
+Next, we translate the architecture of the VGG-FACE network for use with the Keras Python framework and load the pre-trained weights. We feed each face through the network, stopping at the fc-7 layer to obtain a 4,096-dimensional descriptor for each image.
 
 For each test descriptor $w$, we calculate its cosine similarity to each training descriptor $v$. This is given by $arccos\frac{v \cdot w}{||v|| ||w||}$. The use of cosine similarity is different from the Euclidean distance methodology used in \cite{parkhi_deep_2015}, which we found to have weaker performance on our dataset. We find the nearest-$k$ neighboring training descriptors according to cosine similarity and classify the test face according to the majority vote.
 
@@ -137,12 +140,20 @@ Furthermore, each of image is centered on a single face, which provides some mea
 \subsection{Evaluation}
 We train each algorithm using three instances of each person's face. We then evaluate each algorithm's performance according to its accuracy ($\frac{\textrm{correct predictions}}{\textrm{total predictions}}$) in recognizing faces on the test set, which includes the remaining instances of each person's face.
 
-\section{Results and Description}
+\section{Results and Discussion}
 TODO: ADD RESULTS WITH VGG, DFI
 TODO: ANALYZE/DESCRIBE
 
+Our baseline test accuracy with no manipulations on the LFW images is shown in Figure \ref{fig:baseline}. We vary the number of training faces used per person and calculate the accuracy for each algorithm. These baseline results indicate that VGG-FACE outperforms PCA, Sparse Representation, and SVM methods with both 3 and 15 training faces per person. In the interest of computation cost, we did not test the performance of VGG-FACE on the 10 and 19 training faces per person.
 
-A deep learning approach to face recognition outperformed the statistical methods of PCA and Sparse Representation. The VGG-FACE network produced an accuracy score of over 0.98 on non-manipulated images for various values of $k$, where $k$ is the number of nearest neighboring training descriptors to compare to for each test image. We found that preprocessing the images through face detection and cropping improved performance. In addition, using cosine similarity and the nearest-$k$ neighboring heuristic, instead of Euclidean distance and the mean of the training descriptors, also improved performance. A summary of the VGG-FACE network's performance on non-manipulated images of the LFW dataset is shown in Figure \ref{fig:vgg_nonmanipulated}. 
+\begin{figure}
+\centering
+\includegraphics[scale=0.5]{../figures/results_plots/default_accuracies_difftraintest.png}
+\caption{Baseline results with no manipulation}
+\label{fig:baseline}
+\end{figure}
+
+A deep learning approach to face recognition outperformed the statistical methods of PCA and Sparse Representation and SVM. The VGG-FACE network produced an accuracy score of over 0.98 on non-manipulated images for various values of $k$, where $k$ is the number of nearest neighboring training descriptors to compare to for each test image. We found that preprocessing the images through face detection and cropping improved performance. In addition, using cosine similarity and the nearest-$k$ neighboring heuristic, instead of Euclidean distance and the mean of the training descriptors, also improved performance. A summary of the VGG-FACE network's performance on non-manipulated images of the LFW dataset is shown in Figure \ref{fig:vgg_nonmanipulated}. 
 
 \begin{figure}
 \centering
@@ -150,6 +161,8 @@ A deep learning approach to face recognition outperformed the statistical method
 \caption{VGG-FACE Results with No Manipulations (The dotted line indicates performance with Euclidean distance and mean descriptor)}
 \label{fig:vgg_nonmanipulated}
 \end{figure}
+
+With manipulations, however, we find support for image manipulations equalizing face recognition ability. ...
 
 \begin{figure}
 \centering
