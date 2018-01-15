@@ -73,19 +73,16 @@ def get_lfw_dataset(min_faces_per_person, num_train):
     #train_data, test_data, train_targets, test_targets = train_test_split(data, dataset.target)
     return train_data, train_targets, test_data, test_targets
 
-def get_lfw_image_path(lfw_data_folder_path, person, imagenum):
-    return os.path.join(lfw_data_folder_path, person, "{}_{:04d}.jpg".format(person, imagenum))
+def get_lfw_image_path(person, imagenum):
+    return os.path.join("dfi", "lfw_aegan", person, "{}_{:04d}.jpg".format(person, imagenum))
 
 def get_lfw_dfi_image_path(person, imagenum, transform):
-    return os.path.join("..", "dfi", "{}_{:04d}__{}.jpg".format(person, imagenum, transform))
+    return os.path.join("dfi", "output", "{}_{:04d}__{}.jpg".format(person, imagenum, transform))
 
-def get_lfw_image(image_path, crop_resize, scale=0.5):
+def get_lfw_image(image_path, scale):
     face = imread(image_path)
     face = face[:,:,:3] # delete alpha channel
-    if crop_resize:
-        face = face[(slice(50, 200), slice(50, 200))]
-        face = imresize(face, 200 / 150 * scale)
-    else:
+    if scale != 1:
         face = imresize(face, scale)
     face = face.flatten()
     face = face / 255 # convert to float
@@ -95,16 +92,15 @@ def get_lfw_dfi_dataset(min_faces_per_person, num_train, manipulation_info):
     assert(manipulation_info.type == "dfi")
 
     train_data, train_targets, test_data, test_targets = [], [], [], []
-    lfw_home, lfw_data_folder_path = check_fetch_lfw()
     transform = manipulation_info.parameters["transform"]
     person_index = 0
 
-    for person in os.listdir(lfw_data_folder_path):
-        if not os.path.isfile(get_lfw_image_path(lfw_data_folder_path, person, min_faces_per_person)):
+    for person in os.listdir(os.path.join("dfi", "lfw_aegan")):
+        if not os.path.isfile(get_lfw_image_path(person, min_faces_per_person)):
             continue
 
         # Load train data
-        train_data += [get_lfw_image(get_lfw_image_path(lfw_data_folder_path, person, index + 1), crop_resize=True) for index in range(min_faces_per_person - num_train, min_faces_per_person)]
+        train_data += [get_lfw_image(get_lfw_image_path(person, index + 1), scale=1) for index in range(min_faces_per_person - num_train, min_faces_per_person)]
         train_targets += [person_index] * num_train
         assert(len(train_data) == len(train_targets))
 
@@ -112,7 +108,7 @@ def get_lfw_dfi_dataset(min_faces_per_person, num_train, manipulation_info):
         person_image_paths = [get_lfw_dfi_image_path(person, index + 1, transform) for index in range(0, min_faces_per_person - num_train)]
         person_image_paths = [image_path for image_path in person_image_paths if os.path.isfile(image_path)]
         assert(1 <= len(person_image_paths) <= min_faces_per_person - num_train)
-        test_data += [get_lfw_image(image_path, crop_resize=False) for image_path in person_image_paths]
+        test_data += [get_lfw_image(image_path, scale=0.5) for image_path in person_image_paths]
         test_targets += [person_index] * len(person_image_paths)
         assert(len(test_data) == len(test_targets))
 
