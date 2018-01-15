@@ -104,16 +104,6 @@ blur,{'blurwindow_size': 10},Sparse Representation Dimension Reduction,20,62,0.0
 ,,,,,,,,,,
 blur,{'blurwindow_size': 10},Sparse Representation Combined l1,20,62,0.016129032,1,0.108456761,0.339208243,66.03144004,
 ,,,,,,,,,,
-dfi,{'transform': 'Senior'},PCA,20,62,0.016129032,1,0.068627451,6.259384,7.619724,
-dfi,{'transform': 'Senior'},Sparse Representation,20,62,0.016129032,1,0.238562092,2.50E-05,2897.600796,
-dfi,{'transform': 'Senior'},Sparse Representation Dimension Reduction,20,62,0.016129032,1,0.261437908,20.231177,25.618672,
-dfi,{'transform': 'Senior'},Sparse Representation Combined l1,20,62,0.016129032,1,0.192810458,20.689469,47.01603,
-dfi,{'transform': 'Senior'},SVM,20,62,0.016129032,0.4,0.117647059,22.865778,5.517095,
-dfi,{'transform': 'Mustache'},PCA,20,62,0.016129032,1,0.055555556,7.873118,8.581079,
-dfi,{'transform': 'Mustache'},Sparse Representation,20,62,0.016129032,1,0.258169935,2.50E-05,2927.141318,
-dfi,{'transform': 'Mustache'},Sparse Representation Dimension Reduction,20,62,0.016129032,1,0.261437908,20.647131,28.587026,
-dfi,{'transform': 'Mustache'},Sparse Representation Combined l1,20,62,0.016129032,1,0.166666667,21.262647,49.079422,
-dfi,{'transform': 'Mustache'},SVM,20,62,0.016129032,0.4,0.140522876,23.480795,5.538388,
 none,{},VGG,20,62,0.016129032,0.989247312,0.98614429,2518.814395,704.296187,use k=5 for all reported vgg results
 occlude_lfw,{'occlusion_size': 20},VGG,20,62,0.016129032,0.989247312,0.900621118,2487.495576,700.243438,actually {'occlusion_size': 82} for equivalent area
 occlude_lfw,{'occlusion_size': 10},VGG,20,62,0.016129032,0.989247312,0.982799809,2496.483926,699.494234,actually {'occlusion_size': 41} for equivalent area
