@@ -1,4 +1,7 @@
-%  Preprocess LFW data for VGG
+%  Script to preprocess LFW data for VGG
+%  This uses the DPM detector and cropping function from Parkhi et al.
+%  http://www.robots.ox.ac.uk/~vgg/software/vgg_face/
+%  Outputs a HDF5 file containing the raw matrices of face data
 
 config.paths.net_path = 'data/vgg_face.mat';
 config.paths.face_model_path = 'data/face_model.mat';
