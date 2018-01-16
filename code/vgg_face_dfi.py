@@ -279,7 +279,7 @@ for num_train in num_trains:
     trained_model = TrainedModel(num_train)
     for manipulation in manipulation_infos:
         stats = run_experiment(trained_model, manipulation)
-        results.append(stats, ignore_index=True)
+        results = results.append(stats, ignore_index=True)
         print(stats)
         print()
     results.to_csv(save_path, index=False)
