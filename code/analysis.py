@@ -38,6 +38,12 @@ def create_manipulation_accuracies(num_train):
             'blur':'Blur Window Size',
             'dfi':'',
             }
+    manipulation_titles = {
+            'occlude_lfw':'Occlusion',
+            'radial_distortion':'Radial Distortion',
+            'blur':'Blur',
+            'dfi':'DFI',
+            }
     results = pd.read_csv("../results/results_%d.csv" % num_train, header=0)
     manipulations = np.unique(results['Manipulation Type'])
     #manipulations = ['dfi']
@@ -61,7 +67,7 @@ def create_manipulation_accuracies(num_train):
             ax.bar(ind+(width*(i-num_results/2))/num_results, accuracies, width/num_results, alpha=0.5, label=parameter_labels[i])
         ax.set_xlabel("Recognition Algorithm")
         ax.set_ylabel("Test Accuracy")
-        ax.set_title("Accuracies with %s Manipulation Images" % manipulation.title())
+        ax.set_title("Accuracies with %s Manipulation Images" % manipulation_titles[manipulation])
         ax.set_xticks(ind)
         ax.set_ylim(0, 1)
         algorithms_labels = [algorithm.replace(" ","\n") for algorithm in algorithms]
@@ -171,7 +177,7 @@ def plot_manipulation_impact(normalized_average=True):
 
 if __name__ == "__main__":
     # create_all_traintestsplit_default_accuracies()
-    #create_manipulation_accuracies(15)
-    compute_manipulation_impact(15)
-    plot_manipulation_impact(True)
-    plot_manipulation_impact(False)
+    create_manipulation_accuracies(15)
+#    compute_manipulation_impact(15)
+#    plot_manipulation_impact(True)
+#    plot_manipulation_impact(False)
