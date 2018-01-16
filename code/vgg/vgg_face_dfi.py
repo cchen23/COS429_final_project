@@ -30,7 +30,6 @@ os.chdir('..')
 import numpy as np
 import matplotlib.pyplot as plt
 
-get_ipython().run_line_magic('matplotlib', 'inline')
 
 import time
 import os
@@ -128,10 +127,6 @@ def partial_vgg_face():
 # In[5]:
 
 
-get_ipython().run_line_magic('load_ext', 'autoreload')
-get_ipython().run_line_magic('aimport', 'experiment')
-get_ipython().run_line_magic('aimport', 'manipulations')
-get_ipython().run_line_magic('autoreload', '1')
 
 from sklearn.datasets import fetch_lfw_people
 from scipy.spatial.distance import cosine
