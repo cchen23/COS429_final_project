@@ -77,12 +77,12 @@ While we did not implement this algorithm, we include results from this algorith
 We implement this algorithm based on the work and pre-trained convolutional neural network of \cite{parkhi_deep_2015}. Each image undergoes preprocessing before usage in the network. For the preprocessing, we use the deformable parts model face detector provided by \cite{parkhi_deep_2015} and crop the detected face from each of the the original images. An example of a face before and after preprocessing is shown in Figure \ref{fig:vgg_preprocessing}. We also subtract the mean values for each color channel, provided by \cite{parkhi_deep_2015}, from the images prior to using the convolutional neural network.
 
 \begin{figure}[!htb]
-\subfloat[Original Image]{\includegraphics[width = 3in]{../figures/vgg_2.png}} 
+\subfloat[Original Image]{\includegraphics[width = 3in]{../figures/vgg_2.png}}
 \subfloat[Preprocessed Image]{\includegraphics[width = 3in]{../figures/vgg_3.png}}
 \caption{Preprocessing Demo (The face is detected and cropped from the original image).}
 \label{fig:vgg_preprocessing}
 
-\end{figure} 
+\end{figure}
 
 Next, we translate the architecture of the VGG-FACE network for use with the Keras Python framework and load the pre-trained weights. We feed each face through the network, stopping at the fc-7 layer to obtain a 4,096-dimensional descriptor for each image.
 
@@ -96,7 +96,7 @@ The tendency for external objects to hide parts of people's faces in images moti
 We implement occlusion by selecting a region of the image and randomly resetting the pixels in this region, and show examples of occluded images in Figure \ref{fig:manipulationdemo_occlusion}. We vary the occlusion window size to produce dataset images with varying amounts of occlusion.
 
 \begin{figure}[!htb]
-\subfloat[Original Image]{\includegraphics[width = 3in]{../figures/manipulationdemo_none}} 
+\subfloat[Original Image]{\includegraphics[width = 3in]{../figures/manipulationdemo_none}}
 \subfloat[Occluded Image]{\includegraphics[width = 3in]{../figures/manipulationdemo_occlusion}}
 \caption{Occlusion Demo (Window size is length of occluded region on one size).}
 \label{fig:manipulationdemo_occlusion}
@@ -112,7 +112,7 @@ We set $(i_0,j_0)$ as the vertical and horizontal centerline of the image, and r
 We provide examples of pincushion and barrel distortion for various values of $k$ in Figure \ref{fig:manipulationdemo_radial}. We manipulate our dataset images with various levels of radial distortion, as determined by $k$.
 
 \begin{figure}[!htb]
-\subfloat[Original Image]{\includegraphics[width = 3in]{../figures/manipulationdemo_none}} 
+\subfloat[Original Image]{\includegraphics[width = 3in]{../figures/manipulationdemo_none}}
 \subfloat[Distorted Image]{\includegraphics[width = 3in]{../figures/manipulationdemo_radial}}
 \caption{Radial Distortion Demo.}
 \label{fig:manipulationdemo_radial}
@@ -123,7 +123,7 @@ The possibility for image recognition systems to receive blurry input motivates 
 
 We provide examples of blurred images in Figure \ref{fig:manipulationdemo_blur}.
 \begin{figure}[!htb]
-\subfloat[Original Image]{\includegraphics[width = 3in]{../figures/manipulationdemo_none}} 
+\subfloat[Original Image]{\includegraphics[width = 3in]{../figures/manipulationdemo_none}}
 \subfloat[Blurred Image]{\includegraphics[width = 3in]{../figures/manipulationdemo_blur}}
 \caption{Blur Distortion Demo (Window size is length of window of pixels whose mean replaces each original pixel).}
 \label{fig:manipulationdemo_blur}
@@ -177,7 +177,7 @@ Our baseline test accuracy with no manipulations on the LFW images is shown in F
 \label{fig:baseline}
 \end{figure}
 
-Further adjustments were made to the VGG-FACE network that produced varying results; the highest accuracy achieved was over 0.98 on non-manipulated images for various values of $k$, where $k$ is the number of nearest neighboring training descriptors to compare to for each test image. We found that preprocessing the images through face detection and cropping improved performance. In addition, using cosine similarity and the nearest-$k$ neighboring heuristic, instead of Euclidean distance and the mean of the training descriptors, also improved performance. We show a summary of the VGG-FACE network's performance on non-manipulated images of the LFW dataset in Figure \ref{fig:vgg_nonmanipulated}. 
+Further adjustments were made to the VGG-FACE network that produced varying results; the highest accuracy achieved was over 0.98 on non-manipulated images for various values of $k$, where $k$ is the number of nearest neighboring training descriptors to compare to for each test image. We found that preprocessing the images through face detection and cropping improved performance. In addition, using cosine similarity and the nearest-$k$ neighboring heuristic, instead of Euclidean distance and the mean of the training descriptors, also improved performance. We show a summary of the VGG-FACE network's performance on non-manipulated images of the LFW dataset in Figure \ref{fig:vgg_nonmanipulated}.
 
 \begin{figure}
 \centering
@@ -191,7 +191,7 @@ With manipulations, we find support for image manipulations equalizing face reco
 
 Figure \ref{fig:results_algorithms} shows the results split by algorithm in order to compare the effects of different manipulations. We observe that in 5 out of the 6 algorithms, accuracy drops severely after applying an occlusion manipulation. Only the VGG model is able to handle occlusions well, and it is able to maintain close to baseline accuracy for small occlusions.
 
-However, figure \ref{fig:results_algorithms} also shows that the DFI manipulations had a relatively small impact on the accuracy of statistical methods, while it had the greatest impact on the VGG model. This shows that the statistical models have better ability to generalize the identity of a face to be robust to these types of content-based manipulations.
+However, Figure \ref{fig:results_algorithms} also shows that the DFI manipulations had a relatively small impact on the accuracy of statistical methods, while it had the greatest impact on the VGG model. This shows that the statistical models have better ability to generalize the identity of a face to be robust to these types of content-based manipulations.
 
 In order to compare the change in accuracy across manipulation parameters and different algorithms, we normalize the difference with the baseline accuracies, as shown in the right of Figure \ref{fig:results_diff}. The normalized differences indicate that image manipulations does not clearly impair face recognition accuracy more for algorithms that perform better at baseline.
 
@@ -226,7 +226,7 @@ In order to compare the change in accuracy across manipulation parameters and di
         \includegraphics[width=0.5\textwidth]{../figures/results_plots/results_algorithm_SVM_15.png}}
     \subfloat{
         \includegraphics[width=0.5\textwidth]{../figures/results_plots/results_algorithm_VGG_15.png}}
-    \caption{Test accuracy for each algorithm compared across manipulations.}
+    \caption{Test accuracy (using 15 training examples per face) for each algorithm compared across manipulations. Labels above each bar indicate the corresponding manipulation parameter value used in that experiment.}
     \label{fig:results_algorithms}
 \end{figure}
 
@@ -258,13 +258,16 @@ Another weakness of the system is sensitivity to the alignment of images. With t
 \end{figure}
 
 \section{Conclusion}
-In this project, we implement various face recognition algorithms, ranging from statistical methods such as PCA and Sparse Representation to deep learning methods such as VGG-FACE. We use the Labeled Faces in the Wild dataset, and transform the face images with different manipulations: occlusion, radial distortion, blur, and deep feature interpolation. While VGG-FACE performed the best across non-manipulated and manipulated images, it displayed the same relative accuracy drop as the other algorithms. This suggests that although for humans, people with stronger face recognition ability may do worse relatively when identifying manipulated faces, the same cannot be said of stronger and weaker face recognition algorithms.
+In this project, we implement various face recognition algorithms, ranging from statistical methods such as PCA and Sparse Representation to deep learning methods such as VGG-FACE. We use the Labeled Faces in the Wild dataset, and transform the face images with different manipulations: occlusion, radial distortion, blur, and deep feature interpolation.
+
+When comparing the effects of different face manipulations on different recognition algorithms, we found strengths and weaknesses in the performance of each. Statistical algorithms such as Sparse Representations and SVMs performed well on DFI content-based manipulations, while deep learning methods such as VGG-FACE performed relatively poorly on this manipulation. However, VGG-FACE was able to handle small occlusions, a manipulation which severely impacted the accuracy of statistical models. This shows how each type of recognition model has its own relative strengths, suggesting that a combination of techniques can lead to the highest overall robustness to manipulations.
+
+While VGG-FACE performed the best across non-manipulated and manipulated images, it displayed the same relative accuracy drop as the other algorithms. This suggests that although for humans, people with stronger face recognition ability do worse relatively when identifying manipulated faces, the same cannot be said of stronger and weaker face recognition algorithms.
 
 \bibliographystyle{plain}
 \bibliography{cos429bibtex}
- 
+
 \section{Appendix}\label{sec:Appendix}
 Our implementation is available \href{https://github.com/cchen23/COS429_final_project}{online}. Our implementation includes a general framework which allows the user to swap in definitions of any image manipulations and recognition algorithms, as well as modules that implement each of the manipulations and algorithms we tested.
 
 \end{document}
- 
