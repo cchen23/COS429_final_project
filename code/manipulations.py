@@ -33,7 +33,7 @@ def perform_manipulation(data, manipulation_info: ManipulationInfo):
 def occlude_lfw_dataset(data, occlusion_size):
     """Returns a list of occluded images. Takes dataset.data from lfw as input."""
     num_images = data.shape[0]
-    lfw_imageshape = (62,47)
+    lfw_imageshape = (50, 50)
     lfw_datashape = data[0].shape
     dataset_images = [np.reshape(add_occlusion(np.reshape(data[i], lfw_imageshape), occlusion_size), lfw_datashape) for i in range(num_images)]
     return dataset_images
@@ -70,7 +70,7 @@ def add_occlusion(input_image, occlusion_size):
 #    return distortion_array_i, distortion_array_j
 
 def radially_distort_lfw_dataset(data, k):
-    lfw_imageshape = (62, 47)
+    lfw_imageshape = (50, 50)
     distortion_array_i, distortion_array_j = create_radial_distortion_array(k, lfw_imageshape)
     lfw_datashape = data[0].shape
     num_images = data.shape[0]
@@ -100,17 +100,20 @@ def create_radial_distortion_array(k, input_image_shape):
             i_bar = i - i0
             j_bar = j - j0
             r_squared = (i_bar * i_bar) + (j_bar * j_bar)
-            i_input = i / (1+k*r_squared)
-            j_input = j / (1+k*r_squared)
-            if i_input < i_max and j_input < j_max and i_input >= 0 and j_input >= 0:
-                distortion_array_i[i, j] = i_input
-                distortion_array_j[i, j] = j_input
+            try:
+                i_input = i / (1+k*r_squared)
+                j_input = j / (1+k*r_squared)
+                if i_input < i_max and j_input < j_max and i_input >= 0 and j_input >= 0:
+                    distortion_array_i[i, j] = i_input
+                    distortion_array_j[i, j] = j_input
+            except ZeroDivisionError:
+                pass
     return distortion_array_i, distortion_array_j
 
 def blur_lfw_dataset(data, blurwindow_size):
     """Returns a list of blurred images. Takes dataset.data from lfw as input."""
     num_images = data.shape[0]
-    lfw_imageshape = (62,47)
+    lfw_imageshape = (50, 50)
     lfw_datashape = data[0].shape
     dataset_images = [np.reshape(blur(np.reshape(data[i], lfw_imageshape), blurwindow_size), lfw_datashape) for i in range(num_images)]
     return dataset_images
@@ -133,7 +136,7 @@ def blur_slow(input_image, blurwindow_size):
             
 if __name__ == "__main__":
     min_faces_per_person = 20
-    lfw_shape = (62,47)
+    lfw_shape = (50, 50)
     cmap="gray"
     dataset = fetch_lfw_people(min_faces_per_person=min_faces_per_person)
     print("Number of people with at least %d distinct faces: %d" % (min_faces_per_person, len(np.unique(dataset.target))))
