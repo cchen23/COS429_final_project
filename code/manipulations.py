@@ -40,13 +40,12 @@ def occlude_lfw_dataset(data, occlusion_size):
 
 def add_occlusion(input_image, occlusion_size):
     """Randomly selects an occlusion_size-by-occlusion_size square in the image
-    and sets the pixels to random values between 0 and 256."""
-    max_value = 256
+    and sets the pixels to random values."""
     max_i, max_j = input_image.shape
     input_image = np.copy(input_image)
     start_i = np.random.randint(0, max_i-occlusion_size)
     start_j = np.random.randint(0, max_j-occlusion_size)
-    occlusion_square = np.random.rand(occlusion_size, occlusion_size)*max_value
+    occlusion_square = np.random.rand(occlusion_size, occlusion_size)
     input_image[start_i:start_i+occlusion_size,start_j:start_j+occlusion_size]=occlusion_square
     return input_image
 
