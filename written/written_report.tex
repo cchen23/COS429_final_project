@@ -38,7 +38,7 @@ Similarly, others have developed image manipulations using principles from linea
 Furthermore, researchers in psychology have studied face recognition in humans. A study of "super-recognizers" (people with extraordinarily high powers of face recognition) and "developmental prosopagnosics" (people with severely impaired face recognition abilities) found that inverting images of faces impaired recognition ability more for people with stronger face recognition abilities\cite{russell_super-recognizers:_2009}. This could indicate that image manipulations tend to equalize face recognition abilities, and we investigate whether this is the case with the manipulations and face recognition algorithms we test.
 
 \section{Methods}
-To test robustness of image recognition algorithms, we implemented [TODO: INSERT NUMBER HERE] algorithms and [TODO: INSERT NUMBER HERE] image manipulations. We then tested each of the algorithms with non-manipulated images as well as images resulting from each of the manipulations. In addition to the absolute accuracy of each of these combinations, we analyzed the trend in each algorithm's performance on manipulated images to the algorithm's performance on non-manipulated images.
+To test robustness of image recognition algorithms, we implemented various algorithms and image manipulations. We then tested each of the algorithms with un-manipulated images as well as images resulting from each of the manipulations. In addition to the absolute accuracy of each of these combinations, we analyzed the trend in each algorithm's performance on manipulated images to the algorithm's performance on un-manipulated images.
 
 We describe our algorithms, manipulations, dataset, and evaluation method in the following subsections.
 
@@ -141,9 +141,6 @@ Furthermore, each of image is centered on a single face, which provides some mea
 We train each algorithm using three instances of each person's face. We then evaluate each algorithm's performance according to its accuracy ($\frac{\textrm{correct predictions}}{\textrm{total predictions}}$) in recognizing faces on the test set, which includes the remaining instances of each person's face.
 
 \section{Results and Discussion}
-TODO: ADD RESULTS WITH VGG, DFI
-TODO: ANALYZE/DESCRIBE
-
 Our baseline test accuracy with no manipulations on the LFW images is shown in Figure \ref{fig:baseline}. We vary the number of training faces used per person and calculate the accuracy for each algorithm. These baseline results indicate that VGG-FACE outperforms PCA, Sparse Representation, and SVM methods with both 3 and 15 training faces per person. In the interest of computation cost, we did not test the performance of VGG-FACE on the 10 and 19 training faces per person.
 
 \begin{figure}
@@ -162,7 +159,7 @@ Further adjustments were made to the VGG-FACE network that produced varying resu
 \label{fig:vgg_nonmanipulated}
 \end{figure}
 
-With manipulations, however, we find support for image manipulations equalizing face recognition ability. Figure \ref{fig:results_all} shows test accuracies for each algorithm for each type of image manipulation, using 15 images per face to train. As images are occluded by increasing areas, more blurred, or more radially distorted, the test accuracies drop for each algorithm. However, the VGG-FACE algorithm displays the greatest absolute accuracy drop across different parameters of manipulation, as shown in the left of Figure \ref{fig:results_diff}. In order to compare the change in accuracy across manipulation parameters and different algorithms, we normalize the difference with the baseline accuracies, as shown in the right of Figure \ref{fig:results_diff}. The normalized differences indicate that image manipulations does not impair face recognition accuracy for algorithms that perform better at baseline.
+With manipulations, however, we find support for image manipulations equalizing face recognition ability. Figure \ref{fig:results_all} shows test accuracies for each algorithm for each type of image manipulation, using 15 images per face to train. As images are occluded by increasing areas, more blurred, or more radially distorted, the test accuracies drop for each algorithm. With the exception of the VGG-FACE algorithm a higher baseline accuracy corresponds to a greater drop in performance on manipulated images, as shown in the left of Figure \ref{fig:results_diff}. In order to compare the change in accuracy across manipulation parameters and different algorithms, we normalize the difference with the baseline accuracies, as shown in the right of Figure \ref{fig:results_diff}. The normalized differences indicate that image manipulations does not clearly impair face recognition accuracy more for algorithms that perform better at baseline.
 
 \begin{figure}[ht]
 \centering
@@ -252,8 +249,5 @@ In this project, we implement various face recognition algorithms, ranging from 
 \section{Appendix}\label{sec:Appendix}
 Our implementation is available \href{https://github.com/cchen23/COS429_final_project}{online}. Our implementation includes a general framework which allows the user to swap in definitions of any image manipulations and recognition algorithms, as well as modules that implement each of the manipulations and algorithms we tested.
 
-% Maybe implementation details.
-	% Dataset: at least 20 images.
-% More details in README online?
 \end{document}
  
