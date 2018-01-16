@@ -86,8 +86,8 @@ def get_lfw_dataset(min_faces_per_person, num_train, color=False):
     train_data -= mean_face
     test_data -= mean_face
 
-    train_data = normalize(train_data.reshape(train_data.shape[0], -1), axis=1).reshape(train_data.shape)
-    test_data = normalize(train_data.reshape(test_data.shape[0], -1), axis=1).reshape(test_data.shape)
+    train_data = train_data.reshape(train_data.shape[0], -1).normalize(axis=1).reshape(train_data.shape)
+    test_data = test_data.reshape(test_data.shape[0], -1).normalize(axis=1).reshape(test_data.shape)
 
     return train_data, train_targets, test_data, test_targets
 
