@@ -47,7 +47,7 @@ def create_manipulation_accuracies(num_train):
         manipulation_results = results[results['Manipulation Type']==manipulation]
         algorithms = list(np.unique(manipulation_results['Recognition Algorithm']))
         parameters = list(set(manipulation_results['Manipulation Parameters']))
-        parameters.sort()
+        parameters.sort(key=lambda parameter: list(ast.literal_eval(parameter).values())[0])
         parameter_labels = [list(ast.literal_eval(parameter).values())[0] for parameter in parameters]
         
         ind = np.arange(len(algorithms))  # the x locations for the groups
@@ -132,11 +132,12 @@ def plot_manipulation_impact(normalized_average=True):
             'occlude_lfw%s' % keyword:'Occlusion',
             'radial_distortion%s' % keyword:'Radial Distortion',
             'blur%s' % keyword:'Blur',
+            'dfi%s' % keyword:'DFI',
             }
     manipulation_impact_info = pd.read_csv('../results/manipulation_impact.csv', header=0)
     manipulation_impact_info = manipulation_impact_info.set_index('Algorithm')
     manipulations = [manipulation for manipulation in list(manipulation_impact_info.columns) if keyword in manipulation]
-    manipulations.remove('dfi%s' % keyword)
+    # manipulations.remove('dfi%s' % keyword)
     manipulations.remove('none%s' % keyword)
     algorithms = list(manipulation_impact_info.index)
     ind = np.arange(len(algorithms))  # the x locations for the groups
@@ -170,7 +171,7 @@ def plot_manipulation_impact(normalized_average=True):
 
 if __name__ == "__main__":
     # create_all_traintestsplit_default_accuracies()
-    # create_manipulation_accuracies(15)
+    create_manipulation_accuracies(15)
     compute_manipulation_impact(15)
     plot_manipulation_impact(True)
     plot_manipulation_impact(False)
