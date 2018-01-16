@@ -76,8 +76,10 @@ def create_all_traintestsplit_default_accuracies():
     results = []
     for num_train in num_trains:
         results.append(pd.read_csv("../results/results_%d.csv" % num_train, header=0))
-    labels = ["3", "10", "15", "19"]
-    xlabel = ["PCA", "Sparse\nRepresentation", "Sparse\nRepresentation\nDimension\nReduction", "Sparse\nRepresentation\nCombined\nL1", "SVM", "VGG"]
+    labels = [str(x) for x in num_trains]
+    algorithms = ["PCA", "Sparse Representation", "Sparse Representation Dimension Reduction", 
+    "Sparse Representation Combined l1", "SVM", "VGG"]
+    xlabel = [x.replace(' ', '\n') for x in algorithms]
 
     ind = np.arange(len(xlabel))  # the x locations for the groups
     width = 0.35       # the width of the bars
@@ -86,7 +88,7 @@ def create_all_traintestsplit_default_accuracies():
     for i in range(num_results):
         results_subset = results[i]
 
-        accuracies = results_subset[results_subset['Manipulation Type']=='none']['Test Accuracy']
+        accuracies = [results_subset[(results_subset['Manipulation Type']=='none') & (results_subset['Recognition Algorithm']==algorithm)]['Test Accuracy'].iloc[0] for algorithm in algorithms]
         ax.bar(ind+(width*(i-num_results/2))/num_results, accuracies, width/num_results, alpha=0.5, label=labels[i])
 
     # add some text for labels, title and axes ticks
