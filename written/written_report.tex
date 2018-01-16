@@ -21,28 +21,28 @@
 \maketitle
 
 \section{Motivation}
-We can often recognize pictures of people we know even if the image has low resolution or obscures part of the face, if the camera angle resulted in a distorted image of the subject's face, or if the subject has aged or put on makeup since we last saw them. Although this is a simple recognition task for a human, when we think about how we accomplish this task, it seems non-trivial for compute algorithms to recognize faces despite visual changes.
+We can often recognize pictures of people we know even if the image has low resolution or obscures part of the face, if the camera angle resulted in a distorted image of the subject's face, or if the subject has aged or put on makeup since we last saw them. Although this is a simple recognition task for a human, when we think about how we accomplish this task, it seems non-trivial for computer algorithms to recognize faces despite visual changes.
 
-Computer facial recognition is relied upon for many application where accuracy is important. Facial recognition systems have applications ranging from airport security and suspect identification to personal device authentication and face tagging\cite{huang_face_2011}. In these real-world applications, the system must continue to recognize images of a person who looks slightly different due to the passage of time, a change in environment, or a difference in clothing.
+Computer facial recognition is relied upon for many application where accuracy is important. Facial recognition systems have applications ranging from airport security and suspect identification to personal device authentication and face tagging \cite{huang_face_2011}. In these real-world applications, the system must continue to recognize images of a person who looks slightly different due to the passage of time, a change in environment, or a difference in clothing.
 
-Therefore, we are interested in investigating face recognition algorithms and their robustness to image changes resulting from realistically plausible manipulations. Furthermore, we are curious about whether the impact of image manipulations on computer algorithms' face recognition ability mirrors related insights in neuroscience on humans' face recognition abilities.
+Therefore, we are interested in investigating face recognition algorithms and their robustness to image changes resulting from realistically plausible manipulations. Furthermore, we are curious about whether the impact of image manipulations on computer algorithms' face recognition ability mirrors related insights from neuroscience about humans' face recognition abilities.
 
 \section{Goal}
 In this project, we implement both face recognition algorithms and image manipulations. We then analyze the impact of each image manipulation on the recognition accuracy each algorithm, and how these influences depend on the accuracy of each algorithm on non-manipulated images.
 
 \section{Background and Related Work}
-Researchers have developed a wide variety of face recognition algorithms, such as traditional statistical methods such as PCA, more opaque methods such as deep neural networks, and proprietary systems used by governments and corporations\cite{noauthor_face_nodate}\cite{schroff_facenet:_2015}\cite{sun_meet_2017}.
+Researchers have developed a wide variety of face recognition algorithms, such as traditional statistical methods such as PCA, more opaque methods such as deep neural networks, and proprietary systems used by governments and corporations \cite{noauthor_face_nodate}\cite{schroff_facenet:_2015}\cite{sun_meet_2017}.
 
-Similarly, others have developed image manipulations using principles from linear algebra, such as mimicking distortions from lens distortions, as well as using neural networks, such as a system for transforming images according to specified characteristics\cite{savarese_camera_2015}\cite{upchurch_deep_2016}.
+Similarly, others have developed image manipulations using principles from linear algebra, such as mimicking distortions from lens distortions, as well as using neural networks, such as a system for transforming images according to specified characteristics \cite{savarese_camera_2015}\cite{upchurch_deep_2016}.
 
-Furthermore, researchers in psychology have studied face recognition in humans. A study of "super-recognizers" (people with extraordinarily high powers of face recognition) and "developmental prosopagnosics" (people with severely impaired face recognition abilities) found that inverting images of faces impaired recognition ability more for people with stronger face recognition abilities\cite{russell_super-recognizers:_2009}. This could indicate that image manipulations tend to equalize face recognition abilities, and we investigate whether this is the case with the manipulations and face recognition algorithms we test.
+Furthermore, researchers in psychology have studied face recognition in humans. A study of "super-recognizers" (people with extraordinarily high powers of face recognition) and "developmental prosopagnosics" (people with severely impaired face recognition abilities) found that inverting images of faces impaired recognition ability more for people with stronger face recognition abilities \cite{russell_super-recognizers:_2009}. This could indicate that image manipulations tend to equalize face recognition abilities, and we investigate whether this is the case with the manipulations and face recognition algorithms we test.
 
 \section{Methods}
-To test robustness of image recognition algorithms, we implemented various algorithms and image manipulations. We then tested each of the algorithms with un-manipulated images as well as images resulting from each of the manipulations. In addition to the absolute accuracy of each of these combinations, we analyzed the trend in each algorithm's performance on manipulated images to the algorithm's performance on un-manipulated images.
+To test robustness of image recognition algorithms, we implement various algorithms and image manipulations. We then test each of the algorithms with un-manipulated images as well as images resulting from each of the manipulations. In addition to the absolute accuracy of each of these combinations, we analyze the trend in each algorithm's performance on manipulated images to the algorithm's performance on un-manipulated images.
 
 We describe our algorithms, manipulations, dataset, and evaluation method in the following subsections.
 
-Our implementation is available online, as further described in the Appendix(\ref{sec:Appendix}).
+Our implementation is available online, as further described in the Appendix (\ref{sec:Appendix}).
 
 \subsection{Algorithms}
 \subsubsection{PCA}\hspace*{\fill} \\
@@ -71,18 +71,18 @@ We first project the test and training faces to a lower-dimension subspace using
 So this algorithm performs face recognition by solving $\min||c||_1+||e||_1\:s.t.\:y=\Phi c+e$, where the addition of $e$ is intended to allow the algorithm to account for small differences between images of the same person.
 
 \subsection{Support Vector Machine (SVM)}
-While we did not implement this algorithm, we included results from this as an additional comparison point. We used the stock support vector machine classifier implementation provided in the scikit-learn Python library. The default parameters were used, including the use of an RBF kernel. \cite{scikit-learn}.
+While we did not implement this algorithm, we include results from this algorithm as an additional comparison point. We use the stock support vector machine classifier implementation provided in the scikit-learn Python library. We use the default parameters, including the use of an RBF kernel \cite{scikit-learn}.
 
 \subsubsection{VGG-based Classification}\hspace*{\fill} \\
 We implement this algorithm based on the work and pre-trained convolutional neural network of \cite{parkhi_deep_2015}. Each image undergoes preprocessing before usage in the network. For the preprocessing, we use the deformable parts model face detector provided by \cite{parkhi_deep_2015} and crop the detected face from each of the the original images. An example of a face before and after preprocessing is shown in Figure \ref{fig:vgg_preprocessing}. We also subtract the mean values for each color channel, provided by \cite{parkhi_deep_2015}, from the images prior to using the convolutional neural network.
 
 \begin{figure}[!htb]
-\subfloat[Original Image]{\includegraphics[width = 3in]{../figures/vgg_2.png}} 
+\subfloat[Original Image]{\includegraphics[width = 3in]{../figures/vgg_2.png}}
 \subfloat[Preprocessed Image]{\includegraphics[width = 3in]{../figures/vgg_3.png}}
 \caption{Preprocessing Demo (The face is detected and cropped from the original image).}
 \label{fig:vgg_preprocessing}
 
-\end{figure} 
+\end{figure}
 
 Next, we translate the architecture of the VGG-FACE network for use with the Keras Python framework and load the pre-trained weights. We feed each face through the network, stopping at the fc-7 layer to obtain a 4,096-dimensional descriptor for each image.
 
@@ -96,7 +96,7 @@ The tendency for external objects to hide parts of people's faces in images moti
 We implement occlusion by selecting a region of the image and randomly resetting the pixels in this region, and show examples of occluded images in Figure \ref{fig:manipulationdemo_occlusion}. We vary the occlusion window size to produce dataset images with varying amounts of occlusion.
 
 \begin{figure}[!htb]
-\subfloat[Original Image]{\includegraphics[width = 3in]{../figures/manipulationdemo_none}} 
+\subfloat[Original Image]{\includegraphics[width = 3in]{../figures/manipulationdemo_none}}
 \subfloat[Occluded Image]{\includegraphics[width = 3in]{../figures/manipulationdemo_occlusion}}
 \caption{Occlusion Demo (Window size is length of occluded region on one size).}
 \label{fig:manipulationdemo_occlusion}
@@ -112,7 +112,7 @@ We set $(i_0,j_0)$ as the vertical and horizontal centerline of the image, and r
 We provide examples of pincushion and barrel distortion for various values of $k$ in Figure \ref{fig:manipulationdemo_radial}. We manipulate our dataset images with various levels of radial distortion, as determined by $k$.
 
 \begin{figure}[!htb]
-\subfloat[Original Image]{\includegraphics[width = 3in]{../figures/manipulationdemo_none}} 
+\subfloat[Original Image]{\includegraphics[width = 3in]{../figures/manipulationdemo_none}}
 \subfloat[Distorted Image]{\includegraphics[width = 3in]{../figures/manipulationdemo_radial}}
 \caption{Radial Distortion Demo.}
 \label{fig:manipulationdemo_radial}
@@ -123,14 +123,14 @@ The possibility for image recognition systems to receive blurry input motivates 
 
 We provide examples of blurred images in Figure \ref{fig:manipulationdemo_blur}.
 \begin{figure}[!htb]
-\subfloat[Original Image]{\includegraphics[width = 3in]{../figures/manipulationdemo_none}} 
+\subfloat[Original Image]{\includegraphics[width = 3in]{../figures/manipulationdemo_none}}
 \subfloat[Blurred Image]{\includegraphics[width = 3in]{../figures/manipulationdemo_blur}}
 \caption{Blur Distortion Demo (Window size is length of window of pixels whose mean replaces each original pixel).}
 \label{fig:manipulationdemo_blur}
 \end{figure}
 
 \subsection{Deep Feature Interpolation}\hspace*{\fill} \\
-We applied the Deep Feature Interpolation (DFI) algorithm based on the work and implementation of Upchurch et al., 2017 \cite{upchurch_deep_2016}. This algorithm provides a framework for performing content editing of a facial image. It works by interpolating between attributes in the feature space of a deep convolutional neural network, specifically the VGG network.
+We apply the Deep Feature Interpolation (DFI) algorithm based on the work and implementation of \cite{upchurch_deep_2016}. This algorithm provides a framework for performing content editing of a facial image. It works by interpolating between attributes in the feature space of a deep convolutional neural network, specifically the VGG network.
 
 DFI is a versatile algorithm which can, for example, make a face look older or add a moustache to a face, as well as many other possibilities. To make a face look older, it is necessary to find a attribute vector that provides a mapping from a ``younger'' image to an ``older'' image. Thus, for each target attribute (``senior'', ``moustache'', etc.) it is necessary to identify a corresponding source attribute (i.e. ``young'', ``no facial hair'').
 
@@ -142,12 +142,12 @@ Given an input image, and a source-target attribute pair, the algorithm applies 
     \item Map these images to VGG feature space and compute the mean vector of each set.
     \item Subtract the mean vectors to compute the attribute vector $w$.
     \item Transform the input image into feature space, and add $\alpha w$, where $\alpha$ is an interpolation parameter.
-    \item Perform an inverse mapping back into color space by applying the gradient descent method of Mahendran and Vedaldi \cite{DBLP:journals/corr/MahendranV14}.
+    \item Perform an inverse mapping back into color space by applying the gradient descent method of \cite{DBLP:journals/corr/MahendranV14}.
 \end{enumerate}
 
-We adapted a sample implementation of this algorithm for our implementation, keeping the original parameter values of $k = 1$ and $\alpha = 0.4$.
+We adapt a sample implementation of this algorithm for our implementation, keeping the original parameter values of $k = 1$ and $\alpha = 0.4$.
 
-Figure \ref{fig:dfi} demonstrates the results of this algorithm on one image from the dataset. In our experiments, we used DFI to apply two manipulations: ``senior'' to make the face look older, and ``moustache'' to add a moustache to the face.
+Figure \ref{fig:dfi} demonstrates the results of this algorithm on one image from the dataset. In our experiments, we use DFI to apply two manipulations: ``senior'' to make the face look older, and ``moustache'' to add a moustache to the face.
 
 \begin{figure}
     \centering
@@ -161,7 +161,7 @@ We use the Labeled Faces in the Wild Dataset (LFW) \cite{huang_labeled_2007}. We
 
 Furthermore, each of image is centered on a single face, which provides some measure of standardization between (non-manipulated) images. This allows us to control the amount and type of manipulation which we then add in our experiments, which is important because we test the robustness of algorithms to specific manipulations.
 
-To improve the accuracy of the recognition algorithms, we used an aligned version of the dataset provided by the DFI implementation. This version of the dataset was aligned using a deep neural network and has better alignment than the ``funneled'' versions of the LFW dataset \cite{noauthor_lfw_nodate}.
+To improve the accuracy of the recognition algorithms, we use an aligned version of the dataset provided by the DFI implementation. This version of the dataset was aligned using a deep neural network and has better alignment than the ``funneled'' versions of the LFW dataset \cite{noauthor_lfw_nodate}.
 
 \subsection{Evaluation}
 We train each algorithm using three instances of each person's face. We then evaluate each algorithm's performance according to its accuracy ($\frac{\textrm{correct predictions}}{\textrm{total predictions}}$) in recognizing faces on the test set, which includes the remaining instances of each person's face.
@@ -177,7 +177,7 @@ Our baseline test accuracy with no manipulations on the LFW images is shown in F
 \label{fig:baseline}
 \end{figure}
 
-Further adjustments were made to the VGG-FACE network that produced varying results; the highest accuracy achieved was over 0.98 on non-manipulated images for various values of $k$, where $k$ is the number of nearest neighboring training descriptors to compare to for each test image. We found that preprocessing the images through face detection and cropping improved performance. In addition, using cosine similarity and the nearest-$k$ neighboring heuristic, instead of Euclidean distance and the mean of the training descriptors, also improved performance. A summary of the VGG-FACE network's performance on non-manipulated images of the LFW dataset is shown in Figure \ref{fig:vgg_nonmanipulated}. 
+Further adjustments were made to the VGG-FACE network that produced varying results; the highest accuracy achieved was over 0.98 on non-manipulated images for various values of $k$, where $k$ is the number of nearest neighboring training descriptors to compare to for each test image. We found that preprocessing the images through face detection and cropping improved performance. In addition, using cosine similarity and the nearest-$k$ neighboring heuristic, instead of Euclidean distance and the mean of the training descriptors, also improved performance. We show a summary of the VGG-FACE network's performance on non-manipulated images of the LFW dataset in Figure \ref{fig:vgg_nonmanipulated}.
 
 \begin{figure}
 \centering
@@ -245,7 +245,7 @@ With both manipulated and un-manipulated images, VGG far outperforms the other a
 
 However, a major weakness of VGG is its computational cost. Training VGG on $930$ un-manipulated images took around $42$ minutes, and subsequently testing it on $2093$ test faces took around $12$ minutes. For reference, all of the other algorithms together took $11$ seconds to train and less than $3$ minutes to test on the same dataset.
 
-Another weakness of the system is sensitivity to the alignment of images. With the VGG algorithm, accuracy is lower on the original dataset without face detection and cropping, as shown by the dotted line in Figure \ref{fig:vgg_nonmanipulated}. We mentioned in Section \ref{sec:data} that the Sparse Representation Algorithms has much better performance on the aligned version of the LFW dataset than the ``funneled'' version. The difference in test accuracies on non-manipulated images between the ``funneled'' and aligned LFW datasets is shown in Figure \ref{fig:results_alignment}. Note that the VGG algorithm used the original ``funneled'' images with additional face detection and cropping.
+Another weakness of the system is sensitivity to the alignment of images. With the VGG algorithm, accuracy is lower on the original dataset without face detection and cropping, as shown by the dotted line in Figure \ref{fig:vgg_nonmanipulated}. We mention in Section \ref{sec:data} that the Sparse Representation Algorithms has much better performance on the aligned version of the LFW dataset than the ``funneled'' version. The difference in test accuracies on non-manipulated images between the ``funneled'' and aligned LFW datasets is shown in Figure \ref{fig:results_alignment}. Note that the VGG algorithm used the original ``funneled'' images with additional face detection and cropping.
 
 \begin{figure}[ht]
 \centering
@@ -258,7 +258,7 @@ Another weakness of the system is sensitivity to the alignment of images. With t
 \end{figure}
 
 \section{Conclusion}
-In this project, we implement various face recognition algorithms, ranging from statistical methods such as PCA and Sparse Representation to deep learning methods such as VGG-FACE. We use the Labeled Faces in the Wild dataset, and transform the face images with different manipulations: occlusion, radial distortion, blur, and deep feature interpolation. 
+In this project, we implement various face recognition algorithms, ranging from statistical methods such as PCA and Sparse Representation to deep learning methods such as VGG-FACE. We use the Labeled Faces in the Wild dataset, and transform the face images with different manipulations: occlusion, radial distortion, blur, and deep feature interpolation.
 
 When comparing the effects of different face manipulations on different recognition algorithms, we found strengths and weaknesses in the performance of each. Statistical algorithms such as Sparse Representations and SVMs performed well on DFI content-based manipulations, while deep learning methods such as VGG-FACE performed relatively poorly on this manipulation. However, VGG-FACE was able to handle small occlusions, a manipulation which severely impacted the accuracy of statistical models. This shows how each type of recognition model has its own relative strengths, suggesting that a combination of techniques can lead to the highest overall robustness to manipulations.
 
@@ -266,9 +266,8 @@ While VGG-FACE performed the best across non-manipulated and manipulated images,
 
 \bibliographystyle{plain}
 \bibliography{cos429bibtex}
- 
+
 \section{Appendix}\label{sec:Appendix}
 Our implementation is available \href{https://github.com/cchen23/COS429_final_project}{online}. Our implementation includes a general framework which allows the user to swap in definitions of any image manipulations and recognition algorithms, as well as modules that implement each of the manipulations and algorithms we tested.
 
 \end{document}
- 
