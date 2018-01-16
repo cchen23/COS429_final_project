@@ -9,8 +9,7 @@ from sklearn.datasets import fetch_lfw_people
 from sklearn.datasets.lfw import check_fetch_lfw
 #from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import normalize
-from matplotlib.pyplot import imread
-from scipy.misc import imresize
+from scipy.misc import imread, imresize
 
 import numpy as np
 import time
@@ -20,6 +19,7 @@ import os.path
 import csv
 import concurrent.futures
 import argparse
+import pandas as pd
 
 import algorithms
 import manipulations
@@ -56,21 +56,38 @@ def split_traintest(targets, num_train):
 
 def get_lfw_dataset(min_faces_per_person, num_train):
     """ Return train and test data and labels from 'Labeled Faces in the Wild" dataset."""
-    dataset = fetch_lfw_people(min_faces_per_person=min_faces_per_person)
-    data = dataset.data # num_people x image_length
-    mean_face = np.mean(data, axis=0)
-    data = data - mean_face
+    train_data, train_targets, test_data, test_targets = [], [], [], []
+    person_index = 0
 
-    train_indices, test_indices = split_traintest(dataset.target, num_train)
-    train_data = data[train_indices,:]
-    train_targets = dataset.target[train_indices]
-    test_data = data[test_indices,:]
-    test_targets = dataset.target[test_indices]
+    for person in os.listdir(os.path.join("dfi", "lfw_aegan")):
+        if not os.path.isfile(get_lfw_image_path(person, min_faces_per_person)):
+            continue
 
-    test_data = normalize(test_data, axis=1)
+        # Load train data
+        train_data += [get_lfw_image(get_lfw_image_path(person, index + 1), scale=0.5) for index in range(min_faces_per_person - num_train, min_faces_per_person)]
+        train_targets += [person_index] * num_train
+        assert(len(train_data) == len(train_targets))
+
+        # Load test data
+        test_data += [get_lfw_image(get_lfw_image_path(person, index + 1), scale=0.5) for index in range(0, min_faces_per_person - num_train)]
+        test_targets += [person_index] * (min_faces_per_person - num_train)
+        assert(len(test_data) == len(test_targets))
+
+        person_index += 1
+
+    assert(len(train_data) > 0)
+    assert(len(test_data) > 0)
+
+    train_data = np.array(train_data)
+    test_data = np.array(test_data)
+
+    mean_face = np.mean(train_data, axis=0)
+    train_data -= mean_face
+    test_data -= mean_face
+
     train_data = normalize(train_data, axis=1)
+    test_data = normalize(test_data, axis=1)
 
-    #train_data, test_data, train_targets, test_targets = train_test_split(data, dataset.target)
     return train_data, train_targets, test_data, test_targets
 
 def get_lfw_image_path(person, imagenum):
@@ -80,8 +97,7 @@ def get_lfw_dfi_image_path(person, imagenum, transform):
     return os.path.join("dfi", "output", "{}_{:04d}__{}.jpg".format(person, imagenum, transform))
 
 def get_lfw_image(image_path, scale):
-    face = imread(image_path)
-    face = face[:,:,:3] # delete alpha channel
+    face = imread(image_path, mode="L")
     if scale != 1:
         face = imresize(face, scale)
     face = face.flatten()
@@ -100,7 +116,7 @@ def get_lfw_dfi_dataset(min_faces_per_person, num_train, manipulation_info):
             continue
 
         # Load train data
-        train_data += [get_lfw_image(get_lfw_image_path(person, index + 1), scale=1) for index in range(min_faces_per_person - num_train, min_faces_per_person)]
+        train_data += [get_lfw_image(get_lfw_image_path(person, index + 1), scale=0.5) for index in range(min_faces_per_person - num_train, min_faces_per_person)]
         train_targets += [person_index] * num_train
         assert(len(train_data) == len(train_targets))
 
@@ -108,7 +124,7 @@ def get_lfw_dfi_dataset(min_faces_per_person, num_train, manipulation_info):
         person_image_paths = [get_lfw_dfi_image_path(person, index + 1, transform) for index in range(0, min_faces_per_person - num_train)]
         person_image_paths = [image_path for image_path in person_image_paths if os.path.isfile(image_path)]
         assert(1 <= len(person_image_paths) <= min_faces_per_person - num_train)
-        test_data += [get_lfw_image(image_path, scale=0.5) for image_path in person_image_paths]
+        test_data += [get_lfw_image(image_path, scale=0.25) for image_path in person_image_paths]
         test_targets += [person_index] * len(person_image_paths)
         assert(len(test_data) == len(test_targets))
 
