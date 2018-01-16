@@ -116,7 +116,9 @@ def create_algorithm_accuracies(num_train):
                 ax.text(x, height + 0.01, label, rotation='vertical', fontsize=8, verticalalignment='bottom', horizontalalignment='center')
 
         base_accuracy = algorithm_results[algorithm_results['Manipulation Type'] == 'none']['Test Accuracy'].iloc[0]
-        ax.axhline(y=base_accuracy, color='r', linestyle=':')
+        base_accuracy_line = ax.axhline(y=base_accuracy, color='r', linestyle=':')
+        chance_rate_line = ax.axhline(y=CHANCE_RATE, color='b', linestyle=':')
+        ax.legend([base_accuracy_line, chance_rate_line], ['Base Accuracy', 'Chance Rate'])
 
         ax.set_ylabel("Test Accuracy")
         ax.set_title("%s Accuracy" % algorithm)
