@@ -1,4 +1,4 @@
-The code in this directory uses the Caffe model of VGG_face.
+The code in this directory uses Keras and Theano to run VGG_FACE.
 http://www.robots.ox.ac.uk/~vgg/software/vgg_face/
 
-Needs Caffe and pycaffe install (on AWS)
+The Jupyter Notebook was run on an AWS instance (p2.xlarge).
