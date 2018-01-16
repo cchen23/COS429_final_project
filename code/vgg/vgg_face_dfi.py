@@ -19,9 +19,6 @@
 # In[1]:
 
 
-# Only run once at start of program
-import os
-os.chdir('..')
 
 
 # In[2]:
