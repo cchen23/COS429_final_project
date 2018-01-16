@@ -79,7 +79,7 @@ We implement this algorithm based on the work and pre-trained convolutional neur
 \begin{figure}[!htb]
 \subfloat[Original Image]{\includegraphics[width = 3in]{../figures/vgg_2.png}} 
 \subfloat[Preprocessed Image]{\includegraphics[width = 3in]{../figures/vgg_3.png}}
-\caption{Preprocessing Demo (The face is detected and cropped from the original image)}
+\caption{Preprocessing Demo (The face is detected and cropped from the original image).}
 \label{fig:vgg_preprocessing}
 
 \end{figure} 
@@ -93,12 +93,12 @@ For each test descriptor $w$, we calculate its cosine similarity to each trainin
 \subsubsection{Occlusion}\hspace*{\fill} \\
 The tendency for external objects to hide parts of people's faces in images motivates this manipulation. For instance, a large hat or physically faded spots on an image could hide part of someone's face, but we should still recognize the image as the same person.
 
-We implement occlusion by selecting a region of the image and randomly resetting the pixels in this region, and show examples of occluded images in figure \ref{fig:manipulationdemo_occlusion}.
+We implement occlusion by selecting a region of the image and randomly resetting the pixels in this region, and show examples of occluded images in Figure \ref{fig:manipulationdemo_occlusion}.
 
 \begin{figure}[!htb]
 \subfloat[Original Image]{\includegraphics[width = 3in]{../figures/manipulationdemo_none}} 
 \subfloat[Occluded Image]{\includegraphics[width = 3in]{../figures/manipulationdemo_occlusion}}
-\caption{Occlusion Demo (Window size is length of occluded region on one size)}
+\caption{Occlusion Demo (Window size is length of occluded region on one size).}
 \label{fig:manipulationdemo_occlusion}
 \end{figure}
 
@@ -109,23 +109,23 @@ We mimic barrel distortion according to descriptions found in \cite{gribbon_real
 
 We set $(i_0,j_0)$ as the vertical and horizontal centerline of the image, and replace the pixel at $(i,j)$ with the pixel at $(\frac{i}{1+kr^2},\frac{j}{1+kr^2})$ where $r=\sqrt{(i-i_0)^2+(j-j_0)^2}$ and $k$ is a selected parameter. A positive $k$ results in barrel distortion, while a negative $k$ results in pincushion distortion.
 
-We provide examples of pincushion and barrel distortion for various values of $k$ in figure \ref{fig:manipulationdemo_radial}.
+We provide examples of pincushion and barrel distortion for various values of $k$ in Figure \ref{fig:manipulationdemo_radial}.
 
 \begin{figure}[!htb]
 \subfloat[Original Image]{\includegraphics[width = 3in]{../figures/manipulationdemo_none}} 
 \subfloat[Distorted Image]{\includegraphics[width = 3in]{../figures/manipulationdemo_radial}}
-\caption{Radial Distortion Demo}
+\caption{Radial Distortion Demo.}
 \label{fig:manipulationdemo_radial}
 \end{figure}
 
 \subsubsection{Blur}\hspace*{\fill} \\
 The possibility for image recognition systems to receive blurry input motivates this manipulation. We mimic blurry images by replacing each pixel by the mean value of the pixels within a pre-specified window of the replaced pixel.
 
-We provide examples of blurred images in figure \ref{fig:manipulationdemo_blur}.
+We provide examples of blurred images in Figure \ref{fig:manipulationdemo_blur}.
 \begin{figure}[!htb]
 \subfloat[Original Image]{\includegraphics[width = 3in]{../figures/manipulationdemo_none}} 
 \subfloat[Blurred Image]{\includegraphics[width = 3in]{../figures/manipulationdemo_blur}}
-\caption{Blur Distortion Demo (Window size is length of window of pixels whose mean replaces each original pixel)}
+\caption{Blur Distortion Demo (Window size is length of window of pixels whose mean replaces each original pixel).}
 \label{fig:manipulationdemo_blur}
 \end{figure}
 
@@ -149,7 +149,7 @@ Our baseline test accuracy with no manipulations on the LFW images is shown in F
 \begin{figure}
 \centering
 \includegraphics[scale=0.5]{../figures/results_plots/default_accuracies_difftraintest.png}
-\caption{Baseline results with no manipulation}
+\caption{Baseline results with no manipulation.}
 \label{fig:baseline}
 \end{figure}
 
@@ -158,11 +158,23 @@ Further adjustments were made to the VGG-FACE network that produced varying resu
 \begin{figure}
 \centering
 \includegraphics[scale=0.5]{../figures/results_plots/vgg_1.png}
-\caption{VGG-FACE Results with No Manipulations (The dotted line indicates performance with Euclidean distance and mean descriptor)}
+\caption{VGG-FACE Results with No Manipulations (The dotted line indicates performance with Euclidean distance and mean descriptor).}
 \label{fig:vgg_nonmanipulated}
 \end{figure}
 
-With manipulations, however, we find support for image manipulations equalizing face recognition ability. Figures \ref{} show test accuracies for each algorithm for each type of image manipulation. As images are occluded by increasing areas, more blurred, or more radially distorted, the test accuracies drop for each algorithm. However, the VGG-FACE algorithm displays the greatest absolute accuracy drop across different parameters of manipulation, as shown in Figure \ref{}. In order to compare the change in accuracy across manipulation parameters and different algorithms, we normalize the difference with the baseline accuracies, as shown in Figure \ref{}. The normalized differences indicate that image manipulations does not impair face recognition accuracy for algorithms that perform better at baseline.
+With manipulations, however, we find support for image manipulations equalizing face recognition ability. Figures \ref{} show test accuracies for each algorithm for each type of image manipulation. As images are occluded by increasing areas, more blurred, or more radially distorted, the test accuracies drop for each algorithm. However, the VGG-FACE algorithm displays the greatest absolute accuracy drop across different parameters of manipulation, as shown in the left of Figure \ref{fig:results_diff}. In order to compare the change in accuracy across manipulation parameters and different algorithms, we normalize the difference with the baseline accuracies, as shown in the right of Figure \ref{fig:results_diff}. The normalized differences indicate that image manipulations does not impair face recognition accuracy for algorithms that perform better at baseline.
+
+\begin{figure}[ht]
+\centering
+\subfloat{
+\includegraphics[width=0.5\textwidth]{../figures/results_plots/manipulation_impact_difference.png}}
+\subfloat{
+\includegraphics[width=0.5\textwidth]{../figures/results_plots/manipulation_impact_normalizeddifference.png}}
+\caption{Absolute difference (left) and normalized difference (right) between test accuracies of different algorithms.}
+\label{fig:results_diff}
+\end{figure}
+
+DISCUSSION OF STRENGTHS AND WEAKNESSES - experimental procedure (methodical?) but issues with alignment/inconsistent use of data/computation cost to not run certain experiments as weakness
 
 \begin{figure}
 \centering
