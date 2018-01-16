@@ -118,7 +118,7 @@ def create_algorithm_accuracies(num_train):
         base_accuracy = algorithm_results[algorithm_results['Manipulation Type'] == 'none']['Test Accuracy'].iloc[0]
         base_accuracy_line = ax.axhline(y=base_accuracy, color='r', linestyle=':')
         chance_rate_line = ax.axhline(y=CHANCE_RATE, color='b', linestyle=':')
-        ax.legend([base_accuracy_line, chance_rate_line], ['Base Accuracy', 'Chance Rate'])
+        ax.legend([base_accuracy_line, chance_rate_line], ['Base Accuracy', 'Chance Rate'], loc='upper left')
 
         ax.set_ylabel("Test Accuracy")
         ax.set_title("%s Accuracy" % algorithm)
@@ -229,7 +229,7 @@ def plot_manipulation_impact(normalized_average=True):
 
 if __name__ == "__main__":
     # create_all_traintestsplit_default_accuracies()
-    create_manipulation_accuracies(15)
+    # create_manipulation_accuracies(15)
     create_algorithm_accuracies(15)
 #    compute_manipulation_impact(15)
 #    plot_manipulation_impact(True)
