@@ -20,6 +20,7 @@ import csv
 import concurrent.futures
 import argparse
 import pandas as pd
+import subprocess
 
 import algorithms
 import manipulations
@@ -213,6 +214,22 @@ def run_experiment(model_name, manipulation_info, num_train, savename=None):
         "Testing Time": test_time,
     }
 
+def download_images():
+    """
+    Download image datasets if necessary.
+    Based on: https://github.com/paulu/deepfeatinterp/blob/master/demo1.py
+    """
+    if not os.path.exists('images/dfi'):
+        url='https://www.dropbox.com/s/km3rnco93frlt0b/dfi.tar.gz?dl=1'
+        subprocess.check_call(['wget',url,'-O','dfi.tar.gz'])
+        subprocess.check_call(['tar','xzf','dfi.tar.gz'])
+        subprocess.check_call(['rm','dfi.tar.gz'])
+    if not os.path.exists('images/lfw_aegan'):
+        url='https://www.dropbox.com/s/isz4ske2kheuwgr/lfw_aegan.tar.gz?dl=1'
+        subprocess.check_call(['wget',url,'-O','lfw_aegan.tar.gz'])
+        subprocess.check_call(['tar','xzf','lfw_aegan.tar.gz'])
+        subprocess.check_call(['rm','lfw_aegan.tar.gz'])
+
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("--model", help="Only run experiments with this model")
@@ -220,6 +237,8 @@ if __name__ == "__main__":
     parser.add_argument("--num-train", type=int, help="Only run experiments with this number of training images")
     parser.add_argument("--rerun", action="store_true", help="Re-run experiments (does not remove from .csv file)")
     args = parser.parse_args()
+
+    download_images()
 
     # Experiments without manipulations.
     model_names = [
