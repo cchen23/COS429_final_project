@@ -274,7 +274,7 @@ manipulation_infos = [
 num_trains = [3, 10, 15, 19]
 for num_train in num_trains:
     print("Num training examples: %d" % num_train)
-    save_path = "vgg_face_dfi_%d.csv" % num_train
+    save_path = "../results/vgg_face_dfi_%d.csv" % num_train
     results = pd.DataFrame(columns=experiment.COLUMNS)
     trained_model = TrainedModel(num_train)
     for manipulation in manipulation_infos:
