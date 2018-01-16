@@ -102,7 +102,9 @@ def get_lfw_image(image_path, scale, color=False):
     face = imread(image_path, mode=mode)
     if scale != 1:
         face = imresize(face, scale)
-    face = face.flatten()
+    if not color:
+        # TODO: should be a separate parameter
+        face = face.flatten()
     face = face / 255 # convert to float
     return face
 
