@@ -59,7 +59,7 @@ def get_lfw_dataset(min_faces_per_person, num_train):
     train_data, train_targets, test_data, test_targets = [], [], [], []
     person_index = 0
 
-    for person in os.listdir(os.path.join("dfi", "lfw_aegan")):
+    for person in os.listdir(os.path.join("images", "lfw_aegan")):
         if not os.path.isfile(get_lfw_image_path(person, min_faces_per_person)):
             continue
 
@@ -91,10 +91,10 @@ def get_lfw_dataset(min_faces_per_person, num_train):
     return train_data, train_targets, test_data, test_targets
 
 def get_lfw_image_path(person, imagenum):
-    return os.path.join("dfi", "lfw_aegan", person, "{}_{:04d}.jpg".format(person, imagenum))
+    return os.path.join("images", "lfw_aegan", person, "{}_{:04d}.jpg".format(person, imagenum))
 
 def get_lfw_dfi_image_path(person, imagenum, transform):
-    return os.path.join("dfi", "output", "{}_{:04d}__{}.jpg".format(person, imagenum, transform))
+    return os.path.join("images", "dfi", "{}_{:04d}__{}.jpg".format(person, imagenum, transform))
 
 def get_lfw_image(image_path, scale):
     face = imread(image_path, mode="L")
@@ -111,7 +111,7 @@ def get_lfw_dfi_dataset(min_faces_per_person, num_train, manipulation_info):
     transform = manipulation_info.parameters["transform"]
     person_index = 0
 
-    for person in os.listdir(os.path.join("dfi", "lfw_aegan")):
+    for person in os.listdir(os.path.join("images", "lfw_aegan")):
         if not os.path.isfile(get_lfw_image_path(person, min_faces_per_person)):
             continue
 
