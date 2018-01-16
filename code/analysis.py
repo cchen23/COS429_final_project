@@ -71,6 +71,56 @@ def create_manipulation_accuracies(num_train):
         plt.tight_layout()
         plt.savefig(figures_dir+"results_%s_%d.png"%(manipulation.replace(" ",""), num_train))
 
+def create_algorithm_accuracies(num_train):
+    manipulation_names = {
+            'occlude_lfw':'Occlusion',
+            'radial_distortion':'Radial Distortion',
+            'blur':'Blur',
+            'dfi':'DFI',
+            }
+    results = pd.read_csv("../results/results_%d.csv" % num_train, header=0)
+    algorithms = set(results['Recognition Algorithm'])
+
+    for algorithm in algorithms:
+        algorithm_results = results[results['Recognition Algorithm']==algorithm]
+        manipulations = sorted(set(algorithm_results['Manipulation Type']))
+        manipulations.remove('none')
+
+        width = 0.7       # the width of the bars
+        fig, ax = plt.subplots()
+
+        for ind, manipulation in enumerate(manipulations):
+            if manipulation == "none":
+                continue
+
+            manipulation_results = algorithm_results[algorithm_results['Manipulation Type'] == manipulation]
+            parameters = list(set(manipulation_results['Manipulation Parameters']))
+            parameters.sort(key=lambda parameter: list(ast.literal_eval(parameter).values())[0])
+            parameter_labels = [list(ast.literal_eval(parameter).values())[0] for parameter in parameters]
+
+            num_results = len(parameter_labels)
+
+            for i in range(len(parameters)):
+                parameter_result = manipulation_results[manipulation_results['Manipulation Parameters']==parameters[i]]
+                accuracy = parameter_result['Test Accuracy']
+                x = ind+(width*(i-(num_results-1)/2))/num_results
+                label = parameter_labels[i]
+                height = accuracy
+                ax.bar(x, height, width=width/num_results, alpha=0.5)
+                ax.text(x, height + 0.01, label, rotation='vertical', fontsize=8, verticalalignment='bottom', horizontalalignment='center')
+
+        base_accuracy = algorithm_results[algorithm_results['Manipulation Type'] == 'none']['Test Accuracy'].iloc[0]
+        ax.axhline(y=base_accuracy, color='r', linestyle=':')
+
+        ax.set_ylabel("Test Accuracy")
+        ax.set_title("%s Accuracy" % algorithm)
+        ax.set_xticks(np.arange(len(manipulations)))
+        ax.set_ylim(0, 1.19)
+        ax.set_xticklabels([manipulation_names[m] for m in manipulations],fontsize=8)
+        ax.set_xlabel("Manipulation Type")
+        plt.tight_layout()
+        plt.savefig(figures_dir+"results_algorithm_%s_%d.png"%(algorithm.replace(" ",""), num_train))
+
 def create_all_traintestsplit_default_accuracies():
     num_trains = [3, 10, 15, 19]
     results = []
@@ -172,6 +222,7 @@ def plot_manipulation_impact(normalized_average=True):
 if __name__ == "__main__":
     # create_all_traintestsplit_default_accuracies()
     #create_manipulation_accuracies(15)
-    compute_manipulation_impact(15)
-    plot_manipulation_impact(True)
-    plot_manipulation_impact(False)
+    create_algorithm_accuracies(15)
+    # compute_manipulation_impact(15)
+    # plot_manipulation_impact(True)
+    # plot_manipulation_impact(False)
