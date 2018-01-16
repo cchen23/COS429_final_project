@@ -134,7 +134,7 @@ def plot_manipulation_impact(normalized_average=True):
             'blur%s' % keyword:'Blur',
             'dfi%s' % keyword:'DFI',
             }
-    manipulation_impact_info = pd.read_csv('../results/manipulation_impact.csv', header=0)
+    manipulation_impact_info = pd.read_csv('../results/manipulation_impact.csv', header=0).sort_values('default')
     manipulation_impact_info = manipulation_impact_info.set_index('Algorithm')
     manipulations = [manipulation for manipulation in list(manipulation_impact_info.columns) if keyword in manipulation]
     # manipulations.remove('dfi%s' % keyword)
@@ -171,7 +171,7 @@ def plot_manipulation_impact(normalized_average=True):
 
 if __name__ == "__main__":
     # create_all_traintestsplit_default_accuracies()
-    create_manipulation_accuracies(15)
+    #create_manipulation_accuracies(15)
     compute_manipulation_impact(15)
     plot_manipulation_impact(True)
     plot_manipulation_impact(False)
