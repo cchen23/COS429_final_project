@@ -88,6 +88,8 @@ Next, we translate the architecture of the VGG-FACE network for use with the Ker
 
 For each test descriptor $w$, we calculate its cosine similarity to each training descriptor $v$. This is given by $arccos\frac{v \cdot w}{||v|| ||w||}$. The use of cosine similarity is different from the Euclidean distance methodology used in \cite{parkhi_deep_2015}, which we found to have weaker performance on our dataset. We find the nearest-$k$ neighboring training descriptors according to cosine similarity and classify the test face according to the majority vote.
 
+In our experiments, unless specified otherwise, we used the value $k=5$.
+
 \subsection{Image Manipulations}
 
 \subsubsection{Occlusion}\hspace*{\fill} \\
@@ -129,7 +131,7 @@ We provide examples of blurred images in Figure \ref{fig:manipulationdemo_blur}.
 \label{fig:manipulationdemo_blur}
 \end{figure}
 
-\subsection{Deep Feature Interpolation}\hspace*{\fill} \\
+\subsubsection{Deep Feature Interpolation}\hspace*{\fill} \\
 We apply the Deep Feature Interpolation (DFI) algorithm based on the work and implementation of \cite{upchurch_deep_2016}. This algorithm provides a framework for performing content editing of a facial image. It works by interpolating between attributes in the feature space of a deep convolutional neural network, specifically the VGG network.
 
 DFI is a versatile algorithm which can, for example, make a face look older or add a moustache to a face, as well as many other possibilities. To make a face look older, it is necessary to find a attribute vector that provides a mapping from a ``younger'' image to an ``older'' image. Thus, for each target attribute (``senior'', ``moustache'', etc.) it is necessary to identify a corresponding source attribute (i.e. ``young'', ``no facial hair'').
