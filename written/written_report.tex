@@ -156,7 +156,7 @@ Figure \ref{fig:dfi} demonstrates the results of this algorithm on one image fro
     \label{fig:dfi}
 \end{figure}
 
-\subsection{Dataset}
+\subsection{Dataset}\label{sec:data}
 We use the Labeled Faces in the Wild Dataset (LFW) \cite{huang_labeled_2007}. We chose this dataset because it contains many ($13,000$) labeled images of different people ($1,680$ of whom have at least two distinct images and $62$ of whom have at least twenty distinct images). This provides sufficient training data for our experiments.
 
 Furthermore, each of image is centered on a single face, which provides some measure of standardization between (non-manipulated) images. This allows us to control the amount and type of manipulation which we then add in our experiments, which is important because we test the robustness of algorithms to specific manipulations.
@@ -218,6 +218,18 @@ With manipulations, we find support for image manipulations equalizing face reco
 With both manipulated and un-manipulated images, VGG far outperforms the other algorithms in terms of recognition accuracy, and this effect is especially pronounced on occluded images. We believe that our statistical algorithms perform especially badly on occluded images because they work by comparing pixel similarities between images -- while DFI, radial distortion, and blur somewhat preserve the pixels themselves, in occluded images a large portion of the image's pixel values are completely lost to the algorithm.
 
 However, a major weakness of VGG is its computational cost. Training VGG on $930$ un-manipulated images took around $42$ minutes, and subsequently testing it on $2093$ test faces took around $12$ minutes. For reference, all of the other algorithms together took $11$ seconds to train and less than $3$ minutes to test on the same dataset.
+
+Another weakness of the system is sensitivity to the alignment of images. With the VGG algorithm, accuracy is lower on the original dataset without face detection and cropping, as shown by the dotted line in Figure \ref{fig:vgg_nonmanipulated}. We mentioned in Section \ref{sec:data} that the Sparse Representation Algorithms has much better performance on the aligned version of the LFW dataset than the ``funneled'' version. The difference in test accuracies on non-manipulated images between the ``funneled'' and aligned LFW datasets is shown in Figure \ref{fig:results_alignment}. Note that the VGG algorithm used the original ``funneled'' images with additional face detection and cropping.
+
+\begin{figure}[ht]
+\centering
+\subfloat{
+\includegraphics[width=0.5\textwidth]{../figures/results_plots/old_default_accuracies_difftraintest.png}}
+\subfloat{
+\includegraphics[width=0.5\textwidth]{../figures/results_plots/default_accuracies_difftraintest.png}}
+\caption{Results on non-manipulated images for ``funneled'' images (left) and on images for aligned images (right). There is a major improvement in accuracy scores for Sparse Representation algorithms.}
+\label{fig:results_alignment}
+\end{figure}
 
 \section{Conclusion}
 In this project, we implement various face recognition algorithms, ranging from statistical methods such as PCA and Sparse Representation to deep learning methods such as VGG-FACE. We use the Labeled Faces in the Wild dataset, and transform the face images with different manipulations: occlusion, radial distortion, blur, and deep feature interpolation. While VGG-FACE performed the best across non-manipulated and manipulated images, it displayed the same relative accuracy drop as the other algorithms. This suggests that although for humans, people with stronger face recognition ability do worse relatively when identifying manipulated faces, the same cannot be said of stronger and weaker face recognition algorithms.
